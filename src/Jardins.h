@@ -41,7 +41,7 @@ namespace Carcassonne {
             handler.instance = nullptr;
         }
 
-        Jardin* creerAbbaye(Tuile* premiereTuile) {
+        Jardin* creerJardin(Tuile* premiereTuile) {
             Jardin* newJardin=new Jardin(premiereTuile);
             listeJardin.push_back(newJardin);
             return newJardin;

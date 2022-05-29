@@ -26,6 +26,11 @@ namespace Carcassonne {
         PiocheException(const string msg) : CarcassonneException(msg) {}
     };
 
+    class TuileException : public CarcassonneException {
+    public:
+        TuileException(const string msg) : CarcassonneException(msg) {}
+    };
+
 }
 
 #endif

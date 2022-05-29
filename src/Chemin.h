@@ -1,26 +1,16 @@
 #ifndef __CHEMIN_H__
 #define __CHEMIN_H__
 
-#include "Tuile.h"
-#include <list>
+#include "Environnement.h"
 
 using namespace std;
 
 namespace Carcassonne {
 
-    class Tuile;
-
-    class Chemin {
-    protected :
-        list<Tuile*> listeTuiles;
+    class Chemin : public Environnement {
     public :
-        Chemin(Tuile* premiereTuile){
-            listeTuiles.push_back(premiereTuile);
-        }
-        virtual ~Chemin()=default;
-        virtual void ajouterTuile(Tuile* tuile) = 0;
-        int getTaille(){return listeTuiles.size();}
-        list<Tuile*> getTuiles(){return listeTuiles;}
+        Chemin(Tuile* premiereTuile) : Environnement(premiereTuile) {}
+        ~Chemin()=default;
     };
 }
 

@@ -1,6 +1,7 @@
 #ifndef __PRE_H_
 #define __PRE_H_
 
+#include "Symbols.h"
 #include "Surface.h"
 
 namespace Carcassonne {
@@ -8,8 +9,13 @@ namespace Carcassonne {
     private :
     public :
         Pre(Tuile* premiereTuile):Surface(premiereTuile){}
-        virtual void ajouterTuile(Tuile* tuile){
+
+        void ajouterTuile(Tuile* tuile) override {
             listeTuiles.push_back(tuile);
+        }
+
+        const char& toChar() const override {
+            return C_PRES;
         }
     };
 }

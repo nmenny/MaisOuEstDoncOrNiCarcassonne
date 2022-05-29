@@ -3,5 +3,4 @@
 namespace Carcassonne {
 
 	Villes::Handler Villes::handler(nullptr);
-
 }

@@ -1,8 +1,11 @@
 #ifndef __PIOCHE_H__
 #define __PIOCHE_H__
 
-#include <list>
+#include <vector>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 #include "Tuile.h"
 
 namespace Carcassonne {
@@ -13,13 +16,14 @@ namespace Carcassonne {
 
 		static const std::string TUILES_NOM_FICHIER;
 
-		list<Tuile*> pioche;
+		vector<Tuile*> pioche;
 
-		list<Tuile*> piochees;
+		vector<Tuile*> piochees;
 
 	public:
 
 		Pioche() {
+		    srand(time(NULL)); // Seed aleatoire
             recupereToutesLesTuiles();
 		}
 
@@ -34,6 +38,23 @@ namespace Carcassonne {
 			for(Tuile* t : piochees) {
 				delete t;
 			}
+		}
+
+		size_t getTaillePioche() const {
+            return pioche.size();
+		}
+
+		const Tuile* piocher() {
+            size_t tuilePiocheIdx = rand() % getTaillePioche();
+
+            auto itTuile = find(pioche.begin(), pioche.end(), pioche[tuilePiocheIdx]);
+
+            piochees.push_back(pioche[tuilePiocheIdx]);
+
+            pioche.erase(itTuile);
+
+            return piochees.back();
+
 		}
 
 	private:

@@ -1,6 +1,7 @@
 #ifndef __JARDIN_H__
 #define __JARDIN_H__
 
+#include "Symbols.h"
 #include "Batiment.h"
 
 namespace Carcassonne {
@@ -9,8 +10,13 @@ namespace Carcassonne {
 
     public :
         Jardin(Tuile* premiereTuile):Batiment(premiereTuile){}
-        virtual void ajouterTuile(Tuile* tuile){
+
+         void ajouterTuile(Tuile* tuile) override {
             listeTuiles.push_back(tuile);
+        }
+
+        const char& toChar() const override {
+            return C_JARDIN;
         }
     };
 }

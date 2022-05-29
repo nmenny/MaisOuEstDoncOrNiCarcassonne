@@ -34,11 +34,10 @@ namespace Carcassonne {
             {
                 champ = tmp.substr(0, idxSep);
                 champs.push_back(champ);
-                cout << champ << endl;
                 tmp = tmp.substr(idxSep+1);
             }
 
-            pioche.push_back(new Tuile(champs[0], champs[1], champs[2]));
+            pioche.push_back(new Tuile(champs[0], champs[1]));
         }
 	}
 

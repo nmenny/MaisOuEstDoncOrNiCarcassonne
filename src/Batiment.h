@@ -1,26 +1,16 @@
 #ifndef __BATIMENT_H__
 #define __BATIMENT_H__
 
-#include "Tuile.h"
-#include <list>
+#include "Environnement.h"
 
 using namespace std;
 
 namespace Carcassonne {
 
-    class Tuile;
-
-    class Batiment {
-    protected :
-        list<Tuile*> listeTuiles;
+    class Batiment : public Environnement {
     public :
-        Batiment(Tuile* premiereTuile){
-            listeTuiles.push_back(premiereTuile);
-        }
-        virtual ~Batiment()=default;
-        virtual void ajouterTuile(Tuile* tuile) = 0;
-        int getTaille(){return listeTuiles.size();}
-        list<Tuile*> getTuiles(){return listeTuiles;}
+        Batiment(Tuile* premiereTuile) : Environnement(premiereTuile) {}
+        ~Batiment()=default;
     };
 }
 

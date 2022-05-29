@@ -3,32 +3,40 @@
 
 #include <string>
 #include <array>
+#include <iostream>
 
 using namespace std;
 
 namespace Carcassonne {
 
-    class Surface;
-    class Chemin;
-    class Batiment;
+    class Environnement;
 
     class Tuile {
     private:
 
-        static const size_t NB_ZONES = 8;
+        static const size_t NB_ZONES = 9;
 
-        const std::string ID; //Identificateur de la carte, pour retrouver son dessin
-        array<Surface*, NB_ZONES> surfaces; //Tableau de taille 8, representant les zones des bordures, partant de haut-gauche, puis dans le sens horaire
-        array<Batiment*, NB_ZONES> batiments;
-        array<Chemin*, NB_ZONES> chemins; //Tableau de taille, representant les chemin sur chaque côté, partant du haut, puis sens horaire
+        const std::string ID = ""; //Identificateur de la carte, pour retrouver son dessin
+        array<Environnement*, NB_ZONES> surfaces; //Tableau de taille 8, representant les zones des bordures, partant de haut-gauche, puis dans le sens horaire
     public:
-        Tuile(std::string& id, std::string& zonesSurfaces, std::string& zonesChemins);
+
+        Tuile() {
+            for(size_t zoneIdx = 0; zoneIdx < NB_ZONES; zoneIdx++) {
+                surfaces[zoneIdx] = nullptr;
+            }
+        }
+
+        Tuile(std::string& id, std::string& zonesSurfaces);
 
         ~Tuile()=default;
 
         std::string getID() {
             return ID;
         }
+
+        void affiche(ostream& f, bool isinline=false) const;
+
+        string toString(bool isinline=false) const;
     };
 
 }

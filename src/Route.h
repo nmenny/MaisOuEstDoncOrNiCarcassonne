@@ -1,6 +1,7 @@
 #ifndef __ROUTE_H__
 #define __ROUTE_H__
 
+#include "Symbols.h"
 #include "Chemin.h"
 
 namespace Carcassonne {
@@ -8,8 +9,13 @@ namespace Carcassonne {
     private :
     public :
         Route(Tuile* premiereTuile):Chemin(premiereTuile){}
-        virtual void ajouterTuile(Tuile* tuile){
+
+        void ajouterTuile(Tuile* tuile) override {
             listeTuiles.push_back(tuile);
+        }
+
+        const char& toChar() const override {
+            return C_ROUTE;
         }
     };
 }
