@@ -6,31 +6,50 @@
 namespace Carcassonne {
     class Villes {
     private :
-        Ville** listeVilles;
-        int nbVilles=0;
-        int nbVillesMax=30;
-    public :
-        Villes() : listeVilles(new Ville*[nbVillesMax]) {}
-        ~Villes() {
 
+        struct Handler {
+            Villes* instance;
+            Handler(Villes* ptr) { instance = ptr; }
+            ~Handler() { delete instance; }
+        };
+
+        Villes()=default;
+
+        ~Villes(){
+            for(Ville* ville : listeVilles)
+                delete ville;
         }
+
+        static Handler handler;
+
+        list<Ville*> listeVilles;
+    public :
+
+        static Villes* getInstance() {
+            if(handler.instance == nullptr) {
+                handler.instance = new Villes();
+            }
+            return handler.instance;
+        }
+
+        static void libererInstance() {
+            delete handler.instance;
+            handler.instance = nullptr;
+        }
+
         Ville* creerVille(Tuile* premiereTuile) {
             Ville* newVille=new Ville(premiereTuile);
-            listeVilles[nbVilles]=newVille;
+            listeVilles.push_back(newVille);
             return newVille;
         }
         Ville* fusionnerVilles(Ville* villeOriginale, Ville* villeAAjouter) {
-            Tuile** tuilesAChanger=villeAAjouter->getTuiles();
+            list<Tuile*> tuilesAChanger=villeAAjouter->getTuiles();
             int nbTuilesAChanger=villeAAjouter->getTaille();
-            for(int i=0;i<nbTuilesAChanger;i++){
-                villeOriginale->ajouterTuile(tuilesAChanger[i]);
+            for(Tuile* tuile : tuilesAChanger){
+                villeOriginale->ajouterTuile(tuile);
             }
             //Suppression de villeAAjouter
-            for(int i=0;i<nbVilles;i++){
-                if (listeVilles[i]==villeAAjouter) {
-                    listeVilles[i]=listeVilles[--nbVilles];
-                }
-            }
+            listeVilles.remove(villeAAjouter);
             delete villeAAjouter;
             return villeOriginale;
         }

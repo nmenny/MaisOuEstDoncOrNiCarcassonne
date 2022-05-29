@@ -1,6 +1,6 @@
 CPP= g++ -Wall -o
 
-sources= src/Joueurs.cpp src/Joueur.cpp src/Main.cpp
+sources= src/Joueurs.cpp src/Joueur.cpp src/Main.cpp src/Pres.cpp src/Pioche.cpp
 objets= $(sources:.cpp=.o)
 
 jeu: $(objets)

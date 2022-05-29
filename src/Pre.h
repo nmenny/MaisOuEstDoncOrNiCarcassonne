@@ -1,14 +1,13 @@
-#ifndef __VILLE_H__
-#define __VILLE_H__
+#ifndef __PRE_H_
+#define __PRE_H_
 
 #include "Surface.h"
 
 namespace Carcassonne {
-    class Ville : public Surface {
+    class Pre : public Surface {
     private :
-
     public :
-        Ville(Tuile* premiereTuile):Surface(premiereTuile){}
+        Pre(Tuile* premiereTuile):Surface(premiereTuile){}
         virtual void ajouterTuile(Tuile* tuile){
             listeTuiles.push_back(tuile);
         }

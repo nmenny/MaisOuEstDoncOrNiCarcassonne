@@ -1,14 +1,13 @@
-#ifndef __VILLE_H__
-#define __VILLE_H__
+#ifndef __ROUTE_H__
+#define __ROUTE_H__
 
-#include "Surface.h"
+#include "Chemin.h"
 
 namespace Carcassonne {
-    class Ville : public Surface {
+    class Route : public Chemin {
     private :
-
     public :
-        Ville(Tuile* premiereTuile):Surface(premiereTuile){}
+        Route(Tuile* premiereTuile):Chemin(premiereTuile){}
         virtual void ajouterTuile(Tuile* tuile){
             listeTuiles.push_back(tuile);
         }
