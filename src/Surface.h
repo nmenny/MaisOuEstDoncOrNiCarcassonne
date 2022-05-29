@@ -7,6 +7,7 @@
 using namespace std;
 
 namespace Carcassonne {
+
     class Surface {
     protected :
         list<Tuile*> listeTuiles;

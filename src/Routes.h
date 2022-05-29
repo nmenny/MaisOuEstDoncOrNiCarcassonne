@@ -44,7 +44,6 @@ namespace Carcassonne {
         }
         Route* fusionnerRoutes(Route* routeOriginale, Route* routeAAjouter) {
             list<Tuile*> tuilesAChanger=routeAAjouter->getTuiles();
-            int nbTuilesAChanger=routeAAjouter->getTaille();
             for(Tuile* tuile : tuilesAChanger){
                 routeOriginale->ajouterTuile(tuile);
             }

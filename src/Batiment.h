@@ -1,5 +1,5 @@
-#ifndef __CHEMIN_H__
-#define __CHEMIN_H__
+#ifndef __BATIMENT_H__
+#define __BATIMENT_H__
 
 #include "Tuile.h"
 #include <list>
@@ -10,14 +10,14 @@ namespace Carcassonne {
 
     class Tuile;
 
-    class Chemin {
+    class Batiment {
     protected :
         list<Tuile*> listeTuiles;
     public :
-        Chemin(Tuile* premiereTuile){
+        Batiment(Tuile* premiereTuile){
             listeTuiles.push_back(premiereTuile);
         }
-        virtual ~Chemin()=default;
+        virtual ~Batiment()=default;
         virtual void ajouterTuile(Tuile* tuile) = 0;
         int getTaille(){return listeTuiles.size();}
         list<Tuile*> getTuiles(){return listeTuiles;}

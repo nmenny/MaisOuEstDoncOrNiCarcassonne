@@ -46,7 +46,6 @@ namespace Carcassonne {
         }
         Riviere* fusionnerRivieres(Riviere* riviereOriginale, Riviere* riviereAAjouter) {
             list<Tuile*> tuilesAChanger=riviereAAjouter->getTuiles();
-            int nbTuilesAChanger=riviereAAjouter->getTaille();
             for(Tuile* tuile : tuilesAChanger){
                 riviereOriginale->ajouterTuile(tuile);
             }

@@ -44,7 +44,6 @@ namespace Carcassonne {
         }
         Ville* fusionnerVilles(Ville* villeOriginale, Ville* villeAAjouter) {
             list<Tuile*> tuilesAChanger=villeAAjouter->getTuiles();
-            int nbTuilesAChanger=villeAAjouter->getTaille();
             for(Tuile* tuile : tuilesAChanger){
                 villeOriginale->ajouterTuile(tuile);
             }
