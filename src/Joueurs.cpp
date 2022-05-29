@@ -1,4 +1,5 @@
 #include "Joueurs.h"
+#include "CarcassonneException.h"
 
 namespace Carcassonne {
 

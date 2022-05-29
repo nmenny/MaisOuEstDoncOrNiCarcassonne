@@ -13,14 +13,6 @@ namespace Carcassonne {
 	class GdMeeple;
 	class BasicMeeple;
 
-	class JoueurException {
-		string info;
-	public:
-	    JoueurException(const string msg) :info(msg) {}
-	    ~JoueurException() {}
-	    const char* what() const { return info.c_str(); }
-	};
-
 	class Joueur {
 
 		static const int NB_MEEPLE_DEFAUT = 10;

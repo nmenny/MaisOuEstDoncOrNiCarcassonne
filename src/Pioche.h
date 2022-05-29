@@ -19,7 +19,9 @@ namespace Carcassonne {
 
 	public:
 
-		Pioche()=default;
+		Pioche() {
+            recupereToutesLesTuiles();
+		}
 
 		Pioche(const Pioche& p)=delete;
 
