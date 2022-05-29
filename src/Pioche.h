@@ -45,6 +45,11 @@ namespace Carcassonne {
 		}
 
 		const Tuile* piocher() {
+
+		    if(getTaillePioche() == 0) {
+                return nullptr;
+		    }
+
             size_t tuilePiocheIdx = rand() % getTaillePioche();
 
             auto itTuile = find(pioche.begin(), pioche.end(), pioche[tuilePiocheIdx]);

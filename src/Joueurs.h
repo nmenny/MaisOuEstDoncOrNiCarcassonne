@@ -8,14 +8,18 @@ namespace Carcassonne {
 	class Joueur;
 
 	class Joueurs {
+    public:
+
+        static const int NB_JOUEUR_MAXI = 4;
+
+    private:
+
 
 		struct Handler {
 			Joueurs* instance;
 			Handler(Joueurs* j) { instance = j; }
 			~Handler() { delete instance; }
 		};
-
-		static const int NB_JOUEUR_MAXI = 4;
 
 		static Handler handler;
 

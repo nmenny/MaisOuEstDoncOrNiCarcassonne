@@ -18,19 +18,22 @@ namespace Carcassonne {
 		static const int NB_MEEPLE_DEFAUT = 10;
 
 		int score = 0;
+		const int num;
 		Abbe* abbe = nullptr;
 		GdMeeple* grandMeeple = nullptr;
 		list<BasicMeeple*> listeBasicMeeples;
 
 	public:
 
-		Joueur();
+		Joueur(int num);
 
 		~Joueur();
 
 		int getScore() const;
 
-		void incrementScore();
+		int getNumero() const;
+
+		void incrementScore(int incr);
 
 		// Prend un meeple du joueur
 

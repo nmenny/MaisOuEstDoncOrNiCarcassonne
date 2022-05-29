@@ -1,0 +1,104 @@
+-- Etat du plateau actuel --
+R#V
+#R#
+J#R
+
+-- C'est au tour du joueur 1 de jouer...
+Voici la tuile a jouer ce tour la :
+#C#
+#C#
+C#A
+
+Et voici les endroit ou vous pouvez la poser :
+idxCoup => (x ; y)
+0 => (0 ; -1)
+1 => (1 ; 0)
+2 => (0 ; 1)
+3 => (-1 ; 0)
+
+Ou souhaitez-vous poser la tuile ?
+0
+
+Il vous reste 10 Meeples, voulez-vous les poser sur la Tuile que vous avez pose ?
+
+Voici les endroit ou vous pouvez en poser un :
+0 => pas poser
+1 => Pres
+2 => Chemin
+3 => Pres
+4 => Pres
+5 => Chemin
+6 => Pres
+7 => Chemin
+8 => Pres
+9 => Abbaye
+
+0
+
+-- Etat du plateau actuel --
+#C#
+#C#
+C#A
+R#V
+#R#
+J#R
+
+-- C'est au tour du joueur 2 de jouer...
+Voici la tuile a jouer ce tour la :
+#C#
+CVC
+#C#
+
+Et voici les endroit ou vous pouvez la poser :
+idxCoup => (x ; y)
+0 => (0 ; -1)
+1 => (1 ; 0)
+2 => (0 ; 1)
+3 => (-1 ; 0)
+4 => (1 ; 1)
+5 => (0 ; 2)
+6 => (-1 ; 1)
+
+Ou souhaitez-vous poser la tuile ?
+2
+
+Il vous reste 10 Meeples, voulez-vous les poser sur la Tuile que vous avez pose ?
+
+Voici les endroit ou vous pouvez en poser un :
+0 => pas poser
+1 => Pres
+2 => Chemin
+3 => Pres
+4 => Chemin
+5 => Village
+6 => Chemin
+7 => Pres
+8 => Chemin
+9 => Pres
+
+4
+
+ **** Fin de la partie ****
+
+-- Etat du plateau final --
+#C##C#
+#C#CVC
+C#A#C#
+R#V
+#R#
+J#R
+
+-- Voici le score actuel --
+| Joueurs | Points |
+|    0    |       1|
+|    1    |       1|
+
+Y'a-t'il encore des points a attribuer ?(Y/N)
+N
+
+-- Voici le score final --
+| Joueurs | Points |
+|    0    |       1|
+|    1    |       1|
+
+*** Egalite !!! 

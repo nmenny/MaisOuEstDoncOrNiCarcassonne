@@ -12,9 +12,11 @@ namespace Carcassonne {
     class Environnement;
 
     class Tuile {
-    private:
+    public:
 
         static const size_t NB_ZONES = 9;
+
+    private:
 
         const std::string ID = ""; //Identificateur de la carte, pour retrouver son dessin
         array<Environnement*, NB_ZONES> surfaces; //Tableau de taille 8, representant les zones des bordures, partant de haut-gauche, puis dans le sens horaire

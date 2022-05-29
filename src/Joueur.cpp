@@ -4,7 +4,7 @@
 
 namespace Carcassonne {
 
-	Joueur::Joueur() : listeBasicMeeples(Joueur::NB_MEEPLE_DEFAUT, nullptr) {}
+	Joueur::Joueur(int num) : num(num), listeBasicMeeples(Joueur::NB_MEEPLE_DEFAUT, nullptr) {}
 
 	Joueur::~Joueur() {}
 
@@ -12,8 +12,12 @@ namespace Carcassonne {
 		return score;
 	}
 
-	void Joueur::incrementScore() {
-		score++;
+	int Joueur::getNumero() const {
+        return num;
+    }
+
+	void Joueur::incrementScore(int incr) {
+		score += incr;
 	}
 
 	// Prend un meeple du joueur

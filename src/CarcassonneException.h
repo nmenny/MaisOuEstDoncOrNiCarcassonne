@@ -31,6 +31,11 @@ namespace Carcassonne {
         TuileException(const string msg) : CarcassonneException(msg) {}
     };
 
+    class PlateauException : public CarcassonneException {
+    public:
+        PlateauException(const string msg) : CarcassonneException(msg) {}
+    };
+
 }
 
 #endif

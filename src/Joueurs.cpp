@@ -37,7 +37,7 @@ namespace Carcassonne {
 			throw JoueurException("Ne peut plus avoir plus de joueurs");
 		}
 
-		listeJoueurs[nbJoueur] = new Joueur();
+		listeJoueurs[nbJoueur] = new Joueur(nbJoueur);
 
 		nbJoueur++;
 	}
