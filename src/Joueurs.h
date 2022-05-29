@@ -1,8 +1,11 @@
+#ifndef __JOUEURS_H__
+#define __JOUEURS_H__
+
 #include "Joueur.h"
 
-class Carcassonne::Joueur;
-
 namespace Carcassonne {
+
+	class Joueur;
 
 	class Joueurs {
 
@@ -34,7 +37,7 @@ namespace Carcassonne {
 
 		Joueur* getJoueur(int idxJoueur) const;
 
-		const Joueur** getJoueurs() const;
+		Joueur** getJoueurs() const;
 
 		int getNbJoueurs() const;
 
@@ -42,5 +45,5 @@ namespace Carcassonne {
 
 }
 
-
+#endif
 

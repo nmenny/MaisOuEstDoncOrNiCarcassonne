@@ -1,3 +1,6 @@
+#ifndef __VILLES_H__
+#define __VILLES_H__
+
 #include "Ville.h"
 
 namespace Carcassonne {
@@ -33,3 +36,5 @@ namespace Carcassonne {
         }
     };
 }
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __VILLE_H__
+#define __VILLE_H__
+
 #include "Tuile.h"
 
 namespace Carcassonne {
@@ -23,3 +26,5 @@ namespace Carcassonne {
         Tuile** getTuiles(){return listeTuiles;}
     };
 }
+
+#endif

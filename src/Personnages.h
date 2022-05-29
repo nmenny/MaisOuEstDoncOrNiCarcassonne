@@ -1,3 +1,6 @@
+#ifndef __PERSONNAGES_H__
+#define __PERSONNAGES_H__
+
 #include "Joueurs.h"
 
 namespace Carcassonne {
@@ -8,10 +11,10 @@ namespace Carcassonne {
     public:
         Meeple(Joueur * j): enJeu(false), joueur(j){}
         Joueur* getProprietaire() const { return joueur; }
-        bool misEnJeu() {
+        void misEnJeu() {
             enJeu = true;
         }
-        bool recuperer() {
+        void recuperer() {
             enJeu = false;
         }
     };
@@ -74,7 +77,6 @@ namespace Carcassonne {
             if (this!=&b){
                 n=b.n;
                 tailleMax=b.tailleMax;
-                GdMeeple** listeMpls = new GdMeeple*[tailleMax];
                 for (unsigned int i=0; i<b.n; i++) listeGdMpls[i]=b.listeGdMpls[i];
             }
             return *this;
@@ -93,10 +95,10 @@ namespace Carcassonne {
         Joueur * joueur;
     public:
         Abbe(Joueur* j): enJeu(false), joueur(j){}
-        bool misEnJeu() {
+        void misEnJeu() {
             enJeu = true;
         }
-        bool repris() {
+        void repris() {
             enJeu = false;
         }
     };
@@ -131,3 +133,5 @@ namespace Carcassonne {
         Abbe** getAbbe() { return listeAb; }
     };
 }
+
+#endif

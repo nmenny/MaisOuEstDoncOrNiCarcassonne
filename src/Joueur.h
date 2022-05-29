@@ -1,14 +1,17 @@
+#ifndef __JOUEUR_H__
+#define __JOUEUR_H__
+
 #include <list>
 #include <string>
-
-class Carcassonne::Abbe;
-class Carcassonne::GdMeeple;
-class Carcassonne::BasicMeeple;
 
 using namespace std;
 
 
 namespace Carcassonne {
+
+	class Abbe;
+	class GdMeeple;
+	class BasicMeeple;
 
 	class JoueurException {
 		string info;
@@ -56,3 +59,5 @@ namespace Carcassonne {
 	};
 
 }
+
+#endif

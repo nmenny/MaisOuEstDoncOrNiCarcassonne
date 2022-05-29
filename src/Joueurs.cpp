@@ -49,7 +49,7 @@ namespace Carcassonne {
 		return listeJoueurs[idxJoueur];
 	}
 
-	const Joueur** Joueurs::getJoueurs() const {
+	Joueur** Joueurs::getJoueurs() const {
 		return listeJoueurs;
 	}
 
