@@ -32,7 +32,7 @@ namespace Carcassonne {
 
             while((idxSep = tmp.find(";")) != string::npos)
             {
-                champ = tmp.substr(0, idxSep-1);
+                champ = tmp.substr(0, idxSep);
                 champs.push_back(champ);
                 cout << champ << endl;
                 tmp = tmp.substr(idxSep+1);
