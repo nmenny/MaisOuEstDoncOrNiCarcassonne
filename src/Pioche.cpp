@@ -12,6 +12,7 @@ namespace Carcassonne {
     const string Pioche::TUILES_NOM_FICHIER = "data/allTuiles.csv";
 
 	void Pioche::recupereToutesLesTuiles() {
+	    // Ouvre le fichier contenant les tuiles
 		ifstream stream(Pioche::TUILES_NOM_FICHIER);
 
         if(!stream.is_open()) {
@@ -19,9 +20,11 @@ namespace Carcassonne {
         }
 
         string line, champ, tmp;
-        stream >> line;
+        stream >> line; // skip la premier ligne
         vector<string> champs;
         size_t idxSep;
+
+        // Parcours chaque ligne du fichier
         while(stream >> line) {
 
             champs.clear();
@@ -30,6 +33,7 @@ namespace Carcassonne {
 
             idxSep = string::npos;
 
+            // Recupere chaque champ de la ligne
             while((idxSep = tmp.find(";")) != string::npos)
             {
                 champ = tmp.substr(0, idxSep);
@@ -37,6 +41,7 @@ namespace Carcassonne {
                 tmp = tmp.substr(idxSep+1);
             }
 
+            // Cree une nouvelle Tuile a partir des champs recuperes
             pioche.push_back(new Tuile(champs[0], champs[1]));
         }
 	}

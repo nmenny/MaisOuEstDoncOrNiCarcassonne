@@ -1,3 +1,10 @@
+/*! \file Plateau.h
+    \version 0.1
+*/
+
+// TODO : Regler gros soucis dans getEmplacementsOuPeutPoser() !!!!!
+// TODO : Pousser les tests de poserTuile()
+
 #ifndef __PLATEAU_H__
 #define __PLATEAU_H__
 
@@ -8,22 +15,29 @@
 #include "Pioche.h"
 #include "CarcassonneException.h"
 
+/*! \namespace Carcassonne
+
+    espace de nom regroupant tout ce qui est utilise pour le jeu
+*/
 namespace Carcassonne {
 
     using namespace std;
 
+    /*! \class Plateau
+        \brief Plateau sur lequel les Tuiles sont disposees
+    */
 	class Plateau {
 
 	private:
 
-        Pioche pioche;
+        Pioche pioche; /*!< La pioche */
 
-        const Tuile* tuileCourante = nullptr;
+        const Tuile* tuileCourante = nullptr; /*!< Tuile qui doit etre jouee */
 
-        vector<vector<const Tuile*>> plateau;
+        vector<vector<const Tuile*>> plateau; /*!< Vecteurs representant le plateau */
 
-        int nbLignes = 0;
-        int nbColonnes = 0;
+        int nbLignes = 0; /*!< Nb de lignes du plateau */
+        int nbColonnes = 0; /*!< Nb de colonnes du plateau */
 
 	public:
 
@@ -51,13 +65,11 @@ namespace Carcassonne {
 
         void affiche(ostream& f) const;
 
-        vector<Coordonnee> getEmplacementsOuPeutPoser() const;
+        Coordonnees getEmplacementsOuPeutPoser() const;
 
         const Tuile* poserTuile(const Coordonnee& c);
 
     private:
-
-
 
 	};
 

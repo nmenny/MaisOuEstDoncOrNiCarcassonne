@@ -4,12 +4,15 @@
 #include "Pioche.h"
 #include "Tuile.h"
 #include "Jeu.h"
+#include "Interface.h"
 
 int main(int argc, char* argv[]) {
 
     using namespace Carcassonne;
 
-    Jeu j;
+    InterfaceConsole interfaceC;
+
+    Jeu j(interfaceC, 2);
 
     j.partie();
 

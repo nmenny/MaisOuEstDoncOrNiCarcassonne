@@ -1,48 +1,82 @@
+/*! \file Joueurs.h
+    \version 0.1
+*/
+
 #ifndef __JOUEURS_H__
 #define __JOUEURS_H__
 
 #include "Joueur.h"
 
+/*! \namespace Carcassonne
+
+    espace de nom regroupant tout ce qui est utilise pour le jeu
+*/
 namespace Carcassonne {
 
 	class Joueur;
 
+    /*! \class Joueurs
+        \brief Gere la memoire des tous les Joueurs presents dans le jeu
+    */
 	class Joueurs {
     public:
 
-        static const int NB_JOUEUR_MAXI = 4;
+        static const int NB_JOUEUR_MAXI = 4; /*!< Nombre maximum de joueurs */
 
     private:
 
-
+        /*! \struct Handler
+            \brief Encapsule le Singleton de Joueurs
+        */
 		struct Handler {
-			Joueurs* instance;
+			Joueurs* instance; /*!< Instance de Joueurs (Singleton) */
+
+            /*! \brief Cree une nouvelle instance du Singleton
+                \param[in] Pointeur sur l'objet Joueurs Singleton
+            */
 			Handler(Joueurs* j) { instance = j; }
+
+            /*! \brief Detruit le Singleton a la fin de l'application */
 			~Handler() { delete instance; }
 		};
 
-		static Handler handler;
+		static Handler handler; /*!< Instance Singleton statique de Abbayes */
 
-		Joueur** listeJoueurs = nullptr;
+		Joueur** listeJoueurs = nullptr; /*!< Liste des Jardins presents dans la partie */
 
-		int nbJoueur = 0;
+		int nbJoueur = 0; /*!< Nombre de joueurs dans la partie */
 
+        /*! \brief Constructeur de la classe */
 		Joueurs();
 
+        /*! \brief Destructeur de la classe */
 		~Joueurs();
 
 	public:
 
+        /*! \brief Recupere l'instance du Singleton */
 		static Joueurs* getInstance();
 
+        /*! \brief Libere l'instance du Singleton */
 		static void libererInstance();
 
+        /*! \brief Ajoute un nouveau Joueur si possible */
 		void ajouterJoueur();
 
+        /*! \brief Recupere un certain Joueur
+            \param[in] idxJoueur Indice du joueur a recuperer
+            \return Pointeur sur le joueur correspondant, ou nullptr si ce joueur n'existe pas
+        */
 		Joueur* getJoueur(int idxJoueur) const;
 
+        /*! \brief Recupere tous les Joueurs
+            \return Pointeur sur tous les joueurs
+        */
 		Joueur** getJoueurs() const;
 
+        /*! \brief Recupere le nombre de joueurs presents dans la partie
+            \return Le nombre de joueurs presents dans la partie
+        */
 		int getNbJoueurs() const;
 
 	};

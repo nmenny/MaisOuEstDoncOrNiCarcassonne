@@ -1,3 +1,7 @@
+/*! \file Pioche.h
+    \version 0.1
+*/
+
 #ifndef __PIOCHE_H__
 #define __PIOCHE_H__
 
@@ -8,6 +12,10 @@
 #include <algorithm>
 #include "Tuile.h"
 
+/*! \namespace Carcassonne
+
+    espace de nom regroupant tout ce qui est utilise pour le jeu
+*/
 namespace Carcassonne {
 
 	class Pioche {
