@@ -5,3 +5,6 @@
 *.layout
 *.exe
 jeu
+Makefile
+makefile
+*.stash
