@@ -30,7 +30,7 @@ namespace Carcassonne {
                     saisie = interface.demanderOuPoser();
                } catch(InterfaceException& e) {}
 
-               if(saisie >= 0 && saisie < emplacementJouables.size()) {
+               if(saisie < emplacementJouables.size()) {
                   break;
                }
             }

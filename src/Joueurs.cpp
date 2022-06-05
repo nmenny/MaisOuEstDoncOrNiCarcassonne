@@ -19,7 +19,7 @@ namespace Carcassonne {
 
 	Joueurs::Joueurs() {
 		listeJoueurs = new Joueur*[Joueurs::NB_JOUEUR_MAXI];
-		for(int idxJoueur; idxJoueur < Joueurs::NB_JOUEUR_MAXI; idxJoueur++) {
+		for(int idxJoueur = 0; idxJoueur < Joueurs::NB_JOUEUR_MAXI; idxJoueur++) {
 			listeJoueurs[idxJoueur] = nullptr;
 		}
 

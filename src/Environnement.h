@@ -5,8 +5,11 @@
 #ifndef __ENVIRONNEMENT_H__
 #define __ENVIRONNEMENT_H__
 
-#include "Tuile.h"
 #include <list>
+
+#include "Tuile.h"
+#include "Personnages.h"
+
 
 /*! \namespace Carcassonne
 
@@ -20,6 +23,7 @@ namespace Carcassonne {
     class Environnement {
     protected :
         list<Tuile*> listeTuiles; /*!< Liste contenant toutes les tuiles contenant un même environnement */
+        list<Meeple*> listeMeeples; /*!< Liste contenant les meeples presents dans un environnement */
     public :
 
         /*! \brief Constructeur de la classe

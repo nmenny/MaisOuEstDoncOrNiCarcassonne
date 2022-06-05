@@ -33,6 +33,8 @@ namespace Carcassonne {
                 delete env;
         }
 
+        GestionnaireMemoireEnvironnement<T>& operator=(const GestionnaireMemoireEnvironnement<T>&)=delete;
+
         static Handler handler;
 
         list<T*> listeEnv;
