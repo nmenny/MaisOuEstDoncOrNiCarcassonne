@@ -15,17 +15,11 @@ INCLUDEPATH += . src
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-SOURCES += src/Abbayes.cpp \
-           src/Interface.cpp \
-           src/Jardins.cpp \
+SOURCES += src/Interface.cpp \
            src/Jeu.cpp \
            src/Joueur.cpp \
            src/Joueurs.cpp \
            src/Main.cpp \
            src/Pioche.cpp \
            src/Plateau.cpp \
-           src/Pres.cpp \
-           src/Rivieres.cpp \
-           src/Routes.cpp \
-           src/Tuile.cpp \
-           src/Villes.cpp
+           src/Tuile.cpp 
