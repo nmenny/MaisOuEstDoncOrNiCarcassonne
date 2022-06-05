@@ -32,7 +32,7 @@ namespace Carcassonne {
 
         Pioche pioche; /*!< La pioche */
 
-        const Tuile* tuileCourante = nullptr; /*!< Tuile qui doit etre jouee */
+        Tuile* tuileCourante = nullptr; /*!< Tuile qui doit etre jouee */
 
         vector<vector<const Tuile*>> plateau; /*!< Vecteurs representant le plateau */
 
@@ -57,7 +57,7 @@ namespace Carcassonne {
             return pioche;
         }
 
-        const Tuile* getTuile() const {
+        Tuile* getTuile() const {
             return tuileCourante;
         }
 

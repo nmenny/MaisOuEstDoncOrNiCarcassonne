@@ -44,6 +44,39 @@ namespace Carcassonne {
 
     }
 
+    Tuile& Tuile::rotation(const directionRotation& dir) {
+        array<Environnement*, NB_ZONES> surfacesTmp;
+
+        // Copie des elements d'environnement dans l'orientation actuelle
+        for(size_t envIdx = 0; envIdx < NB_ZONES; envIdx++) {
+            surfacesTmp[envIdx] = surfaces[envIdx];
+        }
+
+        // rotation
+        switch(dir) {
+        case directionRotation::gauche:
+
+            for(size_t envIdxLigne = 0; envIdxLigne < NB_ZONES / 3; envIdxLigne++) {
+                for(size_t envIdxCol = 0; envIdxCol < NB_ZONES / 3; envIdxCol++) {
+                    surfaces[6 - envIdxCol * 3 + envIdxLigne] = surfacesTmp[envIdxLigne * 3 + envIdxCol];
+                }
+            }
+
+        break;
+        case directionRotation::droite:
+
+            for(size_t envIdxLigne = 0; envIdxLigne < NB_ZONES / 3; envIdxLigne++) {
+                for(size_t envIdxCol = 0; envIdxCol < NB_ZONES / 3; envIdxCol++) {
+                    surfaces[envIdxCol * 3 + 2 - envIdxLigne] = surfacesTmp[envIdxLigne * 3 + envIdxCol];
+                }
+            }
+
+        break;
+        }
+
+        return *this;
+    }
+
     void Tuile::affiche(ostream& f, bool isinline) const {
         string str;
 

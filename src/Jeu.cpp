@@ -10,6 +10,7 @@ namespace Carcassonne {
 
     void Jeu::partie() {
 
+        /*
         while(!plateau.isEmpty())
         {
             interface.affichePlateau(plateau);
@@ -46,6 +47,28 @@ namespace Carcassonne {
         interface.afficheScore(*joueurs);
 
         interface.afficheGagnant(getJoueurGagnant());
+
+        */
+
+        plateau.getTuile()->affiche(std::cout);
+
+        plateau.getTuile()->rotation(directionRotation::droite);
+
+        cout << "\n rot droite \n";
+
+        plateau.getTuile()->affiche(std::cout);
+
+        plateau.getTuile()->rotation(directionRotation::gauche);
+
+        cout << "\n rot gauche \n";
+
+        plateau.getTuile()->affiche(std::cout);
+
+        plateau.getTuile()->rotation(directionRotation::gauche);
+
+        cout << "\n rot gauche \n";
+
+        plateau.getTuile()->affiche(std::cout);
 
     }
 

@@ -9,6 +9,8 @@ using namespace std;
 
 namespace Carcassonne {
 
+    enum class directionRotation{droite, gauche};
+
     class Environnement;
 
     class Tuile {
@@ -35,6 +37,8 @@ namespace Carcassonne {
         std::string getID() {
             return ID;
         }
+
+        Tuile& rotation(const directionRotation& dir);
 
         void affiche(ostream& f, bool isinline=false) const;
 

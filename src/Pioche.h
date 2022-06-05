@@ -52,7 +52,7 @@ namespace Carcassonne {
             return pioche.size();
 		}
 
-		const Tuile* piocher() {
+		Tuile* piocher() {
 
 		    if(getTaillePioche() == 0) {
                 return nullptr;
