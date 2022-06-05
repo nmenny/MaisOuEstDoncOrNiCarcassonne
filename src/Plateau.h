@@ -2,14 +2,11 @@
     \version 0.1
 */
 
-// TODO : Regler gros soucis dans getEmplacementsOuPeutPoser() !!!!!
-// TODO : Pousser les tests de poserTuile()
-
 #ifndef __PLATEAU_H__
 #define __PLATEAU_H__
 
 #include <iostream>
-#include <vector>
+#include <array>
 
 #include "Coordonnee.h"
 #include "Pioche.h"
@@ -28,13 +25,18 @@ namespace Carcassonne {
     */
 	class Plateau {
 
+    public:
+
+        static const int NB_LIGNES_MAX = 5;
+        static const int NB_COLONNES_MAX = 5;
+
 	private:
 
         Pioche pioche; /*!< La pioche */
 
         Tuile* tuileCourante = nullptr; /*!< Tuile qui doit etre jouee */
 
-        vector<vector<const Tuile*>> plateau; /*!< Vecteurs representant le plateau */
+        array<array<const Tuile*, NB_COLONNES_MAX>, NB_LIGNES_MAX> plateau; /*!< Vecteurs representant le plateau */
 
         int nbLignes = 0; /*!< Nb de lignes du plateau */
         int nbColonnes = 0; /*!< Nb de colonnes du plateau */
@@ -42,13 +44,9 @@ namespace Carcassonne {
 	public:
 
         Plateau() {
+            initPlateau();
             tuileCourante = pioche.piocher();
-            vector<const Tuile*> v;
-            v.push_back(tuileCourante);
-            plateau.push_back(v);
-            nbLignes++;
-            nbColonnes++;
-            tuileCourante = pioche.piocher();
+            poserTuile(Coordonnee(NB_COLONNES_MAX / 2, NB_LIGNES_MAX / 2));
         };
 
         ~Plateau()=default;
@@ -70,6 +68,14 @@ namespace Carcassonne {
         const Tuile* poserTuile(const Coordonnee& c);
 
     private:
+
+        void initPlateau() {
+            for(size_t idxLigne = 0; idxLigne < NB_LIGNES_MAX; idxLigne++) {
+                for(size_t idxCol = 0; idxCol < NB_COLONNES_MAX; idxCol++) {
+                    plateau[idxLigne][idxCol] = nullptr;
+                }
+            }
+        }
 
 	};
 

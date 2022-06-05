@@ -89,18 +89,9 @@ namespace Carcassonne {
         GdMeeple** getGdMeeple() { return listeGdMpls; }
     };
 
-    class Abbe{
-    private:
-        bool enJeu;
-        Joueur * joueur;
+    class Abbe : public Meeple{
     public:
-        Abbe(Joueur* j): enJeu(false), joueur(j){}
-        void misEnJeu() {
-            enJeu = true;
-        }
-        void repris() {
-            enJeu = false;
-        }
+        Abbe(Joueur* j): Meeple(j) {}
     };
 
     class Abbes{

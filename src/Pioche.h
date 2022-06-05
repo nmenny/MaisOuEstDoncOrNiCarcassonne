@@ -5,6 +5,7 @@
 #ifndef __PIOCHE_H__
 #define __PIOCHE_H__
 
+#include <iostream>
 #include <vector>
 #include <string>
 #include <cstdlib>
@@ -53,7 +54,6 @@ namespace Carcassonne {
 		}
 
 		Tuile* piocher() {
-
 		    if(getTaillePioche() == 0) {
                 return nullptr;
 		    }

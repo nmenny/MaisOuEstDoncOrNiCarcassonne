@@ -7,7 +7,6 @@ namespace Carcassonne {
 
     const string chaineCaseVide = "         ";
 
-
 	void Plateau::affiche(ostream& f) const {
 
         vector<string> ligne;
@@ -39,47 +38,40 @@ namespace Carcassonne {
 
 	}
 
-	// TODO : Corriger la fonction
-    // Recupere tous les endroits ou l'on peut poser une Tuile
 	Coordonnees Plateau::getEmplacementsOuPeutPoser() const {
-
         Coordonnees vectC;
 
-        int x = 0;
-        int y = 0;
+        for(size_t y = 0; y < NB_LIGNES_MAX; y++) {
+            for(size_t x = 0; x < NB_COLONNES_MAX; x++) {
+                // Si l'element courant est une tuile, on peut verifier que l'on peut poser autour d'elle
+                if(plateau[y][x] != nullptr) {
 
-        // Parcours toutes les lignes du plateau
-        for(auto line : plateau) {
-            x = 0;
-            // Parcours toutes les colonnes de la ligne
-            for(auto column : line) {
-
-                // Si la colonne en question est une Tuile,
-                if(column != nullptr) {
-
-                    // placer en haut
-                    if( (find(vectC.begin(), vectC.end(), Coordonnee(x,y-1)) == vectC.end()) && ((y == 0) || (plateau[x][y-1] == nullptr))) {
-                        vectC.push_back(Coordonnee(x,y-1));
+                    // Placer en haut / bas
+                    for(int offsetY = -1; offsetY < 2; offsetY += 2) {
+                        Coordonnee c(x, y + offsetY);
+                        if(c.getY() >= 0 && // Coordonnes avec l'offset dans les clous
+                           c.getY() < NB_LIGNES_MAX &&
+                           plateau[c.getY()][x] == nullptr && // Case a check n'a pas de Tuile
+                           find(vectC.begin(), vectC.end(), c) == vectC.end()) // Les coordonnees ne sont pas deja renseignees
+                        {
+                            vectC.push_back(c);
+                        }
                     }
 
-                    // placer a droite
-                    if( (find(vectC.begin(), vectC.end(), Coordonnee(x+1,y)) == vectC.end()) && ((x >= nbColonnes-1) || (plateau[x+1][y] == nullptr))) {
-                        vectC.push_back(Coordonnee(x+1,y));
+                    // Placer a droite / gauche
+                    for(int offsetX = -1; offsetX < 2; offsetX += 2) {
+                        Coordonnee c(x + offsetX, y);
+                        if(c.getX() >= 0 && // Coordonnes avec l'offset dans les clous
+                           c.getX() < NB_COLONNES_MAX &&
+                           plateau[y][c.getX()] == nullptr && // Case a check n'a pas de Tuile
+                           find(vectC.begin(), vectC.end(), c) == vectC.end()) // Les coordonnees ne sont pas deja renseignees
+                        {
+                            vectC.push_back(c);
+                        }
                     }
 
-                    // placer en bas
-                    if( (find(vectC.begin(), vectC.end(), Coordonnee(x,y+1)) == vectC.end()) && ((y >= nbLignes-1) || (plateau[x][y+1] == nullptr))) {
-                        vectC.push_back(Coordonnee(x,y+1));
-                    }
-
-                    // placer a gauche
-                    if( (find(vectC.begin(), vectC.end(), Coordonnee(x-1,y)) == vectC.end()) && ((x == 0) || (plateau[x-1][y] == nullptr))) {
-                        vectC.push_back(Coordonnee(x-1,y));
-                    }
                 }
-                x++;
             }
-            y++;
         }
 
         return vectC;
@@ -87,72 +79,18 @@ namespace Carcassonne {
 	}
 
 	const Tuile* Plateau::poserTuile(const Coordonnee& c) {
-	    // Verifie que l'on est bien dans les clous (autorise des coordonnees de (-1, -1) pour indiquer que l'on pose
-        //  a gauche (hors du plateau) jusqu'à (nbColonnes, nbLignes) pour indiquer que l'on poser a droite
-        if(c.getX() < -1 || c.getX() > nbColonnes || c.getY() < -1 || c.getY() > nbLignes) {
-            throw PlateauException("Ne peut pas poser une tuile a ces coordonnees !");
+	    // Verifie que l'on est bien dans les clous
+        if(c.getX() < 0 || c.getX() >= NB_COLONNES_MAX || c.getY() < 0 || c.getY() >= NB_LIGNES_MAX) {
+            throw PlateauException("Coordonnees hors du plateau !");
+        }
+
+        // Verfie que l'on ne place pas une tuile par dessus une autre
+        if(plateau[c.getY()][c.getX()] != nullptr) {
+            throw PlateauException("Ne peut pas placer une Tuile par dessus une autre !");
         }
 
         // Si on est sur le plateau, on ajoute simplement dedans
-        if(c.getX() >= 0 && c.getX() < nbColonnes && c.getY() >= 0 && c.getY() < nbLignes && plateau[c.getX()][c.getY()] == nullptr) {
-            plateau[c.getY()][c.getX()] = tuileCourante;
-        } else { // Sinon, il faut agrandir le plateau
-
-            // Si l'on veut ajouter sur la gauche du plateau
-            if(c.getX() < 0) {
-
-                // Parcours toutes les lignes et ajoute un element en tete pour chaque
-                for(int lineIdx = 0; lineIdx < nbLignes; lineIdx++) {
-                    plateau[lineIdx].insert(plateau[lineIdx].begin(), nullptr);
-                }
-
-                nbColonnes++;
-
-                // Ajoute la tuile au plateau
-                plateau[c.getY()][c.getX()+1] = tuileCourante;
-
-            } else if(c.getX() >= nbColonnes) { // Sinon, si on veut ajouter à droite du plateau
-
-                // Parcours toutes les lignes et ajoute un element en queue pour chaque
-                for(int lineIdx = 0; lineIdx < nbLignes; lineIdx++) {
-                    plateau[lineIdx].push_back(nullptr);
-                }
-
-                nbColonnes++;
-
-                // Ajoute la tuile au plateau
-                plateau[c.getY()][c.getX()] = tuileCourante;
-
-            } else if(c.getY() < 0) { // Sinon, si l'on veut ajouter en haut du plateau
-
-                // On insere une nouvelle ligne en haut
-                plateau.insert(plateau.begin(), vector<const Tuile*>());
-
-                // On parcours cette nouvelle ligne afin de la remplir de valeurs nulles
-                for(int colIdx = 0; colIdx < nbColonnes; colIdx++) {
-                    plateau[0].push_back(nullptr);
-                }
-
-                nbLignes++;
-
-                // Ajoute la tuile au plateau
-                plateau[c.getY()+1][c.getX()] = tuileCourante;
-            } else { // Sinon, on veut donc ajouter en bas du plateau
-
-                // On insere une nouvelle ligne en bas
-                plateau.push_back(vector<const Tuile*>());
-
-                // On parcours cette nouvelle ligne afin de la remplir de valeurs nulles
-                for(int colIdx = 0; colIdx < nbColonnes; colIdx++) {
-                    plateau[nbColonnes].push_back(nullptr);
-                }
-
-                nbLignes++;
-
-                // Ajoute la tuile au plateau
-                plateau[c.getY()][c.getX()] = tuileCourante;
-            }
-        }
+        plateau[c.getY()][c.getX()] = tuileCourante;
 
         // On garde en memoire la tuile posee
         const Tuile* tuilePosee = tuileCourante;

@@ -85,6 +85,18 @@ namespace Carcassonne {
         PlateauException(const string msg) : CarcassonneException(msg) {}
     };
 
+    /*! \class InterfaceException
+        \brief Exceptions declenchees par l'interface
+    */
+    class InterfaceException : public CarcassonneException {
+    public:
+
+        /*! \brief Constructeur de la classe
+            \param[in] msg Message lie a l'exception
+        */
+        InterfaceException(const string msg) : CarcassonneException(msg) {}
+    };
+
 }
 
 #endif

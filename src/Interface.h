@@ -14,6 +14,7 @@
 #include "Joueurs.h"
 #include "Tuile.h"
 #include "Coordonnee.h"
+#include "CarcassonneException.h"
 
 /*! \namespace Carcassonne
 
@@ -71,10 +72,9 @@ namespace Carcassonne {
         // Acquisitions
 
         /*! \brief Demande a l'utilisateur ou il souhaite poser une Tuile
-            \param[in] c La liste des coordonnees ou des Tuiles peuvent etre posees
             \return L'indice de l'action a effectuer
         */
-        virtual int demanderOuPoser(const Coordonnees& c)=0;
+        virtual int demanderOuPoser()=0;
 
         /*! \brief Demande a l'utilisateur s'il souhaite attribuer des points aux joueurs
             \param[in,out] j Les joueurs participant a la partie
@@ -159,24 +159,17 @@ namespace Carcassonne {
             }
         }
 
-        int demanderOuPoser(const Coordonnees& c) override {
-            streamOut << "\nOu souhaitez-vous poser la tuile ?\n";
+        int demanderOuPoser() override {
+           streamOut << "\nOu souhaitez-vous poser la tuile ?\n";
 
-            int saisie = -1;
+           int saisie = 0;
 
-            // Tant que l'utilisateur ne rentre pas une action viable, il doit refaire la saisie
-            while(true) {
-               try {
-                    streamIn >> saisie;
-               } catch(...) {}
-
-               if(saisie >= 0 && saisie < c.size()) {
-                  break;
-               }
-
-               streamOut << "La valeur rentree n'est pas correcte, recommencez... (on attend l'indice du coup que vous jouez)\n";
-
-            }
+           try {
+                streamIn >> saisie;
+           } catch(...) {
+                streamOut << "La valeur rentree n'est pas correcte, recommencez... (on attend l'indice du coup que vous jouez)\n";
+                throw InterfaceException("Valeur saisie incorrecte !");
+           }
 
             return saisie;
         }

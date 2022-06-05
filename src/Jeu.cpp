@@ -10,7 +10,6 @@ namespace Carcassonne {
 
     void Jeu::partie() {
 
-        /*
         while(!plateau.isEmpty())
         {
             interface.affichePlateau(plateau);
@@ -23,13 +22,20 @@ namespace Carcassonne {
 
             interface.afficheEmplacementsJouables(emplacementJouables);
 
-
             int saisie = -1;
 
-            saisie = interface.demanderOuPoser(emplacementJouables);
+            // Tant que l'utilisateur ne rentre pas une action viable, il doit refaire la saisie
+            while(true) {
+               try {
+                    saisie = interface.demanderOuPoser();
+               } catch(InterfaceException& e) {}
 
+               if(saisie >= 0 && saisie < emplacementJouables.size()) {
+                  break;
+               }
+            }
 
-            const Tuile* tuileJouee = plateau.poserTuile(emplacementJouables[saisie]);
+            plateau.poserTuile(emplacementJouables[saisie]);
 
             joueurCourant->incrementScore(1);
 
@@ -47,28 +53,6 @@ namespace Carcassonne {
         interface.afficheScore(*joueurs);
 
         interface.afficheGagnant(getJoueurGagnant());
-
-        */
-
-        plateau.getTuile()->affiche(std::cout);
-
-        plateau.getTuile()->rotation(directionRotation::droite);
-
-        cout << "\n rot droite \n";
-
-        plateau.getTuile()->affiche(std::cout);
-
-        plateau.getTuile()->rotation(directionRotation::gauche);
-
-        cout << "\n rot gauche \n";
-
-        plateau.getTuile()->affiche(std::cout);
-
-        plateau.getTuile()->rotation(directionRotation::gauche);
-
-        cout << "\n rot gauche \n";
-
-        plateau.getTuile()->affiche(std::cout);
 
     }
 
