@@ -1,24 +1,20 @@
 #include "Personnages.h"
 #include "Joueur.h"
 #include "CarcassonneException.h"
+#include "GestionnaireMemoireMeeple.h"
 
 namespace Carcassonne {
 
-	Joueur::Joueur(int num) : num(num), listeBasicMeeples(Joueur::NB_MEEPLE_DEFAUT, nullptr) {}
+     Joueur::Joueur(int num): num(num), listeBasicMeeples(Joueur::NB_MEEPLE_DEFAUT, nullptr) {
+        for(size_t meepleIdx = 0; meepleIdx < NB_MEEPLE_DEFAUT; meepleIdx++) {
+            listeBasicMeeples[meepleIdx] = BasicMeeples::getInstance()->ajoutMeeple(this);
+        }
 
-	Joueur::~Joueur() {}
+        abbe = Abbes::getInstance()->ajoutMeeple(this);
 
-	int Joueur::getScore() const {
-		return score;
-	}
+        grandMeeple = GdMeeples::getInstance()->ajoutMeeple(this);
 
-	int Joueur::getNumero() const {
-        return num;
     }
-
-	void Joueur::incrementScore(int incr) {
-		score += incr;
-	}
 
 	// Prend un meeple du joueur
 
@@ -27,8 +23,8 @@ namespace Carcassonne {
 			throw JoueurException("Plus de Meeple recuperable !");
 		}
 
-		BasicMeeple* meeple = listeBasicMeeples.front();
-		listeBasicMeeples.pop_front();
+		BasicMeeple* meeple = listeBasicMeeples.back();
+		listeBasicMeeples.pop_back();
 		return meeple;
 	}
 

@@ -52,7 +52,7 @@ namespace Carcassonne {
             handler.instance = nullptr;
         }
 
-        virtual size_t getNbEnv() const { return listeEnv.size(); }
+        virtual size_t getNbEnvEnMemoire() const { return listeEnv.size(); }
 
         virtual T* creer(Tuile* premiereTuile) {
             T* newEnv=new T(premiereTuile);

@@ -45,7 +45,7 @@ namespace Carcassonne {
             handler.instance = nullptr;
         }
 
-        virtual size_t getNbEnv() const { return listeMeeples.size(); }
+        virtual size_t getNbMeeplesEnMemoire() const { return listeMeeples.size(); }
 
         virtual T* ajoutMeeple(Joueur* j) {
             listeMeeples.push_back(new T(j));
@@ -61,17 +61,17 @@ namespace Carcassonne {
     /*!
         \brief Gere la memoire des tous les Meeples Basiques du jeu
     */
-    using BasicMeeples = GestionnaireMemoireEnvironnement<BasicMeeple>;
+    using BasicMeeples = GestionnaireMemoireMeeple<BasicMeeple>;
 
     /*!
         \brief Gere la memoire des tous les Grand Meeples du jeu
     */
-    using GdMeeples = GestionnaireMemoireEnvironnement<GdMeeple>;
+    using GdMeeples = GestionnaireMemoireMeeple<GdMeeple>;
 
     /*!
         \brief Gere la memoire des tous les abbes du jeu
     */
-    using Abbes = GestionnaireMemoireEnvironnement<Abbe>;
+    using Abbes = GestionnaireMemoireMeeple<Abbe>;
 
 }
 

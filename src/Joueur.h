@@ -5,7 +5,7 @@
 #ifndef __JOUEUR_H__
 #define __JOUEUR_H__
 
-#include <list>
+#include <vector>
 #include <string>
 
 using namespace std;
@@ -31,7 +31,7 @@ namespace Carcassonne {
 		const int num; /*!< Numero du joueur */
 		Abbe* abbe = nullptr; /*!< Abbe dont le joueur est en possession */
 		GdMeeple* grandMeeple = nullptr; /*!< GrandMeeple dont le joueur est en possession */
-		list<BasicMeeple*> listeBasicMeeples; /*!< Liste de tous les Meeples que possede le Joueur */
+		vector<BasicMeeple*> listeBasicMeeples; /*!< Liste de tous les Meeples que possede le Joueur */
 
 	public:
 
@@ -41,22 +41,28 @@ namespace Carcassonne {
 		Joueur(int num);
 
         /*! \brief Destructeur de la classe */
-		~Joueur();
+		~Joueur()=default;
 
         /*! \brief Donne le score du joueur
             \return Le score du joueur
         */
-		int getScore() const;
+		int getScore() const {
+            return score;
+        }
 
         /*! \brief Donne le numero du joueur
             \return Le numero du joueur
         */
-		int getNumero() const;
+        int getNumero() const {
+            return num;
+        }
 
         /*! \brief Increment le score d'une certaine valeur
             \param[in] incr Le valeur d'increment du score
         */
-		void incrementScore(int incr);
+		void incrementScore(int incr) {
+            score += incr;
+        }
 
 		// Prend un meeple du joueur
 
