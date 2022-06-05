@@ -22,14 +22,14 @@ namespace Carcassonne {
     */
     class Environnement {
     protected :
-        list<Tuile*> listeTuiles; /*!< Liste contenant toutes les tuiles contenant un même environnement */
+        list<const Tuile*> listeTuiles; /*!< Liste contenant toutes les tuiles contenant un même environnement */
         list<Meeple*> listeMeeples; /*!< Liste contenant les meeples presents dans un environnement */
     public :
 
         /*! \brief Constructeur de la classe
             \param[in] premiereTuile Tuile contenant une structure
         */
-        Environnement(Tuile* premiereTuile){
+        Environnement(const Tuile* premiereTuile){
             listeTuiles.push_back(premiereTuile);
         }
         /*! \brief Destructeur de la classe */
@@ -38,7 +38,9 @@ namespace Carcassonne {
         /*! \brief Connecte une tuile a un environnement
             \param[in] tuile Tuile a connecter a l'environnement courant
         */
-        virtual void ajouterTuile(Tuile* tuile) = 0;
+        virtual void ajouterTuile(const Tuile* tuile) {
+            listeTuiles.push_back(tuile);
+        }
 
         /*! \brief Renvoie le caractere representant un type d'environnement
             \return Le caractere representant l'environnement
@@ -53,7 +55,7 @@ namespace Carcassonne {
         /*! \brief Renvoie la liste des Tuiles regroupant ce même element d'environnement
             \return Le liste des Tuiles regroupant ce même element d'environnement
         */
-        list<Tuile*> getTuiles(){return listeTuiles;}
+        list<const Tuile*> getTuiles(){return listeTuiles;}
     };
 
 }

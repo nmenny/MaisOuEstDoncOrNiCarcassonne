@@ -26,12 +26,8 @@ namespace Carcassonne {
         */
         Ville(Tuile* premiereTuile):Surface(premiereTuile){}
 
-        /*! \brief Ajoute une nouvelle Tuile possedant une Ville
-            \param[in] tuile La tuile possedant une Ville
-        */
-        void ajouterTuile(Tuile* tuile) override {
-            listeTuiles.push_back(tuile);
-        }
+        /*! \brief Destructeur de la classe */
+        ~Ville()=default;
 
         /*! \brief Donne le caractere representant une Ville
             \return Le caractere correspodant a une Ville

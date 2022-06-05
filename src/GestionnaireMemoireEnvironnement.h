@@ -61,8 +61,8 @@ namespace Carcassonne {
         }
 
         virtual T* fusionner(T* envOriginal, T* envAFusionner) {
-            list<Tuile*> tuilesAChanger=envAFusionner->getTuiles();
-            for(Tuile* tuile : tuilesAChanger){
+            list<const Tuile*> tuilesAChanger=envAFusionner->getTuiles();
+            for(const Tuile* tuile : tuilesAChanger){
                 envOriginal->ajouterTuile(tuile);
             }
             //Suppression de envAFusionner

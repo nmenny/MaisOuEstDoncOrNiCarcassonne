@@ -26,12 +26,8 @@ namespace Carcassonne {
         */
         Route(Tuile* premiereTuile):Chemin(premiereTuile){}
 
-        /*! \brief Ajoute une nouvelle Tuile possedant une Route
-            \param[in] tuile La tuile possedant une Route
-        */
-        void ajouterTuile(Tuile* tuile) override {
-            listeTuiles.push_back(tuile);
-        }
+        /*! \brief Destructeur de la classe */
+        ~Route()=default;
 
         /*! \brief Donne le caractere representant une Route
             \return Le caractere correspodant a une Route

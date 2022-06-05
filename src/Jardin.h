@@ -27,12 +27,8 @@ namespace Carcassonne {
         */
         Jardin(Tuile* premiereTuile):Batiment(premiereTuile){}
 
-        /*! \brief Ajoute une nouvelle Tuile possedant un Jardin
-            \param[in] tuile La tuile possedant un Jardin
-        */
-        void ajouterTuile(Tuile* tuile) override {
-            listeTuiles.push_back(tuile);
-        }
+        /*! \brief Destructeur de la classe */
+        ~Jardin()=default;
 
         /*! \brief Donne le caractere representant un Jardin
             \return Le caractere correspodant a un Jardin

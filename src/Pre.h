@@ -26,12 +26,8 @@ namespace Carcassonne {
         */
         Pre(Tuile* premiereTuile):Surface(premiereTuile){}
 
-        /*! \brief Ajoute une nouvelle Tuile possedant un Pre
-            \param[in] tuile La tuile possedant un Pre
-        */
-        void ajouterTuile(Tuile* tuile) override {
-            listeTuiles.push_back(tuile);
-        }
+        /*! \brief Destructeur de la classe */
+        ~Pre()=default;
 
         /*! \brief Donne le caractere representant un Pre
             \return Le caractere correspodant a un Pre

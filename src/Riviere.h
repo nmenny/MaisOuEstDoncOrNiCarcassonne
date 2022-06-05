@@ -26,12 +26,8 @@ namespace Carcassonne {
         */
         Riviere(Tuile* premiereTuile):Chemin(premiereTuile){}
 
-        /*! \brief Ajoute une nouvelle Tuile possedant une Riviere
-            \param[in] tuile La tuile possedant une Riviere
-        */
-        void ajouterTuile(Tuile* tuile) override {
-            listeTuiles.push_back(tuile);
-        }
+        /*! \brief Destructeur de la classe */
+        ~Riviere()=default;
 
         /*! \brief Donne le caractere representant une Riviere
             \return Le caractere correspodant a une Riviere

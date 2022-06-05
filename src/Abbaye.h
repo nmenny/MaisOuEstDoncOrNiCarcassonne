@@ -30,13 +30,6 @@ namespace Carcassonne {
         /*! \brief Destructeur de la classe */
         ~Abbaye()=default;
 
-        /*! \brief Ajoute une nouvelle Tuile possedant une Abbaye
-            \param[in] tuile La tuile possedant une Abbaye
-        */
-        void ajouterTuile(Tuile* tuile) override{
-            listeTuiles.push_back(tuile);
-        }
-
         /*! \brief Donne le caractere representant une Abbaye
             \return Le caractere correspodant a une Abbaye
         */
