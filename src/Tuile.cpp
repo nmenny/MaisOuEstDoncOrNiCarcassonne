@@ -6,12 +6,7 @@
 #include "Symbols.h"
 #include "CarcassonneException.h"
 
-#include "Villes.h"
-#include "Pres.h"
-#include "Abbayes.h"
-#include "Jardins.h"
-#include "Rivieres.h"
-#include "Routes.h"
+#include "GestionnaireMemoireEnvironnement.h"
 
 #include "Surface.h"
 #include "Chemin.h"
@@ -25,17 +20,17 @@ namespace Carcassonne {
         for(char buildingChar : zonesSurfaces) {
             switch(buildingChar) {
             case C_PRES:
-                surfaces[arrayIdx] = Pres::getInstance()->creerPre(this);break;
+                surfaces[arrayIdx] = Pres::getInstance()->creer(this);break;
             case C_VILLE:
-                surfaces[arrayIdx] = Villes::getInstance()->creerVille(this);break;
+                surfaces[arrayIdx] = Villes::getInstance()->creer(this);break;
             case C_ABBAYE:
-                surfaces[arrayIdx] = Abbayes::getInstance()->creerAbbaye(this);break;
+                surfaces[arrayIdx] = Abbayes::getInstance()->creer(this);break;
             case C_JARDIN:
-                surfaces[arrayIdx] = Jardins::getInstance()->creerJardin(this);break;
+                surfaces[arrayIdx] = Jardins::getInstance()->creer(this);break;
             case C_ROUTE:
-                surfaces[arrayIdx] = Routes::getInstance()->creerRoute(this);break;
+                surfaces[arrayIdx] = Routes::getInstance()->creer(this);break;
             case C_RIVIERE:
-                surfaces[arrayIdx] = Rivieres::getInstance()->creerRiviere(this);break;
+                surfaces[arrayIdx] = Rivieres::getInstance()->creer(this);break;
             default:
                 throw TuileException("Un tel element de decors n'existe pas !");
             }

@@ -4,7 +4,8 @@
 #include "Pioche.h"
 #include "Tuile.h"
 #include "Jeu.h"
-#include "Interface.h"
+#include "InterfaceConsole.h"
+#include "GestionnaireMemoireEnvironnement.h"
 
 int main(int argc, char* argv[]) {
 

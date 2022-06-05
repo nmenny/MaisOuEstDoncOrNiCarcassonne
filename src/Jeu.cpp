@@ -22,7 +22,7 @@ namespace Carcassonne {
 
             interface.afficheEmplacementsJouables(emplacementJouables);
 
-            int saisie = -1;
+            size_t saisie = -1;
 
             // Tant que l'utilisateur ne rentre pas une action viable, il doit refaire la saisie
             while(true) {
