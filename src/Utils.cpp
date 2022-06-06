@@ -1,6 +1,3 @@
-#include <string>
-#include <vector>
-
 #include "Utils.h"
 
 namespace Carcassonne {
@@ -21,6 +18,9 @@ namespace Carcassonne {
             champs.push_back(champ);
             tmp = tmp.substr(idxSep+1);
         }
+
+        // Recupere la fin de la chaine
+        champs.push_back(tmp);
 
         return champs;
     }
