@@ -26,6 +26,7 @@ namespace Carcassonne {
     };
 
     class Environnement;
+    class Meeple;
 
     /*! \class IdentificateurTuile
         \brief Identificateur d'un tuile
@@ -81,6 +82,8 @@ namespace Carcassonne {
 
         const IdentificateurTuile idTuile; /*!< Identificateur de la carte */
         array<Environnement*, NB_ZONES> surfaces; /*!< Represente les environnements presentant dans la Tuile */
+        Environnement* environnementAvecMeeple = nullptr; /*!< Environnement sur lequel un Meeple est pose */
+        size_t indiceDeEnvAvecMeeple = -1; /*!< Indice dans la liste des environnements de celui possedant un meeple */
 
     public:
 
@@ -102,13 +105,6 @@ namespace Carcassonne {
         }
 
         /*!
-            \brief Fait une rotation de la Tuile
-            \param[in] dir Direction dans laquelle la Tuile rotate
-            \return Pointeur sur la Tuile qui a subit la rotation
-        */
-        Tuile* rotation(const directionRotation& dir);
-
-        /*!
             \brief Affiche la tuile dans un stream
             \param[in,out] f Le stream dans lequel est affiche la Tuile
             \param[in] isinline Affichage en ligne ou non
@@ -123,6 +119,26 @@ namespace Carcassonne {
             \return Une Tuile sous forme de chaine de caracteres
         */
         string toString(bool isinline=false) const;
+
+        /*!
+            \brief Fait une rotation de la Tuile
+            \param[in] dir Direction dans laquelle la Tuile rotate
+            \return Pointeur sur la Tuile qui a subit la rotation
+        */
+        Tuile* rotation(const directionRotation& dir);
+
+        /*!
+            \brief Pose un meeple sur un environnement particulier sur la Tuile
+            \param[in] env L'environnement surlequel le meeple est pose
+            \param[in,out] m Le meeple a poser
+        */
+        void poserMeeple(const Environnement& env, Meeple& m);
+
+        /*!
+            \brief Retire le meeple qui est pose sur la Tuile
+            \return Le meeple retire
+        */
+        Meeple* retirerMeeple();
     };
 
 }

@@ -52,11 +52,17 @@ namespace Carcassonne {
         }
 
         /*! \brief Retire un Meeple de cet environnement
-            \return Le meeple retire ou nullptr s'il n'y a pas de meeples
+            \return Le meeple retire
         */
         virtual Meeple* retirerMeeple() {
-            throw TuileException("Erreur, il n'est pas possible de retirer des Meeples de cet environnement !");
-            return nullptr;
+            if(listeMeeples.size() == 0) {
+                throw TuileException("Erreur, il n'y a pas de meeple sur cet environnement !");
+            }
+
+            Meeple* m = listeMeeples.front();
+            listeMeeples.pop_front();
+
+            return m;
         }
 
         /*! \brief Renvoie le caractere representant un type d'environnement

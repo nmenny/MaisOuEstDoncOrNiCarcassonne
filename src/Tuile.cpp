@@ -123,4 +123,43 @@ namespace Carcassonne {
 
         return stream.str();
     }
+
+
+    void Tuile::poserMeeple(const Environnement& env, Meeple& m) {
+        // Verifie si la Tuile n'a pas deja un meeple
+        if(environnementAvecMeeple != nullptr) {
+            throw TuileException("Erreur, cette Tuile possede deja un Meeple !");
+        }
+
+        // Recherche l'indice en memoire de l'environnement
+        size_t idxEnv = 0;
+        while((idxEnv < NB_ZONES) && (surfaces[idxEnv] != &env)) {
+            idxEnv++;
+        }
+
+        // Verifie si l'environnement ou l'on souhaite poser le Meeple n'appartient pas a cette Tuile
+        if(idxEnv >= NB_ZONES) {
+            throw TuileException("Erreur, la Tuile ne possede pas cet environnement !");
+        }
+
+        // Pose le meeple
+        environnementAvecMeeple = surfaces[idxEnv];
+        indiceDeEnvAvecMeeple = idxEnv;
+        environnementAvecMeeple->poserMeeple(&m);
+    }
+
+    Meeple* Tuile::retirerMeeple() {
+        // Verifie que la Tuile possede bien un meeple
+        if(environnementAvecMeeple == nullptr) {
+            throw TuileException("Erreur, cette Tuile ne possede pas de Meeple !");
+        }
+
+        // Retire un meeple
+        Meeple* meeple = environnementAvecMeeple->retirerMeeple();
+        environnementAvecMeeple = nullptr;
+        indiceDeEnvAvecMeeple = -1;
+
+        return meeple;
+    }
+
 }
