@@ -70,6 +70,10 @@ namespace Carcassonne {
             return tuileCourante;
         }
 
+        void remettreTuile() {
+            tuileCourante = pioche.repiocher();
+        }
+
         /*!
             \brief Indique s'il est possible de jouer (s'il reste des Tuiles dans la pioche)
             \return <tt>true</tt> Si l'on peut poser une Tuile, <tt>false</tt> sinon
@@ -107,6 +111,8 @@ namespace Carcassonne {
                 }
             }
         }
+
+
 
 	};
 

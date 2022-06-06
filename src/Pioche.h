@@ -90,6 +90,17 @@ namespace Carcassonne {
 
 		}
 
+		Tuile* repiocher() {
+            Tuile* dernierePiochee = piochees.back();
+            piochees.pop_back();
+
+            Tuile* nouvellePiochee = piocher();
+
+            pioche.push_back(dernierePiochee);
+
+            return nouvellePiochee;
+		}
+
 	private:
 
         /*!

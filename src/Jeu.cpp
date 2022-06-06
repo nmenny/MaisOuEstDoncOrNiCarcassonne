@@ -35,6 +35,8 @@ namespace Carcassonne {
 
             interface.afficheJoueur(*joueurCourant);
 
+            // TODO : Piocher tant que l'on n'a pas une tuile posable
+
             interface.afficheTuileCourante(*plateau.getTuile());
 
             recupEmplacementsJouables();

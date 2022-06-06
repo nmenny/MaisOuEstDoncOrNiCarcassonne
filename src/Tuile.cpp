@@ -128,6 +128,34 @@ namespace Carcassonne {
         return stream.str();
     }
 
+    array<Environnement*, 3> Tuile::getEnvironnementsDansUneZone(const direction& d) const {
+        array<Environnement*, 3> res;
+
+        switch(d) {
+        case direction::nord:
+            res[0] = surfaces[0];
+            res[1] = surfaces[1];
+            res[2] = surfaces[2];
+        break;
+        case direction::sud:
+            res[0] = surfaces[6];
+            res[1] = surfaces[7];
+            res[2] = surfaces[8];
+        break;
+        case direction::est:
+            res[0] = surfaces[2];
+            res[1] = surfaces[5];
+            res[2] = surfaces[8];
+        break;
+        case direction::ouest:
+            res[0] = surfaces[0];
+            res[1] = surfaces[3];
+            res[2] = surfaces[6];
+        break;
+        }
+
+        return res;
+    }
 
     void Tuile::poserMeeple(const Environnement& env, Meeple& m) {
         // Verifie si la Tuile n'a pas deja un meeple
@@ -168,6 +196,10 @@ namespace Carcassonne {
 
     void Tuile::fusionnerEnvironnementsAdjacents(int x, int y, Environnement* envDiff) {
         Coordonnees* parcours = new Coordonnees();
+
+        fusionnerEnvironnementsAdjacentsRec(x, y, envDiff, parcours);
+
+        /*
         parcours->push_back(Coordonnee(x,y));
 
         surfaces[y * 3 + x] = fusion(envDiff, surfaces[y * 3 + x]);
@@ -206,7 +238,7 @@ namespace Carcassonne {
            (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end())
            ) {
             fusionnerEnvironnementsAdjacentsRec(x+1, y, envDiff, parcours);
-        }
+        }*/
 
         delete parcours;
     }

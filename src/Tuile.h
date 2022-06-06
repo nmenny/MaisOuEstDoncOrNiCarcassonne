@@ -25,6 +25,16 @@ namespace Carcassonne {
         gauche /*!< Rotation a gauche */
     };
 
+    /*! \enum direction
+        \brief Les differentes zones pour les environnements d'une Tuile
+    */
+    enum class direction {
+        nord, /*!< Zone nord */
+        sud, /*!< Zone sud */
+        est, /*!< Zone est */
+        ouest /*!< Zone ouest */
+    };
+
     class Environnement;
     class Meeple;
     class Coordonnees;
@@ -120,6 +130,8 @@ namespace Carcassonne {
             \return Une Tuile sous forme de chaine de caracteres
         */
         string toString(bool isinline=false) const;
+
+        array<Environnement*, 3> getEnvironnementsDansUneZone(const direction& d) const;
 
         /*!
             \brief Fait une rotation de la Tuile

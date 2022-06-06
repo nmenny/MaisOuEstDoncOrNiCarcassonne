@@ -1,6 +1,8 @@
 #include <string>
+#include <vector>
 #include <algorithm>
 
+#include "Environnement.h"
 #include "Plateau.h"
 
 namespace Carcassonne {
@@ -40,6 +42,7 @@ namespace Carcassonne {
 
 	Coordonnees Plateau::getEmplacementsOuPeutPoser() const {
         Coordonnees vectC;
+        Coordonnees coordsOk;
 
         for(size_t y = 0; y < NB_LIGNES_MAX; y++) {
             for(size_t x = 0; x < NB_COLONNES_MAX; x++) {
@@ -69,12 +72,58 @@ namespace Carcassonne {
                             vectC.push_back(c);
                         }
                     }
-
                 }
             }
         }
 
-        return vectC;
+        for(Coordonnee c : vectC) {
+
+            bool verifCoord = true;
+            array<Environnement*, 3> envACmp, envCmp;
+
+            // En haut
+            if(c.getY() - 1 >= 0 && plateau[c.getY() - 1][c.getX()] != nullptr) {
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::nord);
+                envCmp = plateau[c.getY() - 1][c.getX()]->getEnvironnementsDansUneZone(direction::sud);
+                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
+                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
+                (envACmp[2]->toChar() == envCmp[2]->toChar());
+            }
+
+            // En bas
+            if(c.getY() + 1 < NB_LIGNES_MAX && plateau[c.getY() + 1][c.getX()] != nullptr) {
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::sud);
+                envCmp = plateau[c.getY() + 1][c.getX()]->getEnvironnementsDansUneZone(direction::nord);
+                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
+                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
+                (envACmp[2]->toChar() == envCmp[2]->toChar());
+            }
+
+            // a gauche
+            if(c.getX() - 1 >= 0 && plateau[c.getY()][c.getX()-1] != nullptr) {
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::ouest);
+                envCmp = plateau[c.getY()][c.getX()-1]->getEnvironnementsDansUneZone(direction::est);
+                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
+                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
+                (envACmp[2]->toChar() == envCmp[2]->toChar());
+            }
+
+            // a droite
+            if(c.getX() + 1 < NB_COLONNES_MAX && plateau[c.getY()][c.getX()+1] != nullptr) {
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::est);
+                envCmp = plateau[c.getY()][c.getX()+1]->getEnvironnementsDansUneZone(direction::ouest);
+                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
+                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
+                (envACmp[2]->toChar() == envCmp[2]->toChar());
+            }
+
+            if(verifCoord) {
+                coordsOk.push_back(c);
+            }
+
+        }
+
+        return coordsOk;
 
 	}
 
