@@ -8,6 +8,7 @@
 #include "Symbols.h"
 #include "CarcassonneException.h"
 #include "Utils.h"
+#include "Coordonnee.h"
 
 #include "GestionnaireMemoireEnvironnement.h"
 
@@ -165,75 +166,148 @@ namespace Carcassonne {
         return meeple;
     }
 
+    void Tuile::fusionnerEnvironnementsAdjacents(int x, int y, Environnement* envDiff) {
+        Coordonnees* parcours = new Coordonnees();
+        parcours->push_back(Coordonnee(x,y));
+
+        surfaces[y * 3 + x] = fusion(envDiff, surfaces[y * 3 + x]);
+
+         // Check en haut
+        if(
+           ((y - 1) >= 0) &&
+           surfaces[(y -1)*3 + x]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x, y-1)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x, y-1, envDiff, parcours);
+        }
+
+        // Check en bas
+        if(
+           ((y + 1) < 3) &&
+           surfaces[(y + 1)*3 + x]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x, y+1)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x, y+1, envDiff, parcours);
+        }
+
+        // Check a gauche
+        if(
+           (x - 1 >= 0) &&
+           surfaces[y*3 + x-1]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x-1, y)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x-1, y, envDiff, parcours);
+        }
+
+        // Check a droite
+        if(
+           (x + 1 < 3) &&
+           surfaces[y*3 + x+1]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x+1, y, envDiff, parcours);
+        }
+
+        delete parcours;
+    }
+
+    Environnement* Tuile::fusion(Environnement* evt1, Environnement* evt2) {
+        const char envSymbole = evt1->toChar();
+
+        if(envSymbole != evt2->toChar()) {
+            return nullptr;
+        }
+
+        switch(envSymbole) {
+        case C_PRES:
+            Pres::getInstance()->fusionner(dynamic_cast<Pre*>(evt1), dynamic_cast<Pre*>(evt2));
+            break;
+        case C_VILLE:
+            Villes::getInstance()->fusionner(dynamic_cast<Ville*>(evt1), dynamic_cast<Ville*>(evt2));
+            break;
+        case C_ABBAYE:
+            Abbayes::getInstance()->fusionner(dynamic_cast<Abbaye*>(evt1), dynamic_cast<Abbaye*>(evt2));
+            break;
+        case C_JARDIN:
+            Jardins::getInstance()->fusionner(dynamic_cast<Jardin*>(evt1), dynamic_cast<Jardin*>(evt2));
+            break;
+        case C_ROUTE:
+            Routes::getInstance()->fusionner(dynamic_cast<Route*>(evt1), dynamic_cast<Route*>(evt2));
+            break;
+        case C_RIVIERE:
+            Rivieres::getInstance()->fusionner(dynamic_cast<Riviere*>(evt1), dynamic_cast<Riviere*>(evt2));
+            break;
+        default:
+            throw TuileException("Un tel element de decors n'existe pas !");
+        }
+
+        return evt1;
+    }
+
+    void Tuile::fusionnerEnvironnementsAdjacentsRec(int x, int y, Environnement* envDiff, Coordonnees* parcours) {
+        if(x < 0 || x >= 3 || y < 0 || y >= 3 || surfaces[y*3+x]->toChar() != envDiff->toChar()) {
+            return;
+        }
+
+        surfaces[y * 3 + x] = fusion(envDiff, surfaces[y * 3 + x]);
+        parcours->push_back(Coordonnee(x,y));
+
+        // Check en haut
+        if(
+           ((y - 1) >= 0) &&
+           surfaces[(y -1)*3 + x]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x, y-1)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x, y-1, envDiff, parcours);
+        }
+
+        // Check en bas
+        if(
+           ((y + 1) < 3) &&
+           surfaces[(y + 1)*3 + x]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x, y+1)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x, y+1, envDiff, parcours);
+        }
+
+        // Check a gauche
+        if(
+           (x - 1 >= 0) &&
+           surfaces[y*3 + x-1]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x-1, y)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x-1, y, envDiff, parcours);
+        }
+
+        // Check a droite
+        if(
+           (x + 1 < 3) &&
+           surfaces[y*3 + x+1]->toChar() == envDiff->toChar() &&
+           (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end())
+           ) {
+            fusionnerEnvironnementsAdjacentsRec(x+1, y, envDiff, parcours);
+        }
+
+    }
 
     void Tuile::fusionnerEnvironnementsInternes() {
-
+        // Stocke les environnments de maniere unique
         vector<Environnement*> envUniques;
 
         int y = 0;
         int x = 0;
 
-        while(y < NB_ZONES / 3) {
+        // Parcours tous les environnements de la Tuile
+        while(y < static_cast<int>(NB_ZONES) / 3) {
             x = 0;
-            while(x < NB_ZONES / 3) {
+            while(x < static_cast<int>(NB_ZONES) / 3) {
                 vector<Environnement*>::iterator it;
+                // Si l'environnement courant n'a pas deja ete fusionne
                 if((it = find(envUniques.begin(), envUniques.end(), surfaces[y * 3 + x]))  == envUniques.end() ) {
-                    Environnement* env = surfaces[y * 3 + x];
-                    const char envSymbole = env->toChar();
 
-                    int offsetX = -x;
-                    int offsetY = -y;
+                    fusionnerEnvironnementsAdjacents(x,y,surfaces[y * 3 + x]);
 
-                    while(offsetY <= -y + 2) {
-
-                        while(offsetX <= -x + 2) {
-
-                            if(offsetX == 0 && offsetY == 0) {
-                                offsetX++;
-                                continue;
-                            }
-
-                            if(surfaces[(y + offsetY)*3 + x+offsetX]->toChar() == envSymbole) {
-
-                                if(
-                                   (((y + offsetY-1) >= 0) && surfaces[(y + offsetY-1)*3 + x+offsetX] == env) || // Check en haut
-                                   (((y + offsetY+1) < 3) && surfaces[(y + offsetY+1)*3 + x+offsetX] == env) || // Check en bas
-                                   ((x+offsetX-1 >= 0) && surfaces[(y + offsetY)*3 + x+offsetX-1] == env) || // Check a gauche
-                                   ((x+offsetX+1 < 3) && surfaces[(y + offsetY)*3 + x+offsetX+1] == env) // Check a droite
-                                  ) {
-                                    switch(envSymbole) {
-                                    case C_PRES:
-                                        Pres::getInstance()->fusionner(dynamic_cast<Pre*>(env), dynamic_cast<Pre*>(surfaces[(y + offsetY)*3 + x+offsetX]));
-                                        break;
-                                    case C_VILLE:
-                                        Villes::getInstance()->fusionner(dynamic_cast<Ville*>(env), dynamic_cast<Ville*>(surfaces[(y + offsetY)*3 + x+offsetX]));
-                                        break;
-                                    case C_ABBAYE:
-                                        Abbayes::getInstance()->fusionner(dynamic_cast<Abbaye*>(env), dynamic_cast<Abbaye*>(surfaces[(y + offsetY)*3 + x+offsetX]));
-                                        break;
-                                    case C_JARDIN:
-                                        Jardins::getInstance()->fusionner(dynamic_cast<Jardin*>(env), dynamic_cast<Jardin*>(surfaces[(y + offsetY)*3 + x+offsetX]));
-                                        break;
-                                    case C_ROUTE:
-                                        Routes::getInstance()->fusionner(dynamic_cast<Route*>(env), dynamic_cast<Route*>(surfaces[(y + offsetY)*3 + x+offsetX]));
-                                        break;
-                                    case C_RIVIERE:
-                                        Rivieres::getInstance()->fusionner(dynamic_cast<Riviere*>(env), dynamic_cast<Riviere*>(surfaces[(y + offsetY)*3 + x+offsetX]));
-                                        break;
-                                    default:
-                                        throw TuileException("Un tel element de decors n'existe pas !");
-                                    }
-
-                                    surfaces[(y + offsetY)*3 + x+offsetX] = env;
-                                }
-
-                            }
-                            offsetX++;
-                        }
-                        offsetY++;
-                    }
-
-                    envUniques.push_back(env);
+                    envUniques.push_back(surfaces[y * 3 + x]);
                 }
                 x++;
             }

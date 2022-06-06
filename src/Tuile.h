@@ -27,6 +27,7 @@ namespace Carcassonne {
 
     class Environnement;
     class Meeple;
+    class Coordonnees;
 
     /*! \class IdentificateurTuile
         \brief Identificateur d'un tuile
@@ -140,7 +141,13 @@ namespace Carcassonne {
         */
         Meeple* retirerMeeple();
 
+        void fusionnerEnvironnementsAdjacents(int x, int y, Environnement* envDiff);
+
     private:
+
+        void fusionnerEnvironnementsAdjacentsRec(int x, int y, Environnement* envDiff, Coordonnees* parcours);
+
+        Environnement* fusion(Environnement* evt1, Environnement* evt2);
 
         /*!
             \brief Fait la fusion interne des environnements de la Tuile (les environnements adjacents)

@@ -5,6 +5,7 @@
 #ifndef __GESTIONNAIREMEMOIREENVIRONNEMENT_H__
 #define __GESTIONNAIREMEMOIREENVIRONNEMENT_H__
 
+#include <iostream>
 #include <list>
 
 #include "Tuile.h"
