@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "GestionnaireMemoireMeeple.h"
+#include "GestionnaireMemoireEnvironnement.h"
 #include "Jeu.h"
 #include "InterfaceConsole.h"
 
