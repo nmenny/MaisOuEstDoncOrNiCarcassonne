@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #include "Tuile.h"
 #include "Symbols.h"
@@ -60,6 +61,8 @@ namespace Carcassonne {
             }
             arrayIdx++;
         }
+
+        fusionnerEnvironnementsInternes();
 
     }
 
@@ -160,6 +163,84 @@ namespace Carcassonne {
         indiceDeEnvAvecMeeple = -1;
 
         return meeple;
+    }
+
+
+    void Tuile::fusionnerEnvironnementsInternes() {
+
+        vector<Environnement*> envUniques;
+
+        int y = 0;
+        int x = 0;
+
+        while(y < NB_ZONES / 3) {
+            x = 0;
+            while(x < NB_ZONES / 3) {
+                vector<Environnement*>::iterator it;
+                if((it = find(envUniques.begin(), envUniques.end(), surfaces[y * 3 + x]))  == envUniques.end() ) {
+                    Environnement* env = surfaces[y * 3 + x];
+                    const char envSymbole = env->toChar();
+
+                    int offsetX = -x;
+                    int offsetY = -y;
+
+                    while(offsetY <= -y + 2) {
+
+                        while(offsetX <= -x + 2) {
+
+                            if(offsetX == 0 && offsetY == 0) {
+                                offsetX++;
+                                continue;
+                            }
+
+                            if(surfaces[(y + offsetY)*3 + x+offsetX]->toChar() == envSymbole) {
+
+                                if(
+                                   (((y + offsetY-1) >= 0) && surfaces[(y + offsetY-1)*3 + x+offsetX] == env) || // Check en haut
+                                   (((y + offsetY+1) < 3) && surfaces[(y + offsetY+1)*3 + x+offsetX] == env) || // Check en bas
+                                   ((x+offsetX-1 >= 0) && surfaces[(y + offsetY)*3 + x+offsetX-1] == env) || // Check a gauche
+                                   ((x+offsetX+1 < 3) && surfaces[(y + offsetY)*3 + x+offsetX+1] == env) // Check a droite
+                                  ) {
+                                    switch(envSymbole) {
+                                    case C_PRES:
+                                        Pres::getInstance()->fusionner(dynamic_cast<Pre*>(env), dynamic_cast<Pre*>(surfaces[(y + offsetY)*3 + x+offsetX]));
+                                        break;
+                                    case C_VILLE:
+                                        Villes::getInstance()->fusionner(dynamic_cast<Ville*>(env), dynamic_cast<Ville*>(surfaces[(y + offsetY)*3 + x+offsetX]));
+                                        break;
+                                    case C_ABBAYE:
+                                        Abbayes::getInstance()->fusionner(dynamic_cast<Abbaye*>(env), dynamic_cast<Abbaye*>(surfaces[(y + offsetY)*3 + x+offsetX]));
+                                        break;
+                                    case C_JARDIN:
+                                        Jardins::getInstance()->fusionner(dynamic_cast<Jardin*>(env), dynamic_cast<Jardin*>(surfaces[(y + offsetY)*3 + x+offsetX]));
+                                        break;
+                                    case C_ROUTE:
+                                        Routes::getInstance()->fusionner(dynamic_cast<Route*>(env), dynamic_cast<Route*>(surfaces[(y + offsetY)*3 + x+offsetX]));
+                                        break;
+                                    case C_RIVIERE:
+                                        Rivieres::getInstance()->fusionner(dynamic_cast<Riviere*>(env), dynamic_cast<Riviere*>(surfaces[(y + offsetY)*3 + x+offsetX]));
+                                        break;
+                                    default:
+                                        throw TuileException("Un tel element de decors n'existe pas !");
+                                    }
+
+                                    surfaces[(y + offsetY)*3 + x+offsetX] = env;
+                                }
+
+                            }
+                            offsetX++;
+                        }
+                        offsetY++;
+                    }
+
+                    envUniques.push_back(env);
+                }
+                x++;
+            }
+            y++;
+        }
+
+
     }
 
 }

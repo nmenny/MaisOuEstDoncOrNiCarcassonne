@@ -139,6 +139,14 @@ namespace Carcassonne {
             \return Le meeple retire
         */
         Meeple* retirerMeeple();
+
+    private:
+
+        /*!
+            \brief Fait la fusion interne des environnements de la Tuile (les environnements adjacents)
+        */
+        void fusionnerEnvironnementsInternes();
+
     };
 
 }

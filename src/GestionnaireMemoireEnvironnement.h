@@ -97,6 +97,11 @@ namespace Carcassonne {
             \return L'environnement fusionne
         */
         virtual T* fusionner(T* envOriginal, T* envAFusionner) {
+
+            if(envOriginal == envAFusionner) {
+                return envOriginal;
+            }
+
             list<const Tuile*> tuilesAChanger=envAFusionner->getTuiles();
             for(const Tuile* tuile : tuilesAChanger){
                 envOriginal->ajouterTuile(tuile);

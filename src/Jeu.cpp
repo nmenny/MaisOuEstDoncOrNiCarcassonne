@@ -47,7 +47,7 @@ namespace Carcassonne {
             while(true) {
                try {
                     saisie = interface.demanderOuPoser();
-               } catch(InterfaceException& e) {}
+               } catch(...) {}
 
                if(saisie < emplacementJouables.size()) {
                   break;

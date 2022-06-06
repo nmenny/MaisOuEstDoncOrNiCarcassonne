@@ -15,5 +15,14 @@ int main(int argc, char* argv[]) {
 
     j.partie();
 
+    /*
+    std::cout << Pres::getInstance()->getNbEnvEnMemoire() << "\n";
+    std::cout << Villes::getInstance()->getNbEnvEnMemoire() << "\n";
+    std::cout << Routes::getInstance()->getNbEnvEnMemoire() << "\n";
+    std::cout << Rivieres::getInstance()->getNbEnvEnMemoire() << "\n";
+    std::cout << Abbayes::getInstance()->getNbEnvEnMemoire() << "\n";
+    std::cout << Jardins::getInstance()->getNbEnvEnMemoire() << "\n";
+    */
+
 	return EXIT_SUCCESS;
 }
