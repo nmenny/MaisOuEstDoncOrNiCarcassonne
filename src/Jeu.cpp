@@ -1,12 +1,29 @@
 #include <string>
 #include <iostream>
 
+#include "Joueurs.h"
+#include "GestionnaireMemoireEnvironnement.h"
+#include "GestionnaireMemoireMeeple.h"
+
 #include "Tuile.h"
 #include "Jeu.h"
 
 namespace Carcassonne {
 
     using namespace std;
+
+    Jeu::~Jeu() {
+        Joueurs::libererInstance();
+        Abbayes::libererInstance();
+        Jardins::libererInstance();
+        Pres::libererInstance();
+        Rivieres::libererInstance();
+        Routes::libererInstance();
+        Villes::libererInstance();
+        BasicMeeples::libererInstance();
+        GdMeeples::libererInstance();
+        Abbes::libererInstance();
+    }
 
     void Jeu::partie() {
 

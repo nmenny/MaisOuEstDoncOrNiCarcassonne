@@ -11,8 +11,6 @@
 #include "Coordonnee.h"
 #include "Interface.h"
 
-#include "GestionnaireMemoireEnvironnement.h"
-
 #include <iostream>
 
 /*! \namespace Carcassonne
@@ -60,15 +58,7 @@ namespace Carcassonne {
         }
 
         /*! \brief Destructeur de Jeu */
-        ~Jeu() {
-            Joueurs::libererInstance();
-            Abbayes::libererInstance();
-            Jardins::libererInstance();
-            Pres::libererInstance();
-            Rivieres::libererInstance();
-            Routes::libererInstance();
-            Villes::libererInstance();
-        }
+        ~Jeu();
 
         /*! \brief Gere le deroulement d'une partie */
         void partie();

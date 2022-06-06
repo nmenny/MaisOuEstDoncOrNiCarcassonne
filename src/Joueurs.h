@@ -50,15 +50,39 @@ namespace Carcassonne {
 		Joueurs();
 
         /*! \brief Destructeur de la classe */
-		~Joueurs();
+		~Joueurs() {
+            delete[] listeJoueurs;
+        }
 
 	public:
 
         /*! \brief Recupere l'instance du Singleton */
-		static Joueurs* getInstance();
+		static Joueurs* getInstance() {
+            if(handler.instance == nullptr) {
+                handler.instance = new Joueurs();
+            }
+            return handler.instance;
+        }
 
         /*! \brief Libere l'instance du Singleton */
-		static void libererInstance();
+		static void libererInstance()  {
+            delete handler.instance;
+            handler.instance = nullptr;
+        }
+
+        /*! \brief Recupere tous les Joueurs
+            \return Pointeur sur tous les joueurs
+        */
+		Joueur** getJoueurs() const {
+            return listeJoueurs;
+        }
+
+        /*! \brief Recupere le nombre de joueurs presents dans la partie
+            \return Le nombre de joueurs presents dans la partie
+        */
+		int getNbJoueurs() const {
+            return nbJoueur;
+        }
 
         /*! \brief Ajoute un nouveau Joueur si possible */
 		void ajouterJoueur();
@@ -68,16 +92,6 @@ namespace Carcassonne {
             \return Pointeur sur le joueur correspondant, ou nullptr si ce joueur n'existe pas
         */
 		Joueur* getJoueur(int idxJoueur) const;
-
-        /*! \brief Recupere tous les Joueurs
-            \return Pointeur sur tous les joueurs
-        */
-		Joueur** getJoueurs() const;
-
-        /*! \brief Recupere le nombre de joueurs presents dans la partie
-            \return Le nombre de joueurs presents dans la partie
-        */
-		int getNbJoueurs() const;
 
 	};
 
