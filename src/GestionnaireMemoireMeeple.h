@@ -19,6 +19,7 @@ namespace Carcassonne {
 
     /*! \class GestionnaireMemoireMeeple
         \brief Represente le concept general de Gestionnaire memoire des Meeples
+        \tparam T Type de Meeple que doit gérer le Gestionnaire mémoire
     */
     template<class T>
     class GestionnaireMemoireMeeple {

@@ -9,6 +9,7 @@
 
 #include "Tuile.h"
 #include "Personnages.h"
+#include "CarcassonneException.h"
 
 
 /*! \namespace Carcassonne
@@ -42,20 +43,41 @@ namespace Carcassonne {
             listeTuiles.push_back(tuile);
         }
 
+        /*! \brief Pose un meeple sur un environnement
+            \param[in,out] m Le meeple a poser
+        */
+        virtual void poserMeeple(Meeple* m) {
+            m->misEnJeu();
+            listeMeeples.push_back(m);
+        }
+
+        /*! \brief Retire un Meeple de cet environnement
+            \return Le meeple retire ou nullptr s'il n'y a pas de meeples
+        */
+        virtual Meeple* retirerMeeple() {
+            throw TuileException("Erreur, il n'est pas possible de retirer des Meeples de cet environnement !");
+            return nullptr;
+        }
+
         /*! \brief Renvoie le caractere representant un type d'environnement
             \return Le caractere representant l'environnement
         */
         virtual const char& toChar() const = 0;
 
+        /*! \brief Renvoie le nombre de Meeples presents sur cet environnement
+            \return Le nombre de Meeples presents sur cet environnement
+        */
+        int getNbTuiles(){ return listeTuiles.size(); }
+
         /*! \brief Renvoie le nombre de Tuiles regroupant ce même element d'environnement
             \return Le nombre de Tuiles regroupant ce même element d'environnement
         */
-        int getTaille(){return listeTuiles.size();}
+        int getNbMeeples(){ return listeMeeples.size(); }
 
         /*! \brief Renvoie la liste des Tuiles regroupant ce même element d'environnement
             \return Le liste des Tuiles regroupant ce même element d'environnement
         */
-        list<const Tuile*> getTuiles(){return listeTuiles;}
+        list<const Tuile*> getTuiles(){ return listeTuiles; }
     };
 
 }

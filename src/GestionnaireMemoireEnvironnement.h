@@ -25,6 +25,7 @@ namespace Carcassonne {
 
     /*! \class GestionnaireMemoireEnvironnement
         \brief Represente le concept general de Gestionnaire memoire des environnements
+        \tparam T Type de l'environnement que doit gerer le Gestionnaire memoire
     */
     template<class T>
     class GestionnaireMemoireEnvironnement {
