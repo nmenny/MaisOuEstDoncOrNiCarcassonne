@@ -13,6 +13,24 @@ namespace Carcassonne {
 
     class Environnement;
 
+    class IdentificateurTuile {
+
+        friend class Tuile;
+
+    private:
+        const string idString = "";
+        string idExtension = "";
+        int nbTuile;
+
+        IdentificateurTuile(const string& str);
+        ~IdentificateurTuile()=default;
+
+    public:
+        const string& getId() const { return idString; }
+        const string& getExtension() const { return idExtension; }
+        int getNbTuile() const { return nbTuile; }
+    };
+
     class Tuile {
     public:
 
@@ -20,25 +38,18 @@ namespace Carcassonne {
 
     private:
 
-        const std::string ID = ""; //Identificateur de la carte, pour retrouver son dessin
+        const IdentificateurTuile idTuile; //Identificateur de la carte, pour retrouver son dessin
         array<Environnement*, NB_ZONES> surfaces; //Tableau de taille 8, representant les zones des bordures, partant de haut-gauche, puis dans le sens horaire
     public:
-
-        Tuile() {
-            for(size_t zoneIdx = 0; zoneIdx < NB_ZONES; zoneIdx++) {
-                surfaces[zoneIdx] = nullptr;
-            }
-        }
-
         Tuile(std::string& id, std::string& zonesSurfaces);
 
         ~Tuile()=default;
 
-        std::string getID() {
-            return ID;
+        const IdentificateurTuile& getID() const {
+            return idTuile;
         }
 
-        Tuile& rotation(const directionRotation& dir);
+        Tuile* rotation(const directionRotation& dir);
 
         void affiche(ostream& f, bool isinline=false) const;
 

@@ -1,10 +1,12 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #include "Tuile.h"
 #include "Symbols.h"
 #include "CarcassonneException.h"
+#include "Utils.h"
 
 #include "GestionnaireMemoireEnvironnement.h"
 
@@ -12,9 +14,25 @@
 #include "Chemin.h"
 #include "Batiment.h"
 
+using namespace std;
+
 
 namespace Carcassonne {
-    Tuile::Tuile(std::string& id, std::string& zonesSurfaces) : ID(id) {
+
+    IdentificateurTuile::IdentificateurTuile(const string& str) : idString(str) {
+        vector<string> champs = splitString(str, "_");
+        if(champs.size() < 2) {
+            throw TuileException("Identificateur de tuile pas dans le bon format !");
+        }
+        idExtension = champs[0];
+        try {
+            nbTuile = stoi(champs[1]);
+        } catch(exception& e) {
+            throw TuileException("Erreur de conversion de l'identificateur numerique de la Tuile en entier !");
+        }
+    }
+
+    Tuile::Tuile(string& id, string& zonesSurfaces) : idTuile(id) {
 
         size_t arrayIdx = 0;
         for(char buildingChar : zonesSurfaces) {
@@ -39,7 +57,7 @@ namespace Carcassonne {
 
     }
 
-    Tuile& Tuile::rotation(const directionRotation& dir) {
+    Tuile* Tuile::rotation(const directionRotation& dir) {
         array<Environnement*, NB_ZONES> surfacesTmp;
 
         // Copie des elements d'environnement dans l'orientation actuelle
@@ -69,7 +87,7 @@ namespace Carcassonne {
         break;
         }
 
-        return *this;
+        return this;
     }
 
     void Tuile::affiche(ostream& f, bool isinline) const {
