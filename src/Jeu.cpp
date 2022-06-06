@@ -13,6 +13,7 @@ namespace Carcassonne {
     using namespace std;
 
     Jeu::~Jeu() {
+        // Libere toutes les instances des gestionnaires de memoire
         Joueurs::libererInstance();
         Abbayes::libererInstance();
         Jardins::libererInstance();
@@ -27,7 +28,8 @@ namespace Carcassonne {
 
     void Jeu::partie() {
 
-        while(!plateau.isEmpty())
+        // Tant qu'il reste des Tuiles a jouer
+        while(plateau.peutJouerDesTuiles())
         {
             interface.affichePlateau(plateau);
 
@@ -58,6 +60,8 @@ namespace Carcassonne {
 
             nextJoueur();
         }
+
+        // Fin de partie
 
         interface.afficheFinPartie();
 

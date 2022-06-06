@@ -19,18 +19,26 @@
 */
 namespace Carcassonne {
 
+    /*! \class Pioche
+        \brief Represente la pioche
+    */
 	class Pioche {
 
 	private:
 
-		static const std::string TUILES_NOM_FICHIER;
+		static const std::string TUILES_NOM_FICHIER; /*!< Nom du fichier contenant la definition des tuiles */
 
-		vector<Tuile*> pioche;
+		vector<Tuile*> pioche; /*!< La liste des Tuiles en pioche */
 
-		vector<Tuile*> piochees;
+		vector<Tuile*> piochees; /*!< La liste des Tuiles deja piochees */
 
 	public:
 
+        /*!
+            \brief Constructeur de la classe
+
+            Recupere toutes les Tuiles en memoire
+        */
 		Pioche() {
 		    srand(time(NULL)); // Seed aleatoire
             recupereToutesLesTuiles();
@@ -40,6 +48,7 @@ namespace Carcassonne {
 
 		Pioche& operator=(const Pioche& p)=delete;
 
+        /*! \brief Destructeur de la classe */
 		~Pioche() {
 			for(Tuile* t : pioche) {
 				delete t;
@@ -49,21 +58,32 @@ namespace Carcassonne {
 			}
 		}
 
+        /*!
+            \brief Donne le nombre de Tuiles dans la pioche
+            \return Le nombre de Tuiles dans la pioche
+        */
 		size_t getTaillePioche() const {
             return pioche.size();
 		}
 
+        /*!
+            \brief Pioche une Tuile
+            \return Pointeur sur la Tuile piochee, ou nullptr s'il n'y a plus de Tuile a piocher
+        */
 		Tuile* piocher() {
 		    if(getTaillePioche() == 0) {
                 return nullptr;
 		    }
 
+            // Pioche une Tuile aleatoirement
             size_t tuilePiocheIdx = rand() % getTaillePioche();
 
             auto itTuile = find(pioche.begin(), pioche.end(), pioche[tuilePiocheIdx]);
 
+            // Ajoute la Tuile choisie a la pile des Tuiles piochees
             piochees.push_back(pioche[tuilePiocheIdx]);
 
+            // Enleve la Tuile choisie de la pioche
             pioche.erase(itTuile);
 
             return piochees.back();
@@ -72,6 +92,9 @@ namespace Carcassonne {
 
 	private:
 
+        /*!
+            \brief Recupere toutes les tuiles en memoire qui sont dans le fichier TUILES_NOM_FICHIER
+        */
 		void recupereToutesLesTuiles();
 
 	};

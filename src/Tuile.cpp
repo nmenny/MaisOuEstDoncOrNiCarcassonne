@@ -20,11 +20,15 @@ using namespace std;
 namespace Carcassonne {
 
     IdentificateurTuile::IdentificateurTuile(const string& str) : idString(str) {
-        vector<string> champs = splitString(str, "_");
+        // split l'identifiant
+        vector<string> champs = splitString(str, '_');
+
+        // Verifie que la ligne contient bien au moins deux champs (l'identifiant de l'extension et le numero de Tuile)
         if(champs.size() < 2) {
             throw TuileException("Identificateur de tuile pas dans le bon format !");
         }
         idExtension = champs[0];
+        // Essaie de convertir le numero de Tuile en entier
         try {
             nbTuile = stoi(champs[1]);
         } catch(exception& e) {
@@ -35,6 +39,8 @@ namespace Carcassonne {
     Tuile::Tuile(string& id, string& zonesSurfaces) : idTuile(id) {
 
         size_t arrayIdx = 0;
+
+        // Selon le caractere, une structure differente est allouee
         for(char buildingChar : zonesSurfaces) {
             switch(buildingChar) {
             case C_PRES:
@@ -67,6 +73,7 @@ namespace Carcassonne {
 
         // rotation
         switch(dir) {
+        // Rotation a gauche
         case directionRotation::gauche:
 
             for(size_t envIdxLigne = 0; envIdxLigne < NB_ZONES / 3; envIdxLigne++) {
@@ -76,6 +83,7 @@ namespace Carcassonne {
             }
 
         break;
+        // Rotation a droite
         case directionRotation::droite:
 
             for(size_t envIdxLigne = 0; envIdxLigne < NB_ZONES / 3; envIdxLigne++) {

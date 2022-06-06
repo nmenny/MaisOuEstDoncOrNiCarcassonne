@@ -1,3 +1,7 @@
+/*! \file InterfaceConsole.h
+    \version 0.1
+*/
+
 #ifndef __INTERFACECONSOLE_H__
 #define __INTERFACECONSOLE_H__
 
@@ -7,6 +11,10 @@
 #include "Interface.h"
 #include "CarcassonneException.h"
 
+/*! \namespace Carcassonne
+
+    espace de nom regroupant tout ce qui est utilise pour le jeu
+*/
 namespace Carcassonne {
 
     /*! \class InterfaceConsole

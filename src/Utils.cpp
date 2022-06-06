@@ -2,7 +2,7 @@
 
 namespace Carcassonne {
 
-    vector<string> splitString(const string& chaine, const string& sep) {
+    vector<string> splitString(const string& chaine, const char& sep) {
         vector<string> champs;
         string champ, tmp;
         size_t idxSep;

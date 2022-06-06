@@ -40,9 +40,9 @@ namespace Carcassonne {
 			~Handler() { delete instance; }
 		};
 
-		static Handler handler; /*!< Instance Singleton statique de Abbayes */
+		static Handler handler; /*!< Instance Singleton statique de Joueurs */
 
-		Joueur** listeJoueurs = nullptr; /*!< Liste des Jardins presents dans la partie */
+		Joueur** listeJoueurs = nullptr; /*!< Liste des joueurs presents dans la partie */
 
 		int nbJoueur = 0; /*!< Nombre de joueurs dans la partie */
 

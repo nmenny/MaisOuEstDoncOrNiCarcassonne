@@ -26,8 +26,10 @@ namespace Carcassonne {
         // Parcours chaque ligne du fichier
         while(stream >> line) {
 
-            champs = splitString(line, ";");
+            // Recupere les champs de la ligne
+            champs = splitString(line, ';');
 
+            // Verifie que la ligne contient bien au moins deux champs (l'identifiant de Tuile et les structures presentes dessus)
             if(champs.size() < 2) {
                 throw PiocheException("Format de la " +to_string(nbTuile) +"eme tuile dans le fichier incorrect !");
             }
