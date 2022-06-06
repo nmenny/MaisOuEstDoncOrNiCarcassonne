@@ -57,6 +57,21 @@ namespace Carcassonne {
             return num;
         }
 
+        /*! \brief Donne le nombre de Meeples basique le joueurs possede
+            \return Le nombre de Meeples basiques en la possession du joueur
+        */
+        size_t getNbBasicMeeples() const { return listeBasicMeeples.size(); }
+
+        /*! \brief Le joueur possede-t'il un grand meeple ?
+            \return <tt>true</tt> si le joueur a un grand meeple, <tt>false</tt> sinon
+        */
+        bool aGrandMeeple() const { return grandMeeple != nullptr; }
+
+        /*! \brief Le joueur possede-t'il un abbe ?
+            \return <tt>true</tt> si le joueur a un abbe, <tt>false</tt> sinon
+        */
+        bool aAbbe() const { return abbe != nullptr; }
+
         /*! \brief Increment le score d'une certaine valeur
             \param[in] incr Le valeur d'increment du score
         */

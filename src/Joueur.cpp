@@ -51,10 +51,16 @@ namespace Carcassonne {
 	// Restitue un meeple au joueur
 
 	void Joueur::rendreMeeple(BasicMeeple* meeple) {
+        if(meeple->getProprietaire() != this) {
+            throw JoueurException("Ce joueur n'est pas le proprietaire de ce BasicMeeple !");
+        }
 		listeBasicMeeples.push_back(meeple);
 	}
 
 	void Joueur::rendreGrandMeeple(GdMeeple* gdMeeple) {
+	    if(gdMeeple->getProprietaire() != this) {
+            throw JoueurException("Ce joueur n'est pas le proprietaire de ce GrandMeeple !");
+        }
 		if(grandMeeple != nullptr) {
 			throw JoueurException("Ce joueur possede deja un grand meeple !");
 		}
@@ -63,6 +69,9 @@ namespace Carcassonne {
 	}
 
 	void Joueur::rendreAbbe(Abbe* abbeP) {
+	    if(abbeP->getProprietaire() != this) {
+            throw JoueurException("Ce joueur n'est pas le proprietaire de cet Abbe !");
+        }
 		if(abbe != nullptr) {
 			throw JoueurException("Ce joueur possede deja un abbe !");
 		}
