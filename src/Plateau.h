@@ -68,10 +68,13 @@ namespace Carcassonne {
             \brief Recupere la tuile a poser
             \return Pointeur sur la tuile a poser
         */
-        Tuile* getTuile() const {
+        const Tuile* getTuile() const {
             return tuileCourante;
         }
 
+        /*!
+            \brief Remet la Tuile courante dans la pioche
+        */
         void remettreTuile() {
             tuileCourante = pioche.repiocher();
         }
@@ -103,6 +106,11 @@ namespace Carcassonne {
 
     private:
 
+        /*!
+            \brief Calcule les emplacements vides autour d'une Tuile placee a des coordonnes donnees
+            \param[in] x Composante en x de la Tuile
+            \param[in] y Composante en y de la Tuile
+        */
         void getEmplacementsVidesAutourDeTuile(int x, int y);
 
         /*!

@@ -6,8 +6,7 @@
 #define __GESTIONNAIREMEMOIREMEEPLE_H__
 
 #include <vector>
-
-#include "Personnages.h"
+#include "Joueur.h"
 
 /*! \namespace Carcassonne
 
@@ -85,22 +84,6 @@ namespace Carcassonne {
 
     template<class T>
     typename GestionnaireMemoireMeeple<T>::Handler GestionnaireMemoireMeeple<T>::handler(nullptr);
-
-
-    /*!
-        \brief Gere la memoire des tous les Meeples Basiques du jeu
-    */
-    using BasicMeeples = GestionnaireMemoireMeeple<BasicMeeple>;
-
-    /*!
-        \brief Gere la memoire des tous les Grand Meeples du jeu
-    */
-    using GdMeeples = GestionnaireMemoireMeeple<GdMeeple>;
-
-    /*!
-        \brief Gere la memoire des tous les abbes du jeu
-    */
-    using Abbes = GestionnaireMemoireMeeple<Abbe>;
 
 }
 

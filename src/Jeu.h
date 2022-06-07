@@ -65,6 +65,10 @@ namespace Carcassonne {
 
     private:
 
+        /*!
+            \brief Place une certaine Tuile sur le plateau
+            \param[in] emplIdx Indice de l'emplacement (des coordonnees) ou la Tuile doit etre placee
+        */
         void placerTuile(int emplIdx) {
             plateau.poserTuile(emplacementJouables[emplIdx]);
             joueurCourant->incrementScore(1);

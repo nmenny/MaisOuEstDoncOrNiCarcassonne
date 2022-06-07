@@ -9,12 +9,6 @@
 #include <list>
 
 #include "Tuile.h"
-#include "Pre.h"
-#include "Ville.h"
-#include "Route.h"
-#include "Riviere.h"
-#include "Abbaye.h"
-#include "Jardin.h"
 
 /*! \namespace Carcassonne
 
@@ -117,38 +111,6 @@ namespace Carcassonne {
 
     template<class T>
     typename GestionnaireMemoireEnvironnement<T>::Handler GestionnaireMemoireEnvironnement<T>::handler(nullptr);
-
-
-    /*!
-        \brief Gere la memoire des tous les Pres presents dans le jeu
-    */
-    using Pres = GestionnaireMemoireEnvironnement<Pre>;
-
-    /*!
-        \brief Gere la memoire des toutes les villes presentes dans le jeu
-    */
-    using Villes = GestionnaireMemoireEnvironnement<Ville>;
-
-    /*!
-        \brief Gere la memoire des toutes les Abbayes presentes dans le jeu
-    */
-    using Abbayes = GestionnaireMemoireEnvironnement<Abbaye>;
-
-    /*!
-        \brief Gere la memoire des tous les jardins presents dans le jeu
-    */
-    using Jardins = GestionnaireMemoireEnvironnement<Jardin>;
-
-    /*!
-        \brief Gere la memoire des toutes les rivieres presentes dans le jeu
-    */
-    using Rivieres = GestionnaireMemoireEnvironnement<Riviere>;
-
-    /*!
-        \brief Gere la memoire des toutes les routes presentes dans le jeu
-    */
-    using Routes = GestionnaireMemoireEnvironnement<Route>;
-
 }
 
 #endif // __GESTIONNAIREMEMOIREENVIRONNEMENT_H__

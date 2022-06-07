@@ -7,7 +7,7 @@
 
 namespace Carcassonne {
 
-    const string chaineCaseVide = "         ";
+    static const string chaineCaseVide = "         ";
 
 	void Plateau::affiche(ostream& f) const {
 
@@ -50,8 +50,8 @@ namespace Carcassonne {
 
             // En haut
             if(c.getY() - 1 >= 0 && plateau[c.getY() - 1][c.getX()] != nullptr) {
-                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::nord);
-                envCmp = plateau[c.getY() - 1][c.getX()]->getEnvironnementsDansUneZone(direction::sud);
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::nord);
+                envCmp = plateau[c.getY() - 1][c.getX()]->getEnvironnementsDansUneZone(zoneTuile::sud);
                 verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
                 (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
                 (envACmp[2]->toChar() == envCmp[2]->toChar());
@@ -59,8 +59,8 @@ namespace Carcassonne {
 
             // En bas
             if(c.getY() + 1 < NB_LIGNES_MAX && plateau[c.getY() + 1][c.getX()] != nullptr) {
-                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::sud);
-                envCmp = plateau[c.getY() + 1][c.getX()]->getEnvironnementsDansUneZone(direction::nord);
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::sud);
+                envCmp = plateau[c.getY() + 1][c.getX()]->getEnvironnementsDansUneZone(zoneTuile::nord);
                 verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
                 (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
                 (envACmp[2]->toChar() == envCmp[2]->toChar());
@@ -68,8 +68,8 @@ namespace Carcassonne {
 
             // a gauche
             if(c.getX() - 1 >= 0 && plateau[c.getY()][c.getX()-1] != nullptr) {
-                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::ouest);
-                envCmp = plateau[c.getY()][c.getX()-1]->getEnvironnementsDansUneZone(direction::est);
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::ouest);
+                envCmp = plateau[c.getY()][c.getX()-1]->getEnvironnementsDansUneZone(zoneTuile::est);
                 verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
                 (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
                 (envACmp[2]->toChar() == envCmp[2]->toChar());
@@ -77,8 +77,8 @@ namespace Carcassonne {
 
             // a droite
             if(c.getX() + 1 < NB_COLONNES_MAX && plateau[c.getY()][c.getX()+1] != nullptr) {
-                envACmp = tuileCourante->getEnvironnementsDansUneZone(direction::est);
-                envCmp = plateau[c.getY()][c.getX()+1]->getEnvironnementsDansUneZone(direction::ouest);
+                envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::est);
+                envCmp = plateau[c.getY()][c.getX()+1]->getEnvironnementsDansUneZone(zoneTuile::ouest);
                 verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
                 (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
                 (envACmp[2]->toChar() == envCmp[2]->toChar());

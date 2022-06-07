@@ -84,6 +84,14 @@ namespace Carcassonne {
             \return Le caractere representant l'environnement
         */
         virtual const char& toChar() const = 0;
+
+         /*!
+            \brief Connecte l'environnement courant a un autre
+            \param[in] env L'environnement que l'on connecte
+            \warning env peut etre desalloue a la fin de l'appel a la methode
+            \return L'element courant apres connection
+        */
+        virtual Environnement* connect(Environnement* env)=0;
     };
 
 }

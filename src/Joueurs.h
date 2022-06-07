@@ -13,8 +13,6 @@
 */
 namespace Carcassonne {
 
-	class Joueur;
-
     /*! \class Joueurs
         \brief Gere la memoire des tous les Joueurs presents dans le jeu
     */

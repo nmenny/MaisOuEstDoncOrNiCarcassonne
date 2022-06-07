@@ -90,7 +90,16 @@ namespace Carcassonne {
 
 		}
 
+        /*!
+            \brief Repioche une Tuile
+            \return Pointeur sur la Tuile piochee, ou nullptr s'il n'y a plus de Tuile a piocher
+        */
 		Tuile* repiocher() {
+		    // Si la pioche n'a plus de Tuile, on renvoie la derniere Tuile piochee
+		    if(getTaillePioche() == 0) {
+                return piochees.back();
+		    }
+
             Tuile* dernierePiochee = piochees.back();
             piochees.pop_back();
 

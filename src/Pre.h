@@ -5,6 +5,7 @@
 #ifndef __PRE_H_
 #define __PRE_H_
 
+#include "GestionnaireMemoireEnvironnement.h"
 #include "Symbols.h"
 #include "Surface.h"
 
@@ -34,6 +35,20 @@ namespace Carcassonne {
         */
         const char& toChar() const override {
             return C_PRES;
+        }
+
+        /*!
+            \brief Connecte le pre courant a un autre
+            \param[in] env L'environnement que l'on connecte
+            \warning env peut etre desalloue a la fin de l'appel a la methode
+            \return L'element courant apres connection
+        */
+        Pre* connect(Environnement* env) override {
+            if(env == this) {
+                return this;
+            }
+
+            return GestionnaireMemoireEnvironnement<Pre>::getInstance()->fusionner(this, dynamic_cast<Pre*>(env));
         }
     };
 }

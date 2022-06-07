@@ -9,6 +9,8 @@
 #include <array>
 #include <iostream>
 
+#include "Coordonnee.h"
+
 using namespace std;
 
 /*! \namespace Carcassonne
@@ -25,10 +27,10 @@ namespace Carcassonne {
         gauche /*!< Rotation a gauche */
     };
 
-    /*! \enum direction
+    /*! \enum zoneTuile
         \brief Les differentes zones pour les environnements d'une Tuile
     */
-    enum class direction {
+    enum class zoneTuile {
         nord, /*!< Zone nord */
         sud, /*!< Zone sud */
         est, /*!< Zone est */
@@ -37,7 +39,6 @@ namespace Carcassonne {
 
     class Environnement;
     class Meeple;
-    class Coordonnees;
 
     /*! \class IdentificateurTuile
         \brief Identificateur d'un tuile
@@ -131,7 +132,12 @@ namespace Carcassonne {
         */
         string toString(bool isinline=false) const;
 
-        array<Environnement*, 3> getEnvironnementsDansUneZone(const direction& d) const;
+        /*!
+            \brief Recupere les 3 environnements sur une bordure de la Tuile
+            \param[in] d La zone que l'on recupere dans la tuile
+            \return Un tableau contenant des pointeurs sur les environnements adjacents
+        */
+        array<Environnement*, 3> getEnvironnementsDansUneZone(const zoneTuile& d) const;
 
         /*!
             \brief Fait une rotation de la Tuile
@@ -153,13 +159,30 @@ namespace Carcassonne {
         */
         Meeple* retirerMeeple();
 
-        void fusionnerEnvironnementsAdjacents(int x, int y, Environnement* envDiff);
+        /*!
+            \brief Fusionne les environnements adjacents a un environnement specifique
+            \param[in] x Coordonnee en x de l'environnement a fusionner
+            \param[in] y Coordonnee en y de l'environnement a fusionner
+            \param[in,out] envDiff Pointeur sur l'environnement qui fusionne
+        */
+        void fusionnerEnvironnementsAdjacents(int x, int y, Environnement* envDiff) {
+            Coordonnees* parcours = new Coordonnees();
+
+            fusionnerEnvironnementsAdjacentsRec(x, y, envDiff, parcours);
+
+            delete parcours;
+        }
 
     private:
 
+        /*!
+            \brief Fusionne les environnements adjacents a un environnement specifique recursivement
+            \param[in] x Coordonnee en x de l'environnement a fusionner
+            \param[in] y Coordonnee en y de l'environnement a fusionner
+            \param[in,out] envDiff Pointeur sur l'environnement qui fusionne
+            \param[in,out] parcours Pointeur sur les coordonnees deja parcourues
+        */
         void fusionnerEnvironnementsAdjacentsRec(int x, int y, Environnement* envDiff, Coordonnees* parcours);
-
-        Environnement* fusion(Environnement* evt1, Environnement* evt2);
 
         /*!
             \brief Fait la fusion interne des environnements de la Tuile (les environnements adjacents)

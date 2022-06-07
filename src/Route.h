@@ -35,6 +35,20 @@ namespace Carcassonne {
         const char& toChar() const override {
             return C_ROUTE;
         }
+
+        /*!
+            \brief Connecte la route courante a une autre
+            \param[in] env L'environnement que l'on connecte
+            \warning env peut etre desalloue a la fin de l'appel a la methode
+            \return L'element courant apres connection
+        */
+        Route* connect(Environnement* env) override {
+            if(env == this) {
+                return this;
+            }
+
+            return GestionnaireMemoireEnvironnement<Route>::getInstance()->fusionner(this, dynamic_cast<Route*>(env));
+        }
     };
 }
 

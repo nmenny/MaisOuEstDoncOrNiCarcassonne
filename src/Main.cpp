@@ -1,11 +1,14 @@
+#define UNUSED(x) (void)x
+
 #include <iostream>
 
-#include "GestionnaireMemoireMeeple.h"
-#include "GestionnaireMemoireEnvironnement.h"
+#include "types.h"
 #include "Jeu.h"
 #include "InterfaceConsole.h"
 
 int main(int argc, char* argv[]) {
+    UNUSED(argc);
+    UNUSED(argv);
 
     using namespace Carcassonne;
 

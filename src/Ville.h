@@ -35,6 +35,20 @@ namespace Carcassonne {
         const char& toChar() const override {
             return C_VILLE;
         }
+
+        /*!
+            \brief Connecte la ville courante a une autre
+            \param[in] env L'environnement que l'on connecte
+            \warning env peut etre desalloue a la fin de l'appel a la methode
+            \return L'element courant apres connection
+        */
+        Ville* connect(Environnement* env) override {
+            if(env == this) {
+                return this;
+            }
+
+            return GestionnaireMemoireEnvironnement<Ville>::getInstance()->fusionner(this, dynamic_cast<Ville*>(env));
+        }
     };
 }
 

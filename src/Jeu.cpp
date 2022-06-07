@@ -2,8 +2,7 @@
 #include <iostream>
 
 #include "Joueurs.h"
-#include "GestionnaireMemoireEnvironnement.h"
-#include "GestionnaireMemoireMeeple.h"
+#include "types.h"
 
 #include "Tuile.h"
 #include "Jeu.h"

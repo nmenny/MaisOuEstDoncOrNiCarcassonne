@@ -5,6 +5,8 @@
 #ifndef __BATIMENT_H__
 #define __BATIMENT_H__
 
+#define UNUSED(x) (void)x
+
 #include "Environnement.h"
 
 using namespace std;
@@ -30,6 +32,18 @@ namespace Carcassonne {
 
         /*! \brief Destructeur de la classe */
         ~Batiment()=default;
+
+        /*!
+            \brief Connecte le batiment courant a un autre
+            \param[in] env L'environnement que l'on connecte
+            \warning env peut etre desalloue a la fin de l'appel a la methode
+            \note Un batiment ne peut pas etre connecte a un autre
+            \return L'element courant apres connection
+        */
+        Batiment* connect(Environnement* env) override {
+            UNUSED(env);
+            return this;
+        }
     };
 }
 

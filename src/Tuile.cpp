@@ -10,7 +10,7 @@
 #include "Utils.h"
 #include "Coordonnee.h"
 
-#include "GestionnaireMemoireEnvironnement.h"
+#include "types.h"
 
 #include "Surface.h"
 #include "Chemin.h"
@@ -105,6 +105,7 @@ namespace Carcassonne {
     void Tuile::affiche(ostream& f, bool isinline) const {
         string str;
 
+        // Parcours tous les environnements
         for(size_t decorsIdx = 0; decorsIdx < Tuile::NB_ZONES; decorsIdx++) {
             if(surfaces[decorsIdx] == nullptr) {
                 throw TuileException("Tuile non definie !");
@@ -112,6 +113,7 @@ namespace Carcassonne {
             str += (surfaces[decorsIdx])->toChar();
         }
 
+        // Si on ne veut pas la fichier en ligne, on l'affiche sous forme de "Tuile" (carre de 3x3)
         if(!isinline) {
             f << str.substr(0, 3) << "\n"
               << str.substr(3, 3) << "\n"
@@ -128,26 +130,26 @@ namespace Carcassonne {
         return stream.str();
     }
 
-    array<Environnement*, 3> Tuile::getEnvironnementsDansUneZone(const direction& d) const {
+    array<Environnement*, 3> Tuile::getEnvironnementsDansUneZone(const zoneTuile& d) const {
         array<Environnement*, 3> res;
 
         switch(d) {
-        case direction::nord:
+        case zoneTuile::nord:
             res[0] = surfaces[0];
             res[1] = surfaces[1];
             res[2] = surfaces[2];
         break;
-        case direction::sud:
+        case zoneTuile::sud:
             res[0] = surfaces[6];
             res[1] = surfaces[7];
             res[2] = surfaces[8];
         break;
-        case direction::est:
+        case zoneTuile::est:
             res[0] = surfaces[2];
             res[1] = surfaces[5];
             res[2] = surfaces[8];
         break;
-        case direction::ouest:
+        case zoneTuile::ouest:
             res[0] = surfaces[0];
             res[1] = surfaces[3];
             res[2] = surfaces[6];
@@ -194,87 +196,49 @@ namespace Carcassonne {
         return meeple;
     }
 
-    void Tuile::fusionnerEnvironnementsAdjacents(int x, int y, Environnement* envDiff) {
-        Coordonnees* parcours = new Coordonnees();
-
-        fusionnerEnvironnementsAdjacentsRec(x, y, envDiff, parcours);
-
-        delete parcours;
-    }
-
-    Environnement* Tuile::fusion(Environnement* evt1, Environnement* evt2) {
-        const char envSymbole = evt1->toChar();
-
-        if(envSymbole != evt2->toChar()) {
-            return nullptr;
-        }
-
-        switch(envSymbole) {
-        case C_PRES:
-            Pres::getInstance()->fusionner(dynamic_cast<Pre*>(evt1), dynamic_cast<Pre*>(evt2));
-            break;
-        case C_VILLE:
-            Villes::getInstance()->fusionner(dynamic_cast<Ville*>(evt1), dynamic_cast<Ville*>(evt2));
-            break;
-        case C_ABBAYE:
-            Abbayes::getInstance()->fusionner(dynamic_cast<Abbaye*>(evt1), dynamic_cast<Abbaye*>(evt2));
-            break;
-        case C_JARDIN:
-            Jardins::getInstance()->fusionner(dynamic_cast<Jardin*>(evt1), dynamic_cast<Jardin*>(evt2));
-            break;
-        case C_ROUTE:
-            Routes::getInstance()->fusionner(dynamic_cast<Route*>(evt1), dynamic_cast<Route*>(evt2));
-            break;
-        case C_RIVIERE:
-            Rivieres::getInstance()->fusionner(dynamic_cast<Riviere*>(evt1), dynamic_cast<Riviere*>(evt2));
-            break;
-        default:
-            throw TuileException("Un tel element de decors n'existe pas !");
-        }
-
-        return evt1;
-    }
-
     void Tuile::fusionnerEnvironnementsAdjacentsRec(int x, int y, Environnement* envDiff, Coordonnees* parcours) {
+        // On ne peut pas fusionner des environnements differents
         if(x < 0 || x >= 3 || y < 0 || y >= 3 || surfaces[y*3+x]->toChar() != envDiff->toChar()) {
             return;
         }
 
-        surfaces[y * 3 + x] = fusion(envDiff, surfaces[y * 3 + x]);
+        // Connecte les environnements entre eux
+        surfaces[y * 3 + x] = envDiff->connect(surfaces[y * 3 + x]);
+
         parcours->push_back(Coordonnee(x,y));
 
         // Check en haut
         if(
-           ((y - 1) >= 0) &&
-           surfaces[(y -1)*3 + x]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x, y-1)) == parcours->end())
+           ((y - 1) >= 0) && // Coordonnee dans les clous
+           surfaces[(y -1)*3 + x]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           (find(parcours->begin(), parcours->end(), Coordonnee(x, y-1)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x, y-1, envDiff, parcours);
         }
 
         // Check en bas
         if(
-           ((y + 1) < 3) &&
-           surfaces[(y + 1)*3 + x]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x, y+1)) == parcours->end())
+           ((y + 1) < 3) && // Coordonnee dans les clous
+           surfaces[(y + 1)*3 + x]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           (find(parcours->begin(), parcours->end(), Coordonnee(x, y+1)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x, y+1, envDiff, parcours);
         }
 
         // Check a gauche
         if(
-           (x - 1 >= 0) &&
-           surfaces[y*3 + x-1]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x-1, y)) == parcours->end())
+           (x - 1 >= 0) && // Coordonnee dans les clous
+           surfaces[y*3 + x-1]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           (find(parcours->begin(), parcours->end(), Coordonnee(x-1, y)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x-1, y, envDiff, parcours);
         }
 
         // Check a droite
         if(
-           (x + 1 < 3) &&
-           surfaces[y*3 + x+1]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end())
+           (x + 1 < 3) && // Coordonnee dans les clous
+           surfaces[y*3 + x+1]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x+1, y, envDiff, parcours);
         }
@@ -296,6 +260,7 @@ namespace Carcassonne {
                 // Si l'environnement courant n'a pas deja ete fusionne
                 if((it = find(envUniques.begin(), envUniques.end(), surfaces[y * 3 + x]))  == envUniques.end() ) {
 
+                    // Fusionne les environnements adjacents
                     fusionnerEnvironnementsAdjacents(x,y,surfaces[y * 3 + x]);
 
                     envUniques.push_back(surfaces[y * 3 + x]);
