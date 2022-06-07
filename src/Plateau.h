@@ -38,6 +38,8 @@ namespace Carcassonne {
 
         array<array<const Tuile*, NB_COLONNES_MAX>, NB_LIGNES_MAX> plateau; /*!< Tableaux representant le plateau */
 
+        Coordonnees emplacementsVidesJouables; /*!< Liste des coordonnees des emplacements vides jouables */
+
 	public:
 
         /*!
@@ -90,7 +92,7 @@ namespace Carcassonne {
             \brief Recupere les emplacements ou l'on peut jouer la tuile courante
             \return Liste des coordonnees ou une Tuile peut etre posee
         */
-        Coordonnees getEmplacementsOuPeutPoser() const;
+        Coordonnees getEmplacementsOuPeutPoser();
 
         /*!
             \brief Pose la tuile courante a des coordonnees specifiques
@@ -100,6 +102,8 @@ namespace Carcassonne {
         const Tuile* poserTuile(const Coordonnee& c);
 
     private:
+
+        void getEmplacementsVidesAutourDeTuile(int x, int y);
 
         /*!
             \brief Initialise le plateau avec des Tuiles vides

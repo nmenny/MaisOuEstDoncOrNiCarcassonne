@@ -65,6 +65,11 @@ namespace Carcassonne {
 
     private:
 
+        void placerTuile(int emplIdx) {
+            plateau.poserTuile(emplacementJouables[emplIdx]);
+            joueurCourant->incrementScore(1);
+        }
+
         /*! \brief Passe au joueur suivant */
         void nextJoueur() {
             joueurCourant = joueurs->getJoueur((joueurCourant->getNumero() + 1) % joueurs->getNbJoueurs());
@@ -72,7 +77,6 @@ namespace Carcassonne {
 
         /*! \brief Recupere les emplacements ou la tuile courante peut etre posee */
         void recupEmplacementsJouables() {
-            emplacementJouables.clear();
             emplacementJouables = plateau.getEmplacementsOuPeutPoser();
         }
 

@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 /*! \namespace Carcassonne
 
@@ -146,6 +147,13 @@ namespace Carcassonne {
             \return L'iterateur de fin
         */
 		iterator end() { return iterator(coords.end()); }
+
+		void remove(const Coordonnee& c) {
+            auto it = find(coords.begin(), coords.end(), c);
+            if(it != coords.end()) {
+                coords.erase(it);
+            }
+		}
     };
 
 }

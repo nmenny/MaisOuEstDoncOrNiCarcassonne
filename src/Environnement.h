@@ -36,6 +36,21 @@ namespace Carcassonne {
         /*! \brief Destructeur de la classe */
         virtual ~Environnement()=default;
 
+        /*! \brief Renvoie le nombre de Meeples presents sur cet environnement
+            \return Le nombre de Meeples presents sur cet environnement
+        */
+        int getNbTuiles(){ return listeTuiles.size(); }
+
+        /*! \brief Renvoie le nombre de Tuiles regroupant ce même element d'environnement
+            \return Le nombre de Tuiles regroupant ce même element d'environnement
+        */
+        int getNbMeeples(){ return listeMeeples.size(); }
+
+        /*! \brief Renvoie la liste des Tuiles regroupant ce même element d'environnement
+            \return Le liste des Tuiles regroupant ce même element d'environnement
+        */
+        list<const Tuile*> getTuiles(){ return listeTuiles; }
+
         /*! \brief Connecte une tuile a un environnement
             \param[in] tuile Tuile a connecter a l'environnement courant
         */
@@ -69,21 +84,6 @@ namespace Carcassonne {
             \return Le caractere representant l'environnement
         */
         virtual const char& toChar() const = 0;
-
-        /*! \brief Renvoie le nombre de Meeples presents sur cet environnement
-            \return Le nombre de Meeples presents sur cet environnement
-        */
-        int getNbTuiles(){ return listeTuiles.size(); }
-
-        /*! \brief Renvoie le nombre de Tuiles regroupant ce même element d'environnement
-            \return Le nombre de Tuiles regroupant ce même element d'environnement
-        */
-        int getNbMeeples(){ return listeMeeples.size(); }
-
-        /*! \brief Renvoie la liste des Tuiles regroupant ce même element d'environnement
-            \return Le liste des Tuiles regroupant ce même element d'environnement
-        */
-        list<const Tuile*> getTuiles(){ return listeTuiles; }
     };
 
 }

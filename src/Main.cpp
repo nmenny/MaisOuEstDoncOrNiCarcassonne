@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 
     Jeu j(interfaceC, 2);
 
-    j.partie();
+    //j.partie();
 
 
     std::cout << Pres::getInstance()->getNbEnvEnMemoire() << "\n";

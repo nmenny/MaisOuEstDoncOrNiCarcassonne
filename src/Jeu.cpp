@@ -56,9 +56,7 @@ namespace Carcassonne {
                }
             }
 
-            plateau.poserTuile(emplacementJouables[saisie]);
-
-            joueurCourant->incrementScore(1);
+            placerTuile(saisie);
 
             nextJoueur();
         }

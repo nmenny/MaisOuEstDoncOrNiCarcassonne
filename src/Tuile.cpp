@@ -199,47 +199,6 @@ namespace Carcassonne {
 
         fusionnerEnvironnementsAdjacentsRec(x, y, envDiff, parcours);
 
-        /*
-        parcours->push_back(Coordonnee(x,y));
-
-        surfaces[y * 3 + x] = fusion(envDiff, surfaces[y * 3 + x]);
-
-         // Check en haut
-        if(
-           ((y - 1) >= 0) &&
-           surfaces[(y -1)*3 + x]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x, y-1)) == parcours->end())
-           ) {
-            fusionnerEnvironnementsAdjacentsRec(x, y-1, envDiff, parcours);
-        }
-
-        // Check en bas
-        if(
-           ((y + 1) < 3) &&
-           surfaces[(y + 1)*3 + x]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x, y+1)) == parcours->end())
-           ) {
-            fusionnerEnvironnementsAdjacentsRec(x, y+1, envDiff, parcours);
-        }
-
-        // Check a gauche
-        if(
-           (x - 1 >= 0) &&
-           surfaces[y*3 + x-1]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x-1, y)) == parcours->end())
-           ) {
-            fusionnerEnvironnementsAdjacentsRec(x-1, y, envDiff, parcours);
-        }
-
-        // Check a droite
-        if(
-           (x + 1 < 3) &&
-           surfaces[y*3 + x+1]->toChar() == envDiff->toChar() &&
-           (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end())
-           ) {
-            fusionnerEnvironnementsAdjacentsRec(x+1, y, envDiff, parcours);
-        }*/
-
         delete parcours;
     }
 

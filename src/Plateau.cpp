@@ -40,43 +40,10 @@ namespace Carcassonne {
 
 	}
 
-	Coordonnees Plateau::getEmplacementsOuPeutPoser() const {
-        Coordonnees vectC;
+	Coordonnees Plateau::getEmplacementsOuPeutPoser() {
         Coordonnees coordsOk;
 
-        for(size_t y = 0; y < NB_LIGNES_MAX; y++) {
-            for(size_t x = 0; x < NB_COLONNES_MAX; x++) {
-                // Si l'element courant est une tuile, on peut verifier que l'on peut poser autour d'elle
-                if(plateau[y][x] != nullptr) {
-
-                    // Placer en haut / bas
-                    for(int offsetY = -1; offsetY < 2; offsetY += 2) {
-                        Coordonnee c(x, y + offsetY);
-                        if(c.getY() >= 0 && // Coordonnes avec l'offset dans les clous
-                           c.getY() < NB_LIGNES_MAX &&
-                           plateau[c.getY()][x] == nullptr && // Case a check n'a pas de Tuile
-                           find(vectC.begin(), vectC.end(), c) == vectC.end()) // Les coordonnees ne sont pas deja renseignees
-                        {
-                            vectC.push_back(c);
-                        }
-                    }
-
-                    // Placer a droite / gauche
-                    for(int offsetX = -1; offsetX < 2; offsetX += 2) {
-                        Coordonnee c(x + offsetX, y);
-                        if(c.getX() >= 0 && // Coordonnes avec l'offset dans les clous
-                           c.getX() < NB_COLONNES_MAX &&
-                           plateau[y][c.getX()] == nullptr && // Case a check n'a pas de Tuile
-                           find(vectC.begin(), vectC.end(), c) == vectC.end()) // Les coordonnees ne sont pas deja renseignees
-                        {
-                            vectC.push_back(c);
-                        }
-                    }
-                }
-            }
-        }
-
-        for(Coordonnee c : vectC) {
+        for(Coordonnee c : emplacementsVidesJouables) {
 
             bool verifCoord = true;
             array<Environnement*, 3> envACmp, envCmp;
@@ -124,7 +91,36 @@ namespace Carcassonne {
         }
 
         return coordsOk;
+	}
 
+	void Plateau::getEmplacementsVidesAutourDeTuile(int x, int y) {
+        // Si l'element courant est une tuile, on peut verifier que l'on peut poser autour d'elle
+        if(plateau[y][x] != nullptr) {
+
+            // Placer en haut / bas
+            for(int offsetY = -1; offsetY < 2; offsetY += 2) {
+                Coordonnee c(x, y + offsetY);
+                if(c.getY() >= 0 && // Coordonnes avec l'offset dans les clous
+                   c.getY() < NB_LIGNES_MAX &&
+                   plateau[c.getY()][x] == nullptr && // Case a check n'a pas de Tuile
+                   find(emplacementsVidesJouables.begin(), emplacementsVidesJouables.end(), c) == emplacementsVidesJouables.end()) // Les coordonnees ne sont pas deja renseignees
+                {
+                    emplacementsVidesJouables.push_back(c);
+                }
+            }
+
+            // Placer a droite / gauche
+            for(int offsetX = -1; offsetX < 2; offsetX += 2) {
+                Coordonnee c(x + offsetX, y);
+                if(c.getX() >= 0 && // Coordonnes avec l'offset dans les clous
+                   c.getX() < NB_COLONNES_MAX &&
+                   plateau[y][c.getX()] == nullptr && // Case a check n'a pas de Tuile
+                   find(emplacementsVidesJouables.begin(), emplacementsVidesJouables.end(), c) == emplacementsVidesJouables.end()) // Les coordonnees ne sont pas deja renseignees
+                {
+                    emplacementsVidesJouables.push_back(c);
+                }
+            }
+        }
 	}
 
 	const Tuile* Plateau::poserTuile(const Coordonnee& c) {
@@ -138,16 +134,19 @@ namespace Carcassonne {
             throw PlateauException("Ne peut pas placer une Tuile par dessus une autre !");
         }
 
-        // Si on est sur le plateau, on ajoute simplement dedans
+        // On ajoute simplement dedans
         plateau[c.getY()][c.getX()] = tuileCourante;
 
-        // On garde en memoire la tuile posee
-        const Tuile* tuilePosee = tuileCourante;
+        // L'emplacement ou la tuile a ete posee n'est plus vide
+        emplacementsVidesJouables.remove(c);
+
+        // recupere les emplacements vides autour de la tuile posee
+        getEmplacementsVidesAutourDeTuile(c.getX(), c.getY());
 
         // On pioche la suivante
         tuileCourante = pioche.piocher();
 
-        return tuilePosee;
+        return plateau[c.getY()][c.getX()];
 
 	}
 }
