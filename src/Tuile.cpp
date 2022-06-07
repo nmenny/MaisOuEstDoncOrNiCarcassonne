@@ -5,13 +5,10 @@
 #include <algorithm>
 
 #include "Tuile.h"
-#include "Symbols.h"
 #include "CarcassonneException.h"
+#include "EnvironnementFactory.h"
 #include "Utils.h"
 #include "Coordonnee.h"
-
-#include "types.h"
-
 #include "Surface.h"
 #include "Chemin.h"
 #include "Batiment.h"
@@ -39,27 +36,20 @@ namespace Carcassonne {
     }
 
     Tuile::Tuile(string& id, string& zonesSurfaces) : idTuile(id) {
-
+        Environnement* e;
         size_t arrayIdx = 0;
 
         // Selon le caractere, une structure differente est allouee
         for(char buildingChar : zonesSurfaces) {
-            switch(buildingChar) {
-            case C_PRES:
-                surfaces[arrayIdx] = Pres::getInstance()->creer(this);break;
-            case C_VILLE:
-                surfaces[arrayIdx] = Villes::getInstance()->creer(this);break;
-            case C_ABBAYE:
-                surfaces[arrayIdx] = Abbayes::getInstance()->creer(this);break;
-            case C_JARDIN:
-                surfaces[arrayIdx] = Jardins::getInstance()->creer(this);break;
-            case C_ROUTE:
-                surfaces[arrayIdx] = Routes::getInstance()->creer(this);break;
-            case C_RIVIERE:
-                surfaces[arrayIdx] = Rivieres::getInstance()->creer(this);break;
-            default:
+
+            e = EnvironnementFactory::createNouvEnvironnement(this, buildingChar);
+
+            if(e == nullptr) {
                 throw TuileException("Un tel element de decors n'existe pas !");
             }
+
+            surfaces[arrayIdx] = e;
+
             arrayIdx++;
         }
 

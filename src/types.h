@@ -1,5 +1,7 @@
 /*! \file types.h
     \version 0.1
+    \brief Tous les types de gestion de memoire
+    \note Quand on ajoute un nouveau Meeple ou un nouvel environnement, il faut ajouter un type
 */
 
 #ifndef __TYPES_H__
