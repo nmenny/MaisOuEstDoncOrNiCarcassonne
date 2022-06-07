@@ -31,6 +31,7 @@ namespace Carcassonne {
 
         /*! \brief Destructeur de la classe */
         ~Chemin()=default;
+
     };
 }
 

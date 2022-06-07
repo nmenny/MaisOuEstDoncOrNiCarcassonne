@@ -8,6 +8,7 @@
 #include "GestionnaireMemoireEnvironnement.h"
 #include "Symbols.h"
 #include "Surface.h"
+#include "Batiment.h"
 
 /*! \namespace Carcassonne
 
@@ -49,6 +50,21 @@ namespace Carcassonne {
             }
 
             return GestionnaireMemoireEnvironnement<Pre>::getInstance()->fusionner(this, dynamic_cast<Pre*>(env));
+        }
+
+
+        /*!
+            \brief Indique si le pre courant peut etre adjacent a un autre
+            \param[in] envAdj Environnement adjacent dont on veut verifier la possibilite
+            \return <tt>true</tt> si le batiment courant peut etre adjacent a envAdj, <tt>false</tt> sinon
+            \note Un pre peut etre adjacent a un environnement de meme type ou un batiment
+        */
+        bool peutEtreAdjacentA(const Environnement* envAdj) override {
+            const Batiment* tmp = dynamic_cast<const Batiment*>(envAdj);
+            if(tmp == nullptr) {
+                return toChar() == envAdj->toChar();
+            }
+            return true;
         }
     };
 }

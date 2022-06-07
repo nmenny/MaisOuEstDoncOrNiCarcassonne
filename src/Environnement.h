@@ -92,6 +92,16 @@ namespace Carcassonne {
             \return L'element courant apres connection
         */
         virtual Environnement* connect(Environnement* env)=0;
+
+        /*!
+            \brief Indique si l'environnement courant peut etre adjacent a un autre
+            \param[in] envAdj Environnement adjacent dont on veut verifier la possibilite
+            \return <tt>true</tt> si l'environnement courant peut etre adjacent a envAdj, <tt>false</tt> sinon
+            \note Par defaut, seul des environnements identiques peuvent etre adjacents
+        */
+        virtual bool peutEtreAdjacentA(const Environnement* envAdj) {
+            return toChar() == envAdj->toChar();
+        }
     };
 
 }

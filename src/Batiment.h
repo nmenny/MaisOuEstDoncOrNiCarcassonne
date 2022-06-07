@@ -37,12 +37,23 @@ namespace Carcassonne {
             \brief Connecte le batiment courant a un autre
             \param[in] env L'environnement que l'on connecte
             \warning env peut etre desalloue a la fin de l'appel a la methode
-            \note Un batiment ne peut pas etre connecte a un autre
             \return L'element courant apres connection
+            \note Un batiment ne peut pas etre connecte a un autre
         */
         Batiment* connect(Environnement* env) override {
             UNUSED(env);
             return this;
+        }
+
+        /*!
+            \brief Indique si le batiment courant peut etre adjacent a un autre
+            \param[in] envAdj Environnement adjacent dont on veut verifier la possibilite
+            \return <tt>true</tt> si le batiment courant peut etre adjacent a envAdj, <tt>false</tt> sinon
+            \note Un batiment peut etre adjacent a n'importe quel autre environnement
+        */
+        bool peutEtreAdjacentA(const Environnement* envAdj) override {
+            UNUSED(envAdj);
+            return true;
         }
     };
 }

@@ -52,36 +52,36 @@ namespace Carcassonne {
             if(c.getY() - 1 >= 0 && plateau[c.getY() - 1][c.getX()] != nullptr) {
                 envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::nord);
                 envCmp = plateau[c.getY() - 1][c.getX()]->getEnvironnementsDansUneZone(zoneTuile::sud);
-                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
-                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
-                (envACmp[2]->toChar() == envCmp[2]->toChar());
+                verifCoord &= envACmp[0]->peutEtreAdjacentA(envCmp[0]) &&
+                envACmp[1]->peutEtreAdjacentA(envCmp[1]) &&
+                envACmp[2]->peutEtreAdjacentA(envCmp[2]);
             }
 
             // En bas
             if(c.getY() + 1 < NB_LIGNES_MAX && plateau[c.getY() + 1][c.getX()] != nullptr) {
                 envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::sud);
                 envCmp = plateau[c.getY() + 1][c.getX()]->getEnvironnementsDansUneZone(zoneTuile::nord);
-                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
-                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
-                (envACmp[2]->toChar() == envCmp[2]->toChar());
+                verifCoord &= envACmp[0]->peutEtreAdjacentA(envCmp[0]) &&
+                envACmp[1]->peutEtreAdjacentA(envCmp[1]) &&
+                envACmp[2]->peutEtreAdjacentA(envCmp[2]);
             }
 
             // a gauche
             if(c.getX() - 1 >= 0 && plateau[c.getY()][c.getX()-1] != nullptr) {
                 envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::ouest);
                 envCmp = plateau[c.getY()][c.getX()-1]->getEnvironnementsDansUneZone(zoneTuile::est);
-                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
-                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
-                (envACmp[2]->toChar() == envCmp[2]->toChar());
+                verifCoord &= envACmp[0]->peutEtreAdjacentA(envCmp[0]) &&
+                envACmp[1]->peutEtreAdjacentA(envCmp[1]) &&
+                envACmp[2]->peutEtreAdjacentA(envCmp[2]);
             }
 
             // a droite
             if(c.getX() + 1 < NB_COLONNES_MAX && plateau[c.getY()][c.getX()+1] != nullptr) {
                 envACmp = tuileCourante->getEnvironnementsDansUneZone(zoneTuile::est);
                 envCmp = plateau[c.getY()][c.getX()+1]->getEnvironnementsDansUneZone(zoneTuile::ouest);
-                verifCoord &= (envACmp[0]->toChar() == envCmp[0]->toChar()) &&
-                (envACmp[1]->toChar() == envCmp[1]->toChar()) &&
-                (envACmp[2]->toChar() == envCmp[2]->toChar());
+                verifCoord &= envACmp[0]->peutEtreAdjacentA(envCmp[0]) &&
+                envACmp[1]->peutEtreAdjacentA(envCmp[1]) &&
+                envACmp[2]->peutEtreAdjacentA(envCmp[2]);
             }
 
             if(verifCoord) {
