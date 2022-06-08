@@ -5,6 +5,8 @@
 #ifndef __INTERFACE_H__
 #define __INTERFACE_H__
 
+#include <string>
+
 #include "Plateau.h"
 #include "Joueur.h"
 #include "Joueurs.h"
@@ -16,6 +18,8 @@
     espace de nom regroupant tout ce qui est utilise pour le jeu
 */
 namespace Carcassonne {
+
+    enum class InterfaceError {indiceIncorrect};
 
     /*! \class Interface
         \brief Classe Interface reprensentant une Interface Utilisateur
@@ -64,12 +68,23 @@ namespace Carcassonne {
         */
         virtual void afficheGagnant(const int idxJoueur)=0;
 
+        /*!
+            \brief Affiche un message d'erreur
+            \param[in] err Le type d'erreur
+            \param[in] msg Le message d'erreur
+                <optionnel>
+        */
+        virtual void afficheMessageErreur(const InterfaceError& err, const std::string& msg = "")=0;
+
         // Acquisitions
 
-        /*! \brief Demande a l'utilisateur ou il souhaite poser une Tuile
-            \return L'indice de l'action a effectuer
+        /*! \brief Demande a l'utilisateur l'action qu'il souhaite realiser
+            \return Une chaine de caracteres reprensantant l'action a effectuer, peut etre soit :
+                - un nombre : indice de la position ou poser la Tuile
+                - "d" / "g" : demande de faire une rotation de la Tuile a droite / gauche
+                - "r" : demande de repiocher une nouvelle Tuile
         */
-        virtual size_t demanderOuPoser()=0;
+        virtual std::string demanderAction()=0;
 
         /*! \brief Demande a l'utilisateur s'il souhaite attribuer des points aux joueurs
             \param[in,out] j Les joueurs participant a la partie

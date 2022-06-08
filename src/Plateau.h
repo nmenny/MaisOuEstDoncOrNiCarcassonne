@@ -18,6 +18,8 @@
 */
 namespace Carcassonne {
 
+    class Jeu;
+
     using namespace std;
 
     /*! \class Plateau
@@ -39,6 +41,8 @@ namespace Carcassonne {
         array<array<const Tuile*, NB_COLONNES_MAX>, NB_LIGNES_MAX> plateau; /*!< Tableaux representant le plateau */
 
         Coordonnees emplacementsVidesJouables; /*!< Liste des coordonnees des emplacements vides jouables */
+
+        friend class Jeu;
 
 	public:
 
@@ -105,6 +109,14 @@ namespace Carcassonne {
         const Tuile* poserTuile(const Coordonnee& c);
 
     private:
+
+        /*!
+            \brief Recupere la tuile a poser
+            \return Pointeur sur la tuile a poser
+        */
+        Tuile* p_getTuile() const {
+            return tuileCourante;
+        }
 
         /*!
             \brief Calcule les emplacements vides autour d'une Tuile placee a des coordonnes donnees

@@ -26,6 +26,10 @@ namespace Carcassonne {
     }
 
     void Jeu::partie() {
+        std::string saisie;
+        int indiceJeu = -1;
+        bool actionPlacementValide = false;
+        bool tuileChangee = true;
 
         // Tant qu'il reste des Tuiles a jouer
         while(plateau.peutJouerDesTuiles())
@@ -34,28 +38,52 @@ namespace Carcassonne {
 
             interface.afficheJoueur(*joueurCourant);
 
-            // TODO : Piocher tant que l'on n'a pas une tuile posable
+            // Saisie utilisateur de l'action qu'il souhaite realiser
+            do {
+                actionPlacementValide = false;
 
-            interface.afficheTuileCourante(*plateau.getTuile());
+                if(tuileChangee) {
+                    interface.afficheTuileCourante(*plateau.getTuile());
 
-            recupEmplacementsJouables();
+                    recupEmplacementsJouables();
+                    interface.afficheEmplacementsJouables(emplacementJouables);
+                    tuileChangee = false;
+                }
 
-            interface.afficheEmplacementsJouables(emplacementJouables);
+                // Tant que l'utilisateur ne rentre pas une action viable, il doit refaire la saisie
 
-            size_t saisie = -1;
+                saisie = interface.demanderAction();
 
-            // Tant que l'utilisateur ne rentre pas une action viable, il doit refaire la saisie
-            while(true) {
-               try {
-                    saisie = interface.demanderOuPoser();
-               } catch(...) {}
+                if(saisie == "d") {
+                    plateau.p_getTuile()->rotation(directionRotation::droite);
+                    tuileChangee = true;
+                } else if(saisie == "g") {
+                    plateau.p_getTuile()->rotation(directionRotation::gauche);
+                    tuileChangee = true;
+                } else if(saisie == "r") {
+                    plateau.remettreTuile();
+                    tuileChangee = true;
+                } else {
+                    try {
+                        indiceJeu = std::stoi(saisie);
 
-               if(saisie < emplacementJouables.size()) {
-                  break;
-               }
-            }
+                        if(indiceJeu >= 0 && indiceJeu < static_cast<int>(emplacementJouables.size())) {
+                           actionPlacementValide = true;
+                        } else {
+                            interface.afficheMessageErreur(InterfaceError::indiceIncorrect, "N'est pas dans le bon interval !");
+                        }
 
-            placerTuile(saisie);
+                    } catch(...) {
+                        interface.afficheMessageErreur(InterfaceError::indiceIncorrect);
+                    }
+                }
+
+            } while(!actionPlacementValide);
+
+            //
+
+            placerTuile(indiceJeu);
+            tuileChangee = true;
 
             nextJoueur();
         }

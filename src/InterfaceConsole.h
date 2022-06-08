@@ -89,6 +89,22 @@ namespace Carcassonne {
             streamOut << "\n*** Felication au joueur " << (idxJoueur+1) << "!!! \n";
         }
 
+        /*!
+            \brief Affiche un message d'erreur
+            \param[in] err Le type d'erreur
+            \param[in] msg Le message d'erreur
+                <optionnel>
+        */
+        void afficheMessageErreur(const InterfaceError& err, const std::string& msg = "") {
+            switch(err) {
+            case InterfaceError::indiceIncorrect:
+                streamOut << "L'indice donne n'est pas correct ! " << msg << "\n";
+                break;
+            default:
+                streamOut << "Erreur generale : " << msg << "\n";
+            }
+        }
+
         /*! \brief Affiche le score
             \param[in] j Les joueurs participant a la partie
         */
@@ -110,20 +126,18 @@ namespace Carcassonne {
             }
         }
 
-        /*! \brief Demande a l'utilisateur ou il souhaite poser une Tuile
-            \return L'indice de l'action a effectuer
+        /*! \brief Demande a l'utilisateur l'action qu'il souhaite realiser
+            \return Une chaine de caracteres reprensantant l'action a effectuer, peut etre soit :
+                - un nombre : indice de la position ou poser la Tuile
+                - "d" / "g" : demande de faire une rotation de la Tuile a droite / gauche
+                - "r" : demande de repiocher une nouvelle Tuile
         */
-        size_t demanderOuPoser() override {
-           streamOut << "\nOu souhaitez-vous poser la tuile ?\n";
+        std::string demanderAction() override {
+           streamOut << "\nQue souhaitez-vous faire ?\n";
 
-           size_t saisie = 0;
+           std::string saisie;
 
-           try {
-                streamIn >> saisie;
-           } catch(...) {
-                streamOut << "La valeur rentree n'est pas correcte, recommencez... (on attend l'indice du coup que vous jouez)\n";
-                throw InterfaceException("Valeur saisie incorrecte !");
-           }
+            streamIn >> saisie;
 
             return saisie;
         }
