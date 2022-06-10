@@ -8,4 +8,7 @@ jeu
 Makefile
 makefile
 *.stash
+*.user
 doc/
+bin/
+obj/

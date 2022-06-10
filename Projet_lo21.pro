@@ -24,3 +24,36 @@ SOURCES += src/Jeu.cpp \
            src/Plateau.cpp \
            src/Tuile.cpp \
            src/Utils.cpp
+
+HEADERS += \
+    src/Abbaye.h \
+    src/Batiment.h \
+    src/CarcassonneException.h \
+    src/Chemin.h \
+    src/Coordonnee.h \
+    src/Environnement.h \
+    src/EnvironnementFactory.h \
+    src/GestionnaireMemoireEnvironnement.h \
+    src/GestionnaireMemoireMeeple.h \
+    src/Interface.h \
+    src/InterfaceConsole.h \
+    src/Jardin.h \
+    src/Jeu.h \
+    src/Joueur.h \
+    src/Joueurs.h \
+    src/Personnages.h \
+    src/Pioche.h \
+    src/Plateau.h \
+    src/Pre.h \
+    src/Riviere.h \
+    src/Route.h \
+    src/Surface.h \
+    src/Symbols.h \
+    src/Tuile.h \
+    src/Utils.h \
+    src/Ville.h \
+    src/types.h
+
+DISTFILES += \
+    data/allTuiles.csv \
+    data/allTuiles2.csv
