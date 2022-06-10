@@ -91,6 +91,13 @@ namespace Carcassonne {
         */
         virtual void demanderPointsAAttribuer(Joueurs& j)=0;
 
+        /*! \brief Demande a l'utilisateur s'il souhaite poser un meeple sur la tuile qui vient d'être posee sur le plateau et
+                sur quel environnement il veut le poser
+            \param[in] c Les coordonnees que le jeu propose pour poser les Meeples (Coordonees par rapport a la tuile)
+            \return L'indice dans les coordonnees ou le joueur veut poser le meeple, ou -1 s'il ne souhaite pas en poser
+        */
+        virtual int demanderPoserMeeples(const Coordonnees& c)=0;
+
     };
 
 }

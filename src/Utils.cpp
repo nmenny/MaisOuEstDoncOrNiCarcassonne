@@ -25,4 +25,12 @@ namespace Carcassonne {
         return champs;
     }
 
+    string toLowerCase(const string& str) {
+        string res = "";
+        for(const char c : str) {
+            res += tolower(c);
+        }
+        return res;
+    }
+
 }

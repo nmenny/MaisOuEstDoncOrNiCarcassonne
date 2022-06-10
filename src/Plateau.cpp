@@ -7,8 +7,6 @@
 
 namespace Carcassonne {
 
-    static const string chaineCaseVide = "         ";
-
 	void Plateau::affiche(ostream& f) const {
 
         vector<string> ligne;
@@ -20,7 +18,7 @@ namespace Carcassonne {
             for(auto column : line) {
                 // Si la colonne est vide, on met un espacement
                 if(column == nullptr) {
-                    ligne.push_back(chaineCaseVide);
+                    ligne.push_back(Tuile::TUILE_VIDE_STR);
                 } else {
                     // Sinon, on converti la Tuile en chaine de caracteres
                     ligne.push_back(column->toString(true));
@@ -28,10 +26,10 @@ namespace Carcassonne {
             }
 
             size_t idxLine = 0;
-            // On affiche sur 3 lignes les tuiles
-            for(; idxLine < Tuile::NB_ZONES; idxLine += 3) {
-                for(string col : ligne) {
-                    f << col.substr(idxLine, 3);
+            // On affiche sur NB_ENV_LIGNE lignes les tuiles
+            for(; idxLine < Tuile::NB_ZONES; idxLine += Tuile::NB_ENV_COL) {
+                for(string tuileStr : ligne) {
+                    f << tuileStr.substr(idxLine, Tuile::NB_ENV_COL);
                 }
                 f << "\n";
             }
@@ -46,7 +44,7 @@ namespace Carcassonne {
         for(Coordonnee c : emplacementsVidesJouables) {
 
             bool verifCoord = true;
-            array<Environnement*, 3> envACmp, envCmp;
+            array<Environnement*, Tuile::NB_ZONES_BORDURE> envACmp, envCmp;
 
             // En haut
             if(c.getY() - 1 >= 0 && plateau[c.getY() - 1][c.getX()] != nullptr) {

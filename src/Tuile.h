@@ -37,6 +37,24 @@ namespace Carcassonne {
         ouest /*!< Zone ouest */
     };
 
+    /*! \enum extensions
+        \brief Les differentes extensions du jeu
+    */
+    enum class extensions {
+        Base,
+        Riviere
+    };
+
+    /*! \enum specificiteTuile
+        \brief Les specificites liees a une Tuile (ex: Tuile de demarrage, ..)
+    */
+    enum class specificiteTuile {
+        Aucune,
+        Bouclier,
+        Demarrage,
+        Fin
+    };
+
     class Environnement;
     class Meeple;
 
@@ -49,7 +67,8 @@ namespace Carcassonne {
 
     private:
         const string idString = ""; /*!< Chaine contenant l'identifiant de la Tuile */
-        string idExtension = ""; /*!< Chaine contenant l'extension a laquelle appartient la Tuile */
+        extensions idExtension; /*!< L'extension a laquelle appartient la Tuile */
+        specificiteTuile specif; /*!< La specificite de la Tuile */
         int nbTuile; /*!< Le numero de la Tuile */
 
         /*! \brief Constructeur de la classe
@@ -60,19 +79,39 @@ namespace Carcassonne {
         /*! \brief Destructeur de la classe */
         ~IdentificateurTuile()=default;
 
+        /*!
+            \brief Recupere l'extension a partir d'une chaine de caracteres
+            \param[in] ext La chaine de caracteres representant l'extension d'une Tuile
+            \return L'extension de la Tuile
+        */
+        extensions extractExtension(const string& ext);
+
+        /*!
+            \brief Recupere la specificite a partir d'une chaine de caracteres
+            \param[in] spe La chaine de caracteres representant la specificite d'une Tuile
+            \return La specificite de la Tuile
+        */
+        specificiteTuile extractSpecif(const string& spe);
+
     public:
 
         /*!
             \brief Recupere l'identifiant de la Tuile
             \return Identifiant de la Tuile
         */
-        const string& getId() const { return idString; }
+        const string& getStringId() const { return idString; }
 
         /*!
             \brief Recupere l'extension a laquelle appartient la tuile
             \return Extension de la Tuile
         */
-        const string& getExtension() const { return idExtension; }
+        const extensions& getExtension() const { return idExtension; }
+
+        /*!
+            \brief Recupere la specificite de la Tuile
+            \return Specificite de la Tuile
+        */
+        const specificiteTuile& getSpecificite() const { return specif; }
 
         /*!
             \brief Recupere le numero de la Tuile
@@ -88,7 +127,11 @@ namespace Carcassonne {
     class Tuile {
     public:
 
-        static const size_t NB_ZONES = 9; /*!< Nombre de zones sur une Tuile */
+        static const size_t NB_ENV_COL = 3; /*!< Nombre d'environnements sur une colonne */
+        static const size_t NB_ENV_LIGNE = 5; /*!< Nombre d'environnements sur une ligne */
+        static constexpr size_t NB_ZONES = NB_ENV_COL * NB_ENV_LIGNE; /*!< Nombre de zones sur une Tuile */
+        static const size_t NB_ZONES_BORDURE = 3; /*!< Nombre de zones en bordure d'une Tuile */
+        static const string TUILE_VIDE_STR; /*!< Represente une Tuile vide sous forme de chaine de caracteres */
 
     private:
 
@@ -133,11 +176,11 @@ namespace Carcassonne {
         string toString(bool isinline=false) const;
 
         /*!
-            \brief Recupere les 3 environnements sur une bordure de la Tuile
+            \brief Recupere les NB_ZONES_BORDURE environnements sur une bordure de la Tuile
             \param[in] d La zone que l'on recupere dans la tuile
             \return Un tableau contenant des pointeurs sur les environnements adjacents
         */
-        array<Environnement*, 3> getEnvironnementsDansUneZone(const zoneTuile& d) const;
+        array<Environnement*, NB_ZONES_BORDURE> getEnvironnementsDansUneZone(const zoneTuile& d) const;
 
         /*!
             \brief Fait une rotation de la Tuile

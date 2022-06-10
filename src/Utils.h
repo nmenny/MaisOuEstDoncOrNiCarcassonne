@@ -24,6 +24,13 @@ namespace Carcassonne {
     */
     vector<string> splitString(const string& chaine, const char& sep);
 
+    /*!
+        \brief Converti une chaine de caracteres en minuscule
+        \param[in] str Chaine a convertir en minuscule
+        \return La chaine passee en argument en minuscule
+    */
+    string toLowerCase(const string& str);
+
 }
 
 #endif // __UTILS_H__

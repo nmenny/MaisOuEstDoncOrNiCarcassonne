@@ -77,6 +77,18 @@ namespace Carcassonne {
         }
 
         /*!
+            \brief Recupere une ligne entiere du plateau
+            \param[in] y Numero de ligne a recuperer (0 : haut du plateau)
+            \return Reference sur la ligne du plateau
+        */
+        const array<const Tuile*, NB_COLONNES_MAX>& getLigneDeTuiles(size_t y) {
+            if(y < 0 || y >= NB_LIGNES_MAX) {
+                throw PlateauException("Erreur, tente de recuperer une ligne qui est hors du plateau !");
+            }
+            return plateau[y];
+        }
+
+        /*!
             \brief Remet la Tuile courante dans la pioche
         */
         void remettreTuile() {
