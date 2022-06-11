@@ -55,10 +55,10 @@ namespace Carcassonne {
                 saisie = interface.demanderAction();
 
                 if(saisie == "d" || saisie == "D") {
-                    //plateau.p_getTuile()->rotation(directionRotation::droite);
+                    plateau.p_getTuile()->rotation(directionRotation::droite);
                     tuileChangee = true;
                 } else if(saisie == "g" || saisie == "G") {
-                    //plateau.p_getTuile()->rotation(directionRotation::gauche);
+                    plateau.p_getTuile()->rotation(directionRotation::gauche);
                     tuileChangee = true;
                 } else if(saisie == "r" || saisie == "R") {
                     plateau.remettreTuile();

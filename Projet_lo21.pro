@@ -17,6 +17,15 @@ QT += widgets
 
 # Input
 SOURCES += src/Jeu.cpp \
+           src/InterfaceActions.cpp \
+           src/InterfaceConsole.cpp \
+           src/InterfaceCouleurJoueur.cpp \
+           src/InterfaceJeu.cpp \
+           src/InterfaceJoueur.cpp \
+           src/InterfaceJoueurs.cpp \
+           src/InterfacePioche.cpp \
+           src/InterfacePlateau.cpp \
+           src/InterfaceTuile.cpp \
            src/Joueur.cpp \
            src/Joueurs.cpp \
            src/Main.cpp \
@@ -36,7 +45,17 @@ HEADERS += \
     src/GestionnaireMemoireEnvironnement.h \
     src/GestionnaireMemoireMeeple.h \
     src/Interface.h \
+    src/InterfaceActions.h \
     src/InterfaceConsole.h \
+    src/InterfaceCouleurJoueur.h \
+    src/InterfaceJeu.h \
+    src/InterfaceJoueur.h \
+    src/InterfaceJoueurs.h \
+    src/InterfacePersonnages.h \
+    src/InterfacePioche.h \
+    src/InterfacePlateau.h \
+    src/InterfaceTuile.h \
+    src/InterfaceVariables.h \
     src/Jardin.h \
     src/Jeu.h \
     src/Joueur.h \

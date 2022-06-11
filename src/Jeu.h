@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Coordonnee.h"
+#include "Plateau.h"
 #include "Interface.h"
 
 #include <iostream>

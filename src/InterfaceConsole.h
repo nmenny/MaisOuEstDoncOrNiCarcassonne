@@ -41,16 +41,7 @@ namespace Carcassonne {
         /*! \brief Affiche a l'utilisateur les emplacements ou il peut poser une Tuile
             \param[in] c La liste des coordonnees ou des Tuiles peuvent etre posees
         */
-        void afficheEmplacementsJouables(const Coordonnees& c) override {
-            streamOut << "\nVoici les coups jouables:\n";
-            streamOut << "idxCoup => (x ; y)\n";
-            // Parcours tous les emplacements jouables
-            for(size_t emplacementIdx = 0; emplacementIdx < c.size(); emplacementIdx++) {
-                // Affiche chaque action possible
-                streamOut << emplacementIdx << " => ";
-                c[emplacementIdx].affiche(streamOut);
-            }
-        }
+        void afficheEmplacementsJouables(const Coordonnees& c) override;
 
         /*! \brief Affiche les donnees liees a un joueur
             \param[in] j Le joueur a afficher
@@ -95,36 +86,12 @@ namespace Carcassonne {
             \param[in] msg Le message d'erreur
                 <optionnel>
         */
-        void afficheMessageErreur(const InterfaceError& err, const std::string& msg = "") {
-            switch(err) {
-            case InterfaceError::indiceIncorrect:
-                streamOut << "L'indice donne n'est pas correct ! " << msg << "\n";
-                break;
-            default:
-                streamOut << "Erreur generale : " << msg << "\n";
-            }
-        }
+        void afficheMessageErreur(const InterfaceError& err, const std::string& msg = "") override;
 
         /*! \brief Affiche le score
             \param[in] j Les joueurs participant a la partie
         */
-        void afficheScore(const Joueurs& j) override {
-            streamOut << "| Joueurs | Points |\n";
-            // Parcours l'ensemble des joueurs
-            for(int idxJoueur = 0; idxJoueur < j.getNbJoueurs(); idxJoueur++) {
-                streamOut << "|    " << idxJoueur << "    |";
-                // Calcul la longueur (en nombre de caracteres) du score
-                int lgScore = to_string(j.getJoueur(idxJoueur)->getScore()).size();
-
-                // Affiche suffisament d'espace pour preserver le formattage
-                for(; lgScore < 8; lgScore++) {
-                    streamOut << " ";
-                }
-
-                // Affiche le score
-                streamOut << j.getJoueur(idxJoueur)->getScore() << "|\n";
-            }
-        }
+        void afficheScore(const Joueurs& j) override;
 
         /*! \brief Demande a l'utilisateur l'action qu'il souhaite realiser
             \return Une chaine de caracteres reprensantant l'action a effectuer, peut etre soit :
@@ -132,47 +99,20 @@ namespace Carcassonne {
                 - "d" / "g" : demande de faire une rotation de la Tuile a droite / gauche
                 - "r" : demande de repiocher une nouvelle Tuile
         */
-        std::string demanderAction() override {
-           streamOut << "\nQue souhaitez-vous faire ?\n";
-
-           std::string saisie;
-
-            streamIn >> saisie;
-
-            return saisie;
-        }
+        std::string demanderAction() override;
 
 
         /*! \brief Demande a l'utilisateur s'il souhaite attribuer des points aux joueurs
             \param[in,out] j Les joueurs participant a la partie
         */
-        void demanderPointsAAttribuer(Joueurs& j) override {
-            streamOut << "\nY'a-t'il encore des points a attribuer ?(Y/N)\n";
-
-            char c;
-
-            streamIn >> c;
-
-            if(c == 'Y' || c == 'y') {
-                int pts;
-                // Parcours tous les joueurs
-                for(int idxJoueur = 0; idxJoueur < j.getNbJoueurs(); idxJoueur++) {
-                    // Demande, pour chaque joueur, la valeur d'increment du score
-                    streamOut << "Points pour le joueur " << (idxJoueur + 1) << ":\n";
-                    streamIn >> pts;
-                    j.getJoueur(idxJoueur)->incrementScore(pts);
-                }
-            }
-        }
+        void demanderPointsAAttribuer(Joueurs& j) override;
 
         /*! \brief Demande a l'utilisateur s'il souhaite poser un meeple sur la tuile qui vient d'être posee sur le plateau et
                 sur quel environnement il veut le poser
             \param[in] c Les coordonnees que le jeu propose pour poser les Meeples (Coordonees par rapport a la tuile)
             \return L'indice dans les coordonnees ou le joueur veut poser le meeple, ou -1 s'il ne souhaite pas en poser
         */
-        int demanderPoserMeeples(const Coordonnees& c) override {
-            return -1;
-        }
+        int demanderPoserMeeples(const Coordonnees& c) override;
 
     };
 

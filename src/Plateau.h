@@ -29,8 +29,8 @@ namespace Carcassonne {
 
     public:
 
-        static const int NB_LIGNES_MAX = 5; /*!< Nombre de lignes du plateau au maximum */
-        static const int NB_COLONNES_MAX = 5; /*!< Nombre de colonnes du plateau au maximum */
+        static const int NB_LIGNES_MAX = 30; /*!< Nombre de lignes du plateau au maximum */
+        static const int NB_COLONNES_MAX = 30; /*!< Nombre de colonnes du plateau au maximum */
 
 	private:
 
@@ -82,7 +82,7 @@ namespace Carcassonne {
             \return Reference sur la ligne du plateau
         */
         const array<const Tuile*, NB_COLONNES_MAX>& getLigneDeTuiles(size_t y) {
-            if(y < 0 || y >= NB_LIGNES_MAX) {
+            if(y >= NB_LIGNES_MAX) {
                 throw PlateauException("Erreur, tente de recuperer une ligne qui est hors du plateau !");
             }
             return plateau[y];

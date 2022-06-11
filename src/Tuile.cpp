@@ -162,24 +162,24 @@ namespace Carcassonne {
 
         switch(d) {
         case zoneTuile::nord:
-            res[0] = surfaces[0];
-            res[1] = surfaces[1];
-            res[2] = surfaces[2];
+            for(size_t idxBordure = 0; idxBordure < Tuile::NB_ZONES_BORDURE; idxBordure++) {
+                res[idxBordure] = surfaces[idxBordure+1];
+            }
         break;
         case zoneTuile::sud:
-            res[0] = surfaces[12];
-            res[1] = surfaces[13];
-            res[2] = surfaces[14];
+            for(size_t idxBordure = 0; idxBordure < Tuile::NB_ZONES_BORDURE; idxBordure++) {
+                res[idxBordure] = surfaces[Tuile::NB_ENV_COL * (Tuile::NB_ENV_LIGNE-1) + idxBordure + 1];
+            }
         break;
         case zoneTuile::est:
-            res[0] = surfaces[5];
-            res[1] = surfaces[8];
-            res[2] = surfaces[11];
+            for(size_t idxBordure = 0; idxBordure < Tuile::NB_ZONES_BORDURE; idxBordure++) {
+                res[idxBordure] = surfaces[(1+idxBordure) * Tuile::NB_ENV_COL + Tuile::NB_ENV_COL - 1];
+            }
         break;
         case zoneTuile::ouest:
-            res[0] = surfaces[3];
-            res[1] = surfaces[6];
-            res[2] = surfaces[9];
+            for(size_t idxBordure = 0; idxBordure < Tuile::NB_ZONES_BORDURE; idxBordure++) {
+                res[idxBordure] = surfaces[(1+idxBordure) * Tuile::NB_ENV_COL];
+            }
         break;
         }
 

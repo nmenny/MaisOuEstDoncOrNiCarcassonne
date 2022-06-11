@@ -1,9 +1,9 @@
-/*! \file Interface.h
+/*!
+    \file Interface.h
     \version 0.1
 */
-
-#ifndef __INTERFACE_H__
-#define __INTERFACE_H__
+#ifndef INTERFACE_H
+#define INTERFACE_H
 
 #include <string>
 
@@ -91,7 +91,7 @@ namespace Carcassonne {
         */
         virtual void demanderPointsAAttribuer(Joueurs& j)=0;
 
-        /*! \brief Demande a l'utilisateur s'il souhaite poser un meeple sur la tuile qui vient d'être posee sur le plateau et
+        /*! \brief Demande a l'utilisateur s'il souhaite poser un meeple sur la tuile qui vient d'ï¿½tre posee sur le plateau et
                 sur quel environnement il veut le poser
             \param[in] c Les coordonnees que le jeu propose pour poser les Meeples (Coordonees par rapport a la tuile)
             \return L'indice dans les coordonnees ou le joueur veut poser le meeple, ou -1 s'il ne souhaite pas en poser
@@ -102,4 +102,5 @@ namespace Carcassonne {
 
 }
 
-#endif // __INTERFACE_H__
+
+#endif // INTERFACE_H

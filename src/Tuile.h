@@ -127,10 +127,10 @@ namespace Carcassonne {
     class Tuile {
     public:
 
-        static const size_t NB_ENV_COL = 3; /*!< Nombre d'environnements sur une colonne */
-        static const size_t NB_ENV_LIGNE = 5; /*!< Nombre d'environnements sur une ligne */
+        static const size_t NB_ENV_COL = 7; /*!< Nombre d'environnements sur une colonne */
+        static const size_t NB_ENV_LIGNE = 7; /*!< Nombre d'environnements sur une ligne */
         static constexpr size_t NB_ZONES = NB_ENV_COL * NB_ENV_LIGNE; /*!< Nombre de zones sur une Tuile */
-        static const size_t NB_ZONES_BORDURE = 3; /*!< Nombre de zones en bordure d'une Tuile */
+        static const size_t NB_ZONES_BORDURE = 5; /*!< Nombre de zones en bordure d'une Tuile */
         static const string TUILE_VIDE_STR; /*!< Represente une Tuile vide sous forme de chaine de caracteres */
 
     private:

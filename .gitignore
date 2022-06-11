@@ -9,6 +9,7 @@ Makefile
 makefile
 *.stash
 *.user
+*.qtds
 doc/
 bin/
 obj/
