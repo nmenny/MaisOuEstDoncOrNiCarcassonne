@@ -13,3 +13,4 @@ makefile
 doc/
 bin/
 obj/
+build/
