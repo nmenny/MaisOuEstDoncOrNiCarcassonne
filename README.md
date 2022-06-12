@@ -34,13 +34,11 @@ Il est possible d'utiliser **QT Creator**.
 ### Compiler l'application
 
 Le fichier [Projet_carcassonne.pro](#Projet_carcassonne.pro) contient les instructions afin de créer le Makefile qui permettra de compiler l'application. Pour ce faire, il faut faire appel à la commande suivante :
-
 ```
 qmake6
 ```
 
 Puis, une fois le fichier `Makefile` créé, il suffit de taper la commande suivante pour compiler l'entièreté de l'application :
-
 ```
 make
 ```
