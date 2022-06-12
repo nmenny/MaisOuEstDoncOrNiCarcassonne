@@ -2,6 +2,8 @@
 #define __INTERFACEPIOCHE_H__
 
 #include <QWidget>
+#include "Tuile.h"
+#include "InterfaceTuile.h"
 
 class QLabel;
 class QProgressBar;
@@ -11,10 +13,8 @@ class QPushButton;
 
 namespace Carcassonne {
 
-    class InterfaceTuile;
-    class Tuile;
-
     class InterfacePioche : public QWidget {
+        Q_OBJECT
     public:
     private:
         QProgressBar* nbTuilesRestantes;
@@ -34,6 +34,37 @@ namespace Carcassonne {
         void retirerElementDePioche();
 
         void setNbTuilesDansPioche(int nbTuiles);
+
+        void initNbTuiles(int nbTuiles);
+
+        InterfaceTuile* getTuileCour() const { return tuilePioche; }
+
+        void rotateTuile(directionRotation d) {
+            switch(d) {
+            case directionRotation::droite:
+                tuilePioche->rotate(90);
+                break;
+            case directionRotation::gauche:
+                tuilePioche->rotate(-90);
+            }
+        }
+
+    signals:
+        void sig_rotationTuile(Carcassonne::directionRotation);
+        void sig_repiocher();
+
+    private slots:
+        void evtRotGaHandler() {
+            emit sig_rotationTuile(directionRotation::gauche);
+        }
+
+        void evtRotDrHandler() {
+            emit sig_rotationTuile(directionRotation::droite);
+        }
+
+        void evtRepiocherHandler() {
+            emit sig_repiocher();
+        }
 
     };
 

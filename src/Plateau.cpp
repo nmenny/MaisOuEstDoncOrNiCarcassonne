@@ -38,10 +38,10 @@ namespace Carcassonne {
 
 	}
 
-	Coordonnees Plateau::getEmplacementsOuPeutPoser() {
+    Coordonnees Plateau::getEmplacementsOuPeutPoser() {
         Coordonnees coordsOk;
 
-        for(Coordonnee c : emplacementsVidesJouables) {
+        for(const Coordonnee c : emplacementsVidesJouables) {
 
             bool verifCoord = true;
             array<Environnement*, Tuile::NB_ZONES_BORDURE> envACmp, envCmp;
@@ -90,6 +90,19 @@ namespace Carcassonne {
 
         return coordsOk;
 	}
+
+    Coordonnees Plateau::getEmplacementOuPeutPoserMeeple(const Coordonnee& coordTuile) const {
+        Coordonnees coordsOk;
+        if(coordTuile.getX() < 0 || coordTuile.getX() >= static_cast<int>(NB_COLONNES_MAX) || coordTuile.getY() < 0 || coordTuile.getY() >= static_cast<int>(NB_LIGNES_MAX)) {
+            throw PlateauException("Erreur, essaie d'acceder a une Tuile hors du plateau !");
+        }
+        if(plateau[coordTuile.getY()][coordTuile.getX()] == nullptr) {
+            throw PlateauException("Erreur, essaie d'acceder a un emplacement sans tuile !");
+        }
+        Coordonnees cPosables = plateau[coordTuile.getY()][coordTuile.getX()]->recupEmplacementsOuMeeplesPosables();
+
+        return cPosables;
+    }
 
 	void Plateau::getEmplacementsVidesAutourDeTuile(int x, int y) {
         // Si l'element courant est une tuile, on peut verifier que l'on peut poser autour d'elle
@@ -141,10 +154,14 @@ namespace Carcassonne {
         // recupere les emplacements vides autour de la tuile posee
         getEmplacementsVidesAutourDeTuile(c.getX(), c.getY());
 
-        // On pioche la suivante
-        tuileCourante = pioche.piocher();
-
-        return plateau[c.getY()][c.getX()];
+        return tuileCourante;
 
 	}
+
+    const Meeple* Plateau::poserMeeple(Meeple* m, Environnement* env) {
+        if(tuileCourante->peutPoserMeepleDessus(env) && m != nullptr) {
+            tuileCourante->poserMeeple(*env, *m);
+        }
+        return m;
+    }
 }

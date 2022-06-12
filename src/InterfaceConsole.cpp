@@ -65,7 +65,7 @@ namespace Carcassonne {
                 // Demande, pour chaque joueur, la valeur d'increment du score
                 streamOut << "Points pour le joueur " << (idxJoueur + 1) << ":\n";
                 streamIn >> pts;
-                j.getJoueur(idxJoueur)->incrementScore(pts);
+                j.getJoueur(idxJoueur)->setScore(pts);
             }
         }
     }

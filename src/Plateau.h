@@ -7,7 +7,10 @@
 
 #include <iostream>
 #include <array>
+#include <vector>
 
+#include "Extensions.h"
+#include "Personnages.h"
 #include "Coordonnee.h"
 #include "Pioche.h"
 #include "CarcassonneException.h"
@@ -18,7 +21,7 @@
 */
 namespace Carcassonne {
 
-    class Jeu;
+    class JeuConsole;
 
     using namespace std;
 
@@ -42,7 +45,9 @@ namespace Carcassonne {
 
         Coordonnees emplacementsVidesJouables; /*!< Liste des coordonnees des emplacements vides jouables */
 
-        friend class Jeu;
+        friend class JeuConsole;
+
+        std::vector<extensions> ext;
 
 	public:
 
@@ -51,10 +56,11 @@ namespace Carcassonne {
 
             Pose automatiquement une tuile au centre du plateau
         */
-        Plateau() {
+        Plateau(std::vector<extensions> extensionListe) : pioche(extensionListe), ext(extensionListe) {
             initPlateau();
-            tuileCourante = pioche.piocher();
+            nextTuile();
             poserTuile(Coordonnee(NB_COLONNES_MAX / 2, NB_LIGNES_MAX / 2));
+            nextTuile();
         };
 
         /*! \brief Destructeur de la classe */
@@ -76,12 +82,30 @@ namespace Carcassonne {
             return tuileCourante;
         }
 
+        void nextTuile() {
+            tuileCourante = pioche.piocher();
+        }
+
+        void tournerTuileDroite() {
+            if(tuileCourante == nullptr) {
+                throw TuileException("Ne peut pas faire tourner une tuile vide !!");
+            }
+            tuileCourante->rotation(directionRotation::droite);
+        }
+
+        void tournerTuileGauche() {
+            if(tuileCourante == nullptr) {
+                throw TuileException("Ne peut pas faire tourner une tuile vide !!");
+            }
+            tuileCourante->rotation(directionRotation::gauche);
+        }
+
         /*!
             \brief Recupere une ligne entiere du plateau
             \param[in] y Numero de ligne a recuperer (0 : haut du plateau)
             \return Reference sur la ligne du plateau
         */
-        const array<const Tuile*, NB_COLONNES_MAX>& getLigneDeTuiles(size_t y) {
+        const array<const Tuile*, NB_COLONNES_MAX>& getLigneDeTuiles(size_t y) const {
             if(y >= NB_LIGNES_MAX) {
                 throw PlateauException("Erreur, tente de recuperer une ligne qui est hors du plateau !");
             }
@@ -113,6 +137,8 @@ namespace Carcassonne {
         */
         Coordonnees getEmplacementsOuPeutPoser();
 
+        Coordonnees getEmplacementOuPeutPoserMeeple(const Coordonnee& coordTuile) const;
+
         /*!
             \brief Pose la tuile courante a des coordonnees specifiques
             \param[in] c Coordonnee ou la Tuile va etre posee
@@ -120,7 +146,10 @@ namespace Carcassonne {
         */
         const Tuile* poserTuile(const Coordonnee& c);
 
+        const Meeple* poserMeeple(Meeple* m, Environnement* env);
+
     private:
+
 
         /*!
             \brief Recupere la tuile a poser

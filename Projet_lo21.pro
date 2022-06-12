@@ -4,7 +4,8 @@
 
 TEMPLATE = app
 TARGET = jeu
-OBJECTS_DIR   = ./obj/
+OBJECTS_DIR   = ./build/obj
+MOC_DIR       = ./build/moc
 INCLUDEPATH += . src
 QT += widgets
 
@@ -17,9 +18,11 @@ QT += widgets
 
 # Input
 SOURCES += src/Jeu.cpp \
+           src/Extensions.cpp \
            src/InterfaceActions.cpp \
            src/InterfaceConsole.cpp \
            src/InterfaceCouleurJoueur.cpp \
+           src/InterfaceEnvironnement.cpp \
            src/InterfaceJeu.cpp \
            src/InterfaceJoueur.cpp \
            src/InterfaceJoueurs.cpp \
@@ -35,19 +38,22 @@ SOURCES += src/Jeu.cpp \
            src/Utils.cpp
 
 HEADERS += \
-    src/Abbaye.h \
     src/Batiment.h \
     src/CarcassonneException.h \
     src/Chemin.h \
     src/Coordonnee.h \
     src/Environnement.h \
     src/EnvironnementFactory.h \
+    src/EnvironnementVide.h \
+    src/Extensions.h \
     src/GestionnaireMemoireEnvironnement.h \
     src/GestionnaireMemoireMeeple.h \
-    src/Interface.h \
+    src/GestionnairesMemoire.h \
+    src/InterfaceAccueil.h \
     src/InterfaceActions.h \
     src/InterfaceConsole.h \
     src/InterfaceCouleurJoueur.h \
+    src/InterfaceEnvironnement.h \
     src/InterfaceJeu.h \
     src/InterfaceJoueur.h \
     src/InterfaceJoueurs.h \
@@ -56,23 +62,17 @@ HEADERS += \
     src/InterfacePlateau.h \
     src/InterfaceTuile.h \
     src/InterfaceVariables.h \
-    src/Jardin.h \
     src/Jeu.h \
     src/Joueur.h \
     src/Joueurs.h \
     src/Personnages.h \
     src/Pioche.h \
     src/Plateau.h \
-    src/Pre.h \
-    src/Riviere.h \
-    src/Route.h \
     src/Surface.h \
     src/Symbols.h \
     src/Tuile.h \
     src/Utils.h \
-    src/Ville.h \
+    src/const.h \
     src/types.h
 
-DISTFILES += \
-    data/allTuiles.csv \
-    data/allTuiles2.csv
+DISTFILES += data/tuiles.csv

@@ -9,7 +9,10 @@
 #include <array>
 #include <iostream>
 
+#include "Extensions.h"
 #include "Coordonnee.h"
+#include "CarcassonneException.h"
+#include "Environnement.h"
 
 using namespace std;
 
@@ -35,14 +38,6 @@ namespace Carcassonne {
         sud, /*!< Zone sud */
         est, /*!< Zone est */
         ouest /*!< Zone ouest */
-    };
-
-    /*! \enum extensions
-        \brief Les differentes extensions du jeu
-    */
-    enum class extensions {
-        Base,
-        Riviere
     };
 
     /*! \enum specificiteTuile
@@ -159,6 +154,10 @@ namespace Carcassonne {
             return idTuile;
         }
 
+        bool aMeepleDessus() const {
+            return environnementAvecMeeple != nullptr;
+        }
+
         /*!
             \brief Affiche la tuile dans un stream
             \param[in,out] f Le stream dans lequel est affiche la Tuile
@@ -174,6 +173,20 @@ namespace Carcassonne {
             \return Une Tuile sous forme de chaine de caracteres
         */
         string toString(bool isinline=false) const;
+
+        Meeple* getMeeple() const {
+            if(environnementAvecMeeple != nullptr) {
+                return environnementAvecMeeple->getMeeple();
+            }
+            return nullptr;
+        }
+
+        Environnement* getEnvironnement(const Coordonnee& c) const {
+            if(c.getX() < 0 || c.getX() >= static_cast<int>(NB_ENV_COL) || c.getY() < 0 || c.getY() >= static_cast<int>(NB_ENV_LIGNE)) {
+                throw TuileException("Erreur, pas d'environnements ici !");
+            }
+            return surfaces[c.getY() * NB_ENV_COL + c.getX()];
+        }
 
         /*!
             \brief Recupere les NB_ZONES_BORDURE environnements sur une bordure de la Tuile
@@ -214,6 +227,12 @@ namespace Carcassonne {
             fusionnerEnvironnementsAdjacentsRec(x, y, envDiff, parcours);
 
             delete parcours;
+        }
+
+        Coordonnees recupEmplacementsOuMeeplesPosables() const;
+
+        bool peutPoserMeepleDessus(Environnement* e) const {
+            return (e->peutPoserMeeple()) && (environnementAvecMeeple == nullptr);
         }
 
     private:

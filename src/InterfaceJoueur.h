@@ -2,6 +2,7 @@
 #define __INTERFACEJOUEUR_H__
 
 #include <QWidget>
+#include "InterfaceCouleurJoueur.h"
 
 class QLabel;
 class QSpinBox;
@@ -10,15 +11,14 @@ class QHBoxLayout;
 
 namespace Carcassonne {
 
-    class InterfaceMeeple;
-
     class InterfaceJoueur : public QWidget {
+        Q_OBJECT
     public:
     private:
         size_t num;
         QLabel* nomJoueur;
         QSpinBox* champPts;
-        InterfaceMeeple* cercleCouleurJoueur;
+        InterfaceCouleurJoueur* cercleCouleurJoueur;
         QVBoxLayout* layoutPrincipal;
         QHBoxLayout* layoutDetailJoueur;
     public:
@@ -32,6 +32,10 @@ namespace Carcassonne {
         void setPoints(int pts);
 
         size_t getNum() const { return num; }
+
+        int getScore();
+
+        void modifOk();
     };
 
 }

@@ -62,6 +62,21 @@ namespace Carcassonne {
         */
         size_t getNbBasicMeeples() const { return listeBasicMeeples.size(); }
 
+        size_t getNbAbbe() const {
+            if(aAbbe()) {
+                return 1;
+            }
+            return 0;
+        }
+
+        size_t getNbGrandMeeple() const {
+            if(aGrandMeeple()) {
+                return 1;
+            }
+            return 0;
+        }
+
+
         /*! \brief Le joueur possede-t'il un grand meeple ?
             \return <tt>true</tt> si le joueur a un grand meeple, <tt>false</tt> sinon
         */
@@ -72,11 +87,11 @@ namespace Carcassonne {
         */
         bool aAbbe() const { return abbe != nullptr; }
 
-        /*! \brief Increment le score d'une certaine valeur
-            \param[in] incr Le valeur d'increment du score
+        /*! \brief Donne un score au joueur
+            \param[in] incr Le nouveau score
         */
-		void incrementScore(int incr) {
-            score += incr;
+        void setScore(int incr) {
+            score = incr;
         }
 
 		// Prend un meeple du joueur

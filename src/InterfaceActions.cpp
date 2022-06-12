@@ -1,4 +1,6 @@
 #include <QLabel>
+#include <string>
+#include <vector>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
@@ -7,37 +9,30 @@
 
 namespace Carcassonne {
 
-    static const size_t NB_MEEPLES_DIFF = 3;
-
-    InterfaceActions::InterfaceActions(QWidget* parent) : QWidget(parent) {
+    InterfaceActions::InterfaceActions(std::vector<extensions> ext, QWidget* parent) : QWidget(parent) {
         layoutPrincipal = new QVBoxLayout(this);
         layoutPrincipal->setContentsMargins(0, 0, 0, 50);
 
-        affAction = new QLabel("", this);
-        layoutPrincipal->addWidget(affAction);
-
         layoutMeeples = new QHBoxLayout(this);
+        layoutMeeples->setSpacing(0);
 
-        InterfaceMeeple* meeple = new InterfaceMeeple("Meeple", this);
-        meeples.push_back(meeple);
-        layoutMeeples->addWidget(meeple);
+        std::vector<std::string> idMeeples = getMeeples(ext);
 
-        meeple = new InterfaceMeeple("Gd Meeple", this);
-        meeples.push_back(meeple);
-        layoutMeeples->addWidget(meeple);
-
-        meeple = new InterfaceMeeple("Abbe", this);
-        meeples.push_back(meeple);
-        layoutMeeples->addWidget(meeple);
+        for(size_t i = 0; i < idMeeples.size(); i++) {
+            InterfaceMeeple* meeple = new InterfaceMeeple(idMeeples[i], this);
+            meeples.push_back(meeple);
+            connect(meeple, &InterfaceMeeple::sig_demandePlacement, this, &InterfaceActions::handleClickActionBtn);
+            layoutMeeples->addWidget(meeple);
+        }
 
         layoutPrincipal->addLayout(layoutMeeples);
     }
 
-    void InterfaceActions::afficherNombreRestantMeeples(int* nbMeeplesParCat, size_t nbCatMeepleDiff) {
-        if(nbCatMeepleDiff != NB_MEEPLES_DIFF) {
+    void InterfaceActions::afficherNombreRestantMeeples(std::vector<int> nbMeeplesParCat) {
+        if(nbMeeplesParCat.size() != meeples.size()) {
             throw InterfaceException("Erreur, le nombre de meeples a afficher dans l'interface n'est pas correct !");
         }
-        for(size_t mIdx = 0; mIdx < nbCatMeepleDiff; mIdx++) {
+        for(size_t mIdx = 0; mIdx < nbMeeplesParCat.size(); mIdx++) {
             meeples[mIdx]->setNbMeeple(nbMeeplesParCat[mIdx]);
         }
     }

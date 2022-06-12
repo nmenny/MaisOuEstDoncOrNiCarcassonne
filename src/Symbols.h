@@ -12,6 +12,12 @@
 */
 namespace Carcassonne {
 
+    enum class idTypesVilles {CLASSIQUE = 0, AVEC_BOUCLIER = 1, AVEC_CATHEDRALE = 2};
+
+    //Cas Particuliers
+    const char C_COIN = '@';
+    const char C_BOUCLIER = 'B';
+
     //Surfaces
     const char C_PRES = '#'; /*!< Caractere representant un pre */
     const char C_VILLE = 'V'; /*!< Caractere representant une ville */
@@ -19,6 +25,8 @@ namespace Carcassonne {
     //Batiments
     const char C_ABBAYE = 'A'; /*!< Caractere representant une abbaye */
     const char C_JARDIN = 'J'; /*!< Caractere representant un jardin */
+    const char C_AUBERGE = 'L';
+    const char C_CATHEDRALE = 'T';
 
     //Chemins
     const char C_ROUTE = 'C'; /*!< Caractere representant une route */

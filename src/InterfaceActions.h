@@ -5,6 +5,7 @@
 #include <array>
 #include <QWidget>
 
+#include "Extensions.h"
 #include "InterfacePersonnages.h"
 
 class QLabel;
@@ -14,14 +15,14 @@ class QVBoxLayout;
 namespace Carcassonne {
 
     class InterfaceActions : public QWidget {
+        Q_OBJECT
     public:
     private:
-        QLabel* affAction;
         QVBoxLayout* layoutPrincipal;
         QHBoxLayout* layoutMeeples;
         std::vector<InterfaceMeeple*> meeples;
     public:
-        InterfaceActions(QWidget* parent = nullptr);
+        InterfaceActions(std::vector<extensions> ext, QWidget* parent = nullptr);
 
         virtual ~InterfaceActions() {
             for(auto m : meeples) {
@@ -29,11 +30,27 @@ namespace Carcassonne {
             }
         }
 
-        void afficherAction(std::string msg) {
-            affAction->setText(msg.c_str());
+        void afficherNombreRestantMeeples(std::vector<int> nbMeeplesParCat);
+
+        void rendreActifPoseMeeple() {
+            for(auto m : meeples) {
+                m->activeSelectionMeeple();
+            }
         }
 
-        void afficherNombreRestantMeeples(int* nbMeeplesParCat, size_t nbCatMeepleDiff);
+        void desactivePoseMeeple() {
+            for(auto m : meeples) {
+                m->desactiveSelectionMeeple();
+            }
+        }
+
+    signals:
+        void sig_veutPoserMeeple(Carcassonne::InterfaceMeeple*);
+
+    private slots:
+        void handleClickActionBtn(Carcassonne::InterfaceMeeple* i) {
+            emit sig_veutPoserMeeple(i);
+        }
     };
 
 }

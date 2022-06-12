@@ -2,7 +2,7 @@
 #include <iostream>
 
 #include "Joueurs.h"
-#include "types.h"
+#include "GestionnairesMemoire.h"
 
 #include "Tuile.h"
 #include "Jeu.h"
@@ -25,7 +25,7 @@ namespace Carcassonne {
         Abbes::libererInstance();
     }
 
-    void Jeu::partie() {
+    void JeuConsole::partie() {
         std::string saisie;
         int indiceJeu = -1;
         bool actionPlacementValide = false;
@@ -39,11 +39,12 @@ namespace Carcassonne {
             interface.afficheJoueur(*joueurCourant);
 
             // Saisie utilisateur de l'action qu'il souhaite realiser
-            do {
+            do
+            {
                 actionPlacementValide = false;
 
                 if(tuileChangee) {
-                    interface.afficheTuileCourante(*plateau.getTuile());
+                    interface.afficheTuileCourante(*plateau.getTuile(), plateau.getPioche().getTaillePioche());
 
                     recupEmplacementsJouables();
                     interface.afficheEmplacementsJouables(emplacementJouables);
@@ -54,13 +55,13 @@ namespace Carcassonne {
 
                 saisie = interface.demanderAction();
 
-                if(saisie == "d" || saisie == "D") {
+                if(saisie == COMMANDE_ROTATION_DROITE) {
                     plateau.p_getTuile()->rotation(directionRotation::droite);
                     tuileChangee = true;
-                } else if(saisie == "g" || saisie == "G") {
+                } else if(saisie == COMMANDE_ROTATION_GAUCHE) {
                     plateau.p_getTuile()->rotation(directionRotation::gauche);
                     tuileChangee = true;
-                } else if(saisie == "r" || saisie == "R") {
+                } else if(saisie == COMMANDE_REPIOCHER) {
                     plateau.remettreTuile();
                     tuileChangee = true;
                 } else {
@@ -78,9 +79,10 @@ namespace Carcassonne {
                     }
                 }
 
-            } while(!actionPlacementValide);
 
-            //
+            }
+            while(!actionPlacementValide);
+
 
             placerTuile(indiceJeu);
             tuileChangee = true;
@@ -101,7 +103,11 @@ namespace Carcassonne {
         interface.afficheScore(*joueurs);
 
         interface.afficheGagnant(getJoueurGagnant());
-
     }
 
+
+    const Tuile* JeuGraphique::placerTuile(Coordonnee c) {
+        const Tuile* tuilePosee = plateau.poserTuile(c);
+        return tuilePosee;
+    }
 }

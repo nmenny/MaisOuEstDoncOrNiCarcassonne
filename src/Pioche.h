@@ -11,6 +11,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+
+#include "Extensions.h"
 #include "Tuile.h"
 
 /*! \namespace Carcassonne
@@ -32,6 +34,10 @@ namespace Carcassonne {
 
 		vector<Tuile*> piochees; /*!< La liste des Tuiles deja piochees */
 
+        std::vector<extensions> ext;
+
+        vector<Tuile*> piocheRiviere;
+
 	public:
 
         /*!
@@ -39,9 +45,9 @@ namespace Carcassonne {
 
             Recupere toutes les Tuiles en memoire
         */
-		Pioche() {
+        Pioche(std::vector<extensions> extensionListe) : ext(extensionListe) {
 		    srand(time(NULL)); // Seed aleatoire
-            recupereToutesLesTuiles();
+            recupereToutesLesTuiles(extensionListe);
 		}
 
 		Pioche(const Pioche& p)=delete;
@@ -70,25 +76,7 @@ namespace Carcassonne {
             \brief Pioche une Tuile
             \return Pointeur sur la Tuile piochee, ou nullptr s'il n'y a plus de Tuile a piocher
         */
-		Tuile* piocher() {
-		    if(getTaillePioche() == 0) {
-                return nullptr;
-		    }
-
-            // Pioche une Tuile aleatoirement
-            size_t tuilePiocheIdx = rand() % getTaillePioche();
-
-            auto itTuile = find(pioche.begin(), pioche.end(), pioche[tuilePiocheIdx]);
-
-            // Ajoute la Tuile choisie a la pile des Tuiles piochees
-            piochees.push_back(pioche[tuilePiocheIdx]);
-
-            // Enleve la Tuile choisie de la pioche
-            pioche.erase(itTuile);
-
-            return piochees.back();
-
-		}
+        Tuile* piocher();
 
         /*!
             \brief Repioche une Tuile
@@ -105,7 +93,11 @@ namespace Carcassonne {
 
             Tuile* nouvellePiochee = piocher();
 
-            pioche.push_back(dernierePiochee);
+            if(piocheRiviere.size() >= 1) {
+                piocheRiviere.push_back(dernierePiochee);
+            } else {
+                pioche.push_back(dernierePiochee);
+            }
 
             return nouvellePiochee;
 		}
@@ -115,7 +107,31 @@ namespace Carcassonne {
         /*!
             \brief Recupere toutes les tuiles en memoire qui sont dans le fichier TUILES_NOM_FICHIER
         */
-		void recupereToutesLesTuiles();
+        void recupereToutesLesTuiles(std::vector<extensions> extensionListe);
+
+        Tuile* piocherDansPile(vector<Tuile*>& p);
+
+        Tuile* getTuileDeb() {
+            size_t idxT = 0;
+            while(idxT < getTaillePioche()) {
+                if(pioche[idxT]->getID().getSpecificite() == specificiteTuile::Demarrage) {
+                    return pioche[idxT];
+                }
+                idxT++;
+            }
+            return nullptr;
+        }
+
+        Tuile* getTuileDebRiviere() {
+            size_t idxT = 0;
+            while(idxT < piocheRiviere.size()) {
+                if(piocheRiviere[idxT]->getID().getSpecificite() == specificiteTuile::Demarrage) {
+                    return piocheRiviere[idxT];
+                }
+                idxT++;
+            }
+            return nullptr;
+        }
 
 	};
 

@@ -11,6 +11,10 @@
 namespace Carcassonne {
 
     InterfacePioche::InterfacePioche(QWidget* parent ) : QWidget(parent) {
+
+        // ----
+        // Creation de l'interface graphique
+
         layoutPrincipal = new QVBoxLayout(this);
 
         //
@@ -53,6 +57,13 @@ namespace Carcassonne {
         layoutPrincipal->addLayout(layoutActions);
 
 
+        // ----
+        // Interractions avec l'utilisateur
+        connect(btnRotGauche, SIGNAL(clicked()), this, SLOT(evtRotGaHandler()));
+        connect(btnRotDroite, SIGNAL(clicked()), this, SLOT(evtRotDrHandler()));
+        connect(btnRepiocher, SIGNAL(clicked()), this, SLOT(evtRepiocherHandler()));
+
+
     }
 
     void InterfacePioche::afficherTuile(const Tuile* t) {
@@ -65,8 +76,12 @@ namespace Carcassonne {
     }
 
     void InterfacePioche::setNbTuilesDansPioche(int nbTuiles) {
-        nbTuilesRestantes->setMaximum(nbTuiles);
         nbTuilesRestantes->setValue(nbTuiles);
+    }
+
+    void InterfacePioche::initNbTuiles(int nbTuiles) {
+        nbTuilesRestantes->setMaximum(nbTuiles);
+        nbTuilesRestantes->setValue(nbTuiles-1);
     }
 
 }

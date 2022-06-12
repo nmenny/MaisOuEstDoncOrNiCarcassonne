@@ -5,15 +5,16 @@
 
 namespace Carcassonne {
 
-    class InterfaceMeeple : public QPushButton {
-    public:
-        static const int TAILLE_MEEPLE = 15;
+    class InterfaceCouleurJoueur : public QPushButton {
+        Q_OBJECT
     private:
-        QColor couleurMeeple;
+        static const int TAILLE_POINT = 15;
+    private:
+        QColor couleurPoint;
     public:
-        explicit InterfaceMeeple(const QColor& couleur, QWidget* parent = nullptr);
+        explicit InterfaceCouleurJoueur(const QColor& couleur, QWidget* parent = nullptr);
 
-        virtual ~InterfaceMeeple()=default;
+        virtual ~InterfaceCouleurJoueur()=default;
     protected:
         void paintEvent(QPaintEvent *event) override;
     };

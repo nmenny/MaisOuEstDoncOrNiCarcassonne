@@ -5,7 +5,6 @@
 
 #include "InterfaceJoueurs.h"
 #include "InterfaceJoueur.h"
-#include "CarcassonneException.h"
 
 namespace Carcassonne {
 
@@ -13,6 +12,9 @@ namespace Carcassonne {
     const QColor InterfaceJoueurs::COULEUR_J2 = Qt::red;
     const QColor InterfaceJoueurs::COULEUR_J3 = Qt::green;
     const QColor InterfaceJoueurs::COULEUR_J4 = Qt::yellow;
+    const std::array<QColor, Joueurs::NB_JOUEUR_MAXI> InterfaceJoueurs::COULEURS_JOUEURS =
+            std::array<QColor, Joueurs::NB_JOUEUR_MAXI>({InterfaceJoueurs::COULEUR_J1, InterfaceJoueurs::COULEUR_J2,
+                                                        InterfaceJoueurs::COULEUR_J3, InterfaceJoueurs::COULEUR_J4});
 
     InterfaceJoueurs::InterfaceJoueurs(size_t nbJ, QWidget* parent) : QWidget(parent), nbJoueurs(nbJ) {
         if(nbJ > Joueurs::NB_JOUEUR_MAXI) {
@@ -34,7 +36,6 @@ namespace Carcassonne {
             } else {
                 layoutJoueurs->addWidget(joueurs[idxJ], 1 ,idxJ % 2);
             }
-
         }
 
         layoutPrincipal->addLayout(layoutJoueurs);
@@ -46,12 +47,31 @@ namespace Carcassonne {
 
         layoutPrincipal->addWidget(btnValideScore);
         layoutPrincipal->setAlignment(btnValideScore, Qt::AlignHCenter);
+
+        connect(btnValideScore, SIGNAL(clicked()), this, SLOT(handleValideScore()));
     }
 
     InterfaceJoueurs::~InterfaceJoueurs() {
         for(size_t idxJ = 0; idxJ < nbJoueurs; idxJ++) {
             delete joueurs[idxJ];
         }
+    }
+
+    void InterfaceJoueurs::modifScoreActif() {
+        btnValideScore->setEnabled(true);
+        for(size_t idxJ = 0; idxJ < nbJoueurs; idxJ++) {
+            joueurs[idxJ]->modifOk();
+        }
+    }
+
+    std::array<int, Joueurs::NB_JOUEUR_MAXI> InterfaceJoueurs::getScores() {
+        std::array<int, Joueurs::NB_JOUEUR_MAXI> scores;
+        for(size_t idxJ = 0; idxJ < Joueurs::NB_JOUEUR_MAXI; idxJ++) {
+            if(idxJ < nbJoueurs) {
+                scores[idxJ] = joueurs[idxJ]->getScore();
+            }
+        }
+        return scores;
     }
 
 }

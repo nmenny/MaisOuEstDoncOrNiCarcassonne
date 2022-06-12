@@ -2,7 +2,12 @@
 #include <QPixmap>
 #include <QIcon>
 #include <QWidget>
+#include <QPainter>
+#include <QSize>
+#include <QTransform>
+#include <algorithm>
 
+#include "Environnement.h"
 #include "InterfaceTuile.h"
 #include "Tuile.h"
 
@@ -21,18 +26,48 @@ namespace Carcassonne {
 
     void InterfaceTuile::loadImgIcon(const std::string& cheminFich) {
         QPixmap img(cheminFich.c_str());
+        QTransform tr;
+        tr.rotate(tuileRot);
+        img = img.transformed(tr);
         icon = new QIcon(img);
         setIcon(*icon);
-        setIconSize(img.rect().size());
+        QSize s(LONGUEUR_TUILE, LONGUEUR_TUILE);
+        setIconSize(s);
+        setEnabled(true);
     }
 
-    void InterfaceTuile::setTuile(const Tuile* t) {
+    void InterfaceTuile::setTuile(const Tuile* t, qreal rot) {
         if(tuile != nullptr) {
             throw InterfaceException("Erreur, l'interface de Tuile est deja associee a une Tuile !");
         }
         tuile = t;
+        tuileRot = rot;
         loadImgIcon(CHEMIN_REPERTOIRE_IMAGES + t->getID().getStringId());
     }
 
+    void InterfaceTuile::rotate(qreal v) {
+        if(tuile != nullptr) {
+            tuileRot = static_cast<int>(tuileRot + v) % 360;
+            std::string cheminFich = CHEMIN_REPERTOIRE_IMAGES + tuile->getID().getStringId();
+            loadImgIcon(cheminFich);
+        }
+    }
+
+    void InterfaceTuile::setEmplacementsMeeples(const Coordonnees& c) {
+        env->defEmplPosables(c);
+    }
+
+
+    void InterfaceTuile::handleVerifPlacementMeeple(const Carcassonne::Coordonnee c) {
+        Environnement* envClick = tuile->getEnvironnement(c);
+        if(tuile->peutPoserMeepleDessus(envClick)) {
+            env->setDisabled(true);
+            emit sig_placementMeepleOk(this, envClick);
+        } else if(tuile->aMeepleDessus()) {
+            emit sig_enleverMeeple(this, envClick);
+        } else {
+            env->clearEmplacementsPoses();
+        }
+    }
 }
 

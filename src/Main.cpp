@@ -1,29 +1,29 @@
 #define UNUSED(x) (void)x
 
+#include <string>
+#include <vector>
 #include <QApplication>
 #include <QHBoxLayout>
 #include <iostream>
 
 #include "Jeu.h"
+#include "Extensions.h"
 #include "InterfaceConsole.h"
 #include "InterfaceJeu.h"
-#include "types.h"
+#include "GestionnairesMemoire.h"
+#include "InterfaceAccueil.h"
 
 
 int main(int argc, char* argv[]) {
-
     using namespace Carcassonne;
 
-    InterfaceConsole interfaceC;
-
-    Jeu j(interfaceC, 2);
-
-    //j.partie();
+    // Utilisation de l'interface graphique (par defaut)
 
     QApplication app(argc, argv);
 
-    InterfaceJeu* interfaceJ = new InterfaceJeu(4);
-    interfaceJ->show();
+    InterfaceAccueil fenetre;
+    fenetre.show();
 
     return app.exec();
+
 }

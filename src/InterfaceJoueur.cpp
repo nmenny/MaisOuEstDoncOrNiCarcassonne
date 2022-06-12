@@ -19,18 +19,29 @@ namespace Carcassonne {
         nomJoueur = new QLabel(nomJ.c_str(), this);
         layoutDetailJoueur->addWidget(nomJoueur);
 
-        cercleCouleurJoueur = new InterfaceMeeple(couleur, this);
+        cercleCouleurJoueur = new InterfaceCouleurJoueur(couleur, this);
         layoutDetailJoueur->addWidget(cercleCouleurJoueur);
 
         champPts = new QSpinBox(this);
         champPts->setMinimum(0);
+        champPts->setMaximum(1000);
         champPts->setSingleStep(1);
+        champPts->setDisabled(true);
         layoutPrincipal->addWidget(champPts);
+
     }
 
 
     void InterfaceJoueur::setPoints(int pts) {
         champPts->setValue(pts);
+    }
+
+    void InterfaceJoueur::modifOk() {
+        champPts->setEnabled(true);
+    }
+
+    int InterfaceJoueur::getScore() {
+        return champPts->value();
     }
 
 }

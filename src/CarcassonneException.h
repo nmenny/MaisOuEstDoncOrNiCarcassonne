@@ -49,6 +49,18 @@ namespace Carcassonne {
         JoueurException(const string msg) : CarcassonneException(msg) {}
     };
 
+    /*! \class MemoireException
+        \brief Exceptions declenchees par les gestionnaires memoire
+    */
+    class MemoireException : public CarcassonneException {
+    public:
+
+        /*! \brief Constructeur de la classe
+            \param[in] msg Message lie a l'exception
+        */
+        MemoireException(const string msg) : CarcassonneException(msg) {}
+    };
+
     /*! \class PiocheException
         \brief Exceptions declenchees par la Pioche
     */

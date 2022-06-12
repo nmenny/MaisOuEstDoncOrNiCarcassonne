@@ -5,6 +5,7 @@
 #ifndef __PERSONNAGES_H__
 #define __PERSONNAGES_H__
 
+#include <string>
 #include "Joueur.h"
 
 /*! \namespace Carcassonne
@@ -12,6 +13,8 @@
     espace de nom regroupant tout ce qui est utilise pour le jeu
 */
 namespace Carcassonne {
+
+    class Environnement;
 
     /*! \class Meeple
         \brief Represente un Meeple
@@ -61,6 +64,14 @@ namespace Carcassonne {
         void recuperer() {
             enJeu = false;
         }
+
+        virtual std::string toString() const {
+            return "Meeple";
+        }
+
+        virtual bool peutEtreRetire(const Environnement& e) {
+            return false;
+        }
     };
 
 
@@ -74,6 +85,14 @@ namespace Carcassonne {
             \param[in] j Pointeur sur le Joueur proprietaire
         */
         BasicMeeple(Joueur* j): Meeple(j){}
+
+        std::string toString() const override {
+            return "Meeple";
+        }
+
+        bool peutEtreRetire(const Environnement& e) override {
+            return true;
+        }
     };
 
     /*! \class GdMeeple
@@ -86,6 +105,14 @@ namespace Carcassonne {
             \param[in] j Pointeur sur le Joueur proprietaire
         */
         GdMeeple(Joueur* j): Meeple(j){}
+
+        std::string toString() const override {
+            return "Gd Meeple";
+        }
+
+        bool peutEtreRetire(const Environnement& e) override {
+            return true;
+        }
     };
 
     /*! \class Abbe
@@ -98,6 +125,14 @@ namespace Carcassonne {
             \param[in] j Pointeur sur le Joueur proprietaire
         */
         Abbe(Joueur* j): Meeple(j) {}
+
+        std::string toString() const override {
+            return "Abbe";
+        }
+
+        bool peutEtreRetire(const Environnement& e) override {
+            return true;
+        }
     };
 }
 

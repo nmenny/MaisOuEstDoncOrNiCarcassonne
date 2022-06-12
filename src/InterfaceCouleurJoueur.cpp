@@ -5,18 +5,18 @@
 
 namespace Carcassonne {
 
-    InterfaceMeeple::InterfaceMeeple(const QColor& couleur, QWidget* parent) : QPushButton(parent), couleurMeeple(couleur) {
+    InterfaceCouleurJoueur::InterfaceCouleurJoueur(const QColor& couleur, QWidget* parent) : QPushButton(parent), couleurPoint(couleur) {
         setBackgroundRole(QPalette::Base);
     }
 
-    void InterfaceMeeple::paintEvent(QPaintEvent*) {
+    void InterfaceCouleurJoueur::paintEvent(QPaintEvent*) {
         QPainter peintre;
         peintre.begin(this);
         peintre.setRenderHint(QPainter::Antialiasing, true);
         peintre.setPen(QPen(Qt::white,1));
-        peintre.setBrush(QBrush(couleurMeeple));
+        peintre.setBrush(QBrush(couleurPoint));
 
-        peintre.drawEllipse(0, (this->size().height() - TAILLE_MEEPLE) / 2, TAILLE_MEEPLE, TAILLE_MEEPLE);
+        peintre.drawEllipse(0, (this->size().height() - TAILLE_POINT) / 2, TAILLE_POINT, TAILLE_POINT);
         peintre.end();
     }
 

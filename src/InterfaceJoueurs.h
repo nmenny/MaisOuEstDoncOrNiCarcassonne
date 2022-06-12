@@ -4,7 +4,9 @@
 #include <array>
 #include <QWidget>
 
+#include "CarcassonneException.h"
 #include "Joueurs.h"
+#include "InterfaceJoueur.h"
 
 class QLabel;
 class QVBoxLayout;
@@ -13,14 +15,14 @@ class QPushButton;
 
 namespace Carcassonne {
 
-    class InterfaceJoueur;
-
     class InterfaceJoueurs : public QWidget {
+        Q_OBJECT
     public:
         static const QColor COULEUR_J1;
         static const QColor COULEUR_J2;
         static const QColor COULEUR_J3;
         static const QColor COULEUR_J4;
+        static const std::array<QColor, Joueurs::NB_JOUEUR_MAXI> COULEURS_JOUEURS;
     private:
         size_t nbJoueurs = 2;
         QLabel* titrePage;
@@ -36,6 +38,22 @@ namespace Carcassonne {
         InterfaceJoueurs& operator=(const InterfaceJoueurs& j)=delete;
 
         virtual ~InterfaceJoueurs();
+
+        InterfaceJoueur* getJoueur(size_t idxJ) const {
+            if(idxJ >= nbJoueurs) {
+                throw InterfaceException("Erreur, essaie d'acceder a un joueur qui n'existe pas !!");
+            }
+            return joueurs[idxJ];
+        }
+
+        void modifScoreActif();
+
+        std::array<int, Joueurs::NB_JOUEUR_MAXI> getScores();
+
+    signals:
+        void sig_validerScores();
+    private slots:
+        void handleValideScore() { emit sig_validerScores(); }
     };
 
 }

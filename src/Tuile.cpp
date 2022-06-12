@@ -5,7 +5,6 @@
 #include <algorithm>
 
 #include "Tuile.h"
-#include "CarcassonneException.h"
 #include "EnvironnementFactory.h"
 #include "Utils.h"
 #include "Coordonnee.h"
@@ -49,8 +48,10 @@ namespace Carcassonne {
             return extensions::Base;
         } else if(ext == "riviere") {
             return extensions::Riviere;
+        } else if(ext == "auberge") {
+            return extensions::Auberge;
         } else {
-            throw TuileException("Erreur, cette extension n'est pas prise en compte !");
+            throw TuileException("Erreur,l'extension " +ext +" n'est pas prise en compte !");
         }
     }
 
@@ -80,7 +81,7 @@ namespace Carcassonne {
             e = EnvironnementFactory::createNouvEnvironnement(this, buildingChar);
 
             if(e == nullptr) {
-                throw TuileException("Un tel element de decors n'existe pas !");
+                throw TuileException(string(1, buildingChar) + " n'est pas un element de decors valide !");
             }
 
             surfaces[arrayIdx] = e;
@@ -105,9 +106,9 @@ namespace Carcassonne {
         // Rotation a gauche
         case directionRotation::gauche:
 
-            for(size_t envIdxLigne = 0; envIdxLigne < NB_ZONES / 3; envIdxLigne++) {
-                for(size_t envIdxCol = 0; envIdxCol < NB_ZONES / 3; envIdxCol++) {
-                    surfaces[6 - envIdxCol * 3 + envIdxLigne] = surfacesTmp[envIdxLigne * 3 + envIdxCol];
+            for(size_t envIdxLigne = 0; envIdxLigne < NB_ENV_LIGNE; envIdxLigne++) {
+                for(size_t envIdxCol = 0; envIdxCol < NB_ENV_COL; envIdxCol++) {
+                    surfaces[(NB_ENV_LIGNE - 1 - envIdxCol) * NB_ENV_COL + envIdxLigne] = surfacesTmp[envIdxLigne * NB_ENV_COL + envIdxCol];
                 }
             }
 
@@ -115,9 +116,9 @@ namespace Carcassonne {
         // Rotation a droite
         case directionRotation::droite:
 
-            for(size_t envIdxLigne = 0; envIdxLigne < NB_ZONES / 3; envIdxLigne++) {
-                for(size_t envIdxCol = 0; envIdxCol < NB_ZONES / 3; envIdxCol++) {
-                    surfaces[envIdxCol * 3 + 2 - envIdxLigne] = surfacesTmp[envIdxLigne * 3 + envIdxCol];
+            for(size_t envIdxLigne = 0; envIdxLigne < NB_ENV_LIGNE; envIdxLigne++) {
+                for(size_t envIdxCol = 0; envIdxCol < NB_ENV_COL; envIdxCol++) {
+                    surfaces[envIdxCol * NB_ENV_COL + NB_ENV_LIGNE - 1 - envIdxLigne] = surfacesTmp[envIdxLigne * NB_ENV_COL + envIdxCol];
                 }
             }
 
@@ -223,11 +224,39 @@ namespace Carcassonne {
         return meeple;
     }
 
+    Coordonnees Tuile::recupEmplacementsOuMeeplesPosables() const {
+        Coordonnees coordsEnvUniques;
+        vector<Environnement*> envUniques;
+
+        int y = 0;
+        int x = 0;
+
+        // Parcours tous les environnements de la Tuile
+        while(y < static_cast<int>(NB_ENV_LIGNE)) {
+            x = 0;
+            while(x < static_cast<int>(NB_ENV_COL)) {
+                vector<Environnement*>::iterator it;
+                Environnement* env = surfaces[y * NB_ENV_COL + x];
+                // Si l'environnement courant n'a pas encore ete vu
+                if((it = find(envUniques.begin(), envUniques.end(), env))  == envUniques.end() ) {
+                    envUniques.push_back(env);
+                    if(env->peutPoserMeeple()) {
+                        coordsEnvUniques.push_back(Coordonnee(x, y));
+                    }
+                }
+                x++;
+            }
+            y++;
+        }
+
+        return coordsEnvUniques;
+    }
+
     void Tuile::fusionnerEnvironnementsAdjacentsRec(int x, int y, Environnement* envDiff, Coordonnees* parcours) {
         // On ne peut pas fusionner des environnements differents
         if(x < 0 || x >= static_cast<int>(NB_ENV_COL) ||
            y < 0 || y >= static_cast<int>(NB_ENV_LIGNE) ||
-           surfaces[y*NB_ENV_COL+x]->toChar() != envDiff->toChar())
+           !surfaces[y*NB_ENV_COL+x]->sontSimilaires(envDiff))
         {
             return;
         }
@@ -240,7 +269,7 @@ namespace Carcassonne {
         // Check en haut
         if(
            ((y - 1) >= 0) && // Coordonnee dans les clous
-           surfaces[(y -1)*NB_ENV_COL + x]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           surfaces[(y -1)*NB_ENV_COL + x]->sontSimilaires(envDiff) && // Meme type d'environnement
            (find(parcours->begin(), parcours->end(), Coordonnee(x, y-1)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x, y-1, envDiff, parcours);
@@ -249,7 +278,7 @@ namespace Carcassonne {
         // Check en bas
         if(
            ((y + 1) < static_cast<int>(NB_ENV_LIGNE)) && // Coordonnee dans les clous
-           surfaces[(y + 1)*NB_ENV_COL + x]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           surfaces[(y + 1)*NB_ENV_COL + x]->sontSimilaires(envDiff) && // Meme type d'environnement
            (find(parcours->begin(), parcours->end(), Coordonnee(x, y+1)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x, y+1, envDiff, parcours);
@@ -258,7 +287,7 @@ namespace Carcassonne {
         // Check a gauche
         if(
            (x - 1 >= 0) && // Coordonnee dans les clous
-           surfaces[y*NB_ENV_COL + x-1]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           surfaces[y*NB_ENV_COL + x-1]->sontSimilaires(envDiff) && // Meme type d'environnement
            (find(parcours->begin(), parcours->end(), Coordonnee(x-1, y)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x-1, y, envDiff, parcours);
@@ -267,7 +296,7 @@ namespace Carcassonne {
         // Check a droite
         if(
            (x + 1 < static_cast<int>(NB_ENV_COL)) && // Coordonnee dans les clous
-           surfaces[y*NB_ENV_COL + x+1]->toChar() == envDiff->toChar() && // Meme type d'environnement
+           surfaces[y*NB_ENV_COL + x+1]->sontSimilaires(envDiff) && // Meme type d'environnement
            (find(parcours->begin(), parcours->end(), Coordonnee(x+1, y)) == parcours->end()) // Environnement pas deja visite
            ) {
             fusionnerEnvironnementsAdjacentsRec(x+1, y, envDiff, parcours);

@@ -9,6 +9,7 @@
 #include <list>
 
 #include "Tuile.h"
+#include "CarcassonneException.h"
 
 /*! \namespace Carcassonne
 
@@ -80,7 +81,8 @@ namespace Carcassonne {
             \return L'environnement cree
         */
         virtual T* creer(Tuile* premiereTuile) {
-            T* newEnv=new T(premiereTuile);
+            T* newEnv = newEnv=new T(premiereTuile);
+
             listeEnv.push_back(newEnv);
             return newEnv;
         }
@@ -92,6 +94,9 @@ namespace Carcassonne {
             \return L'environnement fusionne
         */
         virtual T* fusionner(T* envOriginal, T* envAFusionner) {
+            if(envAFusionner == nullptr || envOriginal == nullptr) {
+                throw MemoireException("Erreur, essaie de fusionner des Tuiles incompatibles / indefinies !");
+            }
 
             if(envOriginal == envAFusionner) {
                 return envOriginal;

@@ -78,7 +78,7 @@ namespace Carcassonne {
         /*! \brief Recupere le nombre de joueurs presents dans la partie
             \return Le nombre de joueurs presents dans la partie
         */
-		int getNbJoueurs() const {
+        size_t getNbJoueurs() const {
             return nbJoueur;
         }
 

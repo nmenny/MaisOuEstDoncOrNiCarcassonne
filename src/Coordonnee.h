@@ -138,6 +138,28 @@ namespace Carcassonne {
 			friend class Coordonnees;
 		};
 
+        /*! \class Iterateur de coordonnees constantes
+            \brief Premet d'iterer sur les coordonnees constantes
+        */
+        class const_iterator : public std::vector<Coordonnee>::const_iterator {
+        public:
+            /*! \brief Recupere la coordonnee courante
+                \return La coordonnee courante
+            */
+            const Coordonnee operator*() const {
+                return std::vector<Coordonnee>::const_iterator::operator*();
+            }
+        private:
+
+            /*! \brief Constructeur de la classe
+                \param[in] Vecteur sur lequel l'iterateur itere
+            */
+            const_iterator(std::vector<Coordonnee>::const_iterator it):
+                std::vector<Coordonnee>::const_iterator(it) {}
+
+            friend class Coordonnees;
+        };
+
 		/*! \brief Renvoie l'iterateur sur le debut
             \return L'iterateur sur le premier element
         */
@@ -147,6 +169,16 @@ namespace Carcassonne {
             \return L'iterateur de fin
         */
 		iterator end() { return iterator(coords.end()); }
+
+        /*! \brief Renvoie l'iterateur constant sur le debut
+            \return L'iterateur constant sur le premier element
+        */
+        const_iterator cbegin() { return const_iterator(coords.cbegin()); }
+
+        /*! \brief Renvoie l'iterateur constant final
+            \return L'iterateur constant de fin
+        */
+        const_iterator cend() { return const_iterator(coords.cend()); }
 
 		void remove(const Coordonnee& c) {
             auto it = find(coords.begin(), coords.end(), c);

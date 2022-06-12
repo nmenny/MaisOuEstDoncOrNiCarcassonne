@@ -7,6 +7,7 @@
 
 #define UNUSED(x) (void)x
 
+#include "Symbols.h"
 #include "Environnement.h"
 
 using namespace std;
@@ -56,6 +57,81 @@ namespace Carcassonne {
             return true;
         }
     };
+
+
+    /*! \class Abbaye
+        \brief Represente une Abbaye
+    */
+    class Abbaye : public Batiment {
+    private :
+    public :
+
+        /*! \brief Constructeur de la classe
+            \param[in] premiereTuile Tuile contenant une Abbaye
+        */
+        Abbaye(Tuile* premiereTuile):Batiment(premiereTuile){}
+
+        /*! \brief Destructeur de la classe */
+        ~Abbaye()=default;
+
+        /*! \brief Donne le caractere representant une Abbaye
+            \return Le caractere correspodant a une Abbaye
+        */
+        const char& toChar() const override {
+            return C_ABBAYE;
+        }
+    };
+
+
+    /*! \class Jardin
+        \brief Represente un Jardin
+    */
+    class Jardin : public Batiment {
+    private :
+
+    public :
+
+        /*! \brief Constructeur de la classe
+            \param[in] premiereTuile Tuile contenant un Jardin
+        */
+        Jardin(Tuile* premiereTuile):Batiment(premiereTuile){}
+
+        /*! \brief Destructeur de la classe */
+        ~Jardin()=default;
+
+        /*! \brief Donne le caractere representant un Jardin
+            \return Le caractere correspodant a un Jardin
+        */
+        const char& toChar() const override {
+            return C_JARDIN;
+        }
+    };
+
+
+    /*! \class Auberge
+        \brief Represente une Auberge
+    */
+    class Auberge : public Batiment {
+    private :
+
+    public :
+
+        /*! \brief Constructeur de la classe
+            \param[in] premiereTuile Tuile contenant une Auberge
+        */
+        Auberge(Tuile* premiereTuile):Batiment(premiereTuile){}
+
+        /*! \brief Destructeur de la classe */
+        ~Auberge()=default;
+
+        /*! \brief Donne le caractere representant une Auberge
+            \return Le caractere correspodant a une Auberge
+        */
+        const char& toChar() const override {
+            return C_AUBERGE;
+        }
+    };
+
 }
 
 #endif

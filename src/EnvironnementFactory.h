@@ -6,7 +6,7 @@
 #define __ENVIRONNEMENTFACTORY_H__
 
 #include "Symbols.h"
-#include "types.h"
+#include "GestionnairesMemoire.h"
 #include "Tuile.h"
 #include "Environnement.h"
 
@@ -30,16 +30,31 @@ namespace Carcassonne {
             \return Un pointeur sur le nouvel environnement cree
         */
         static Environnement* createNouvEnvironnement(Tuile* t, const char& c) {
+            Environnement* ins;
             // Selon le caractere, une structure differente est allouee
             switch(c) {
+            case C_COIN:
+                return Coins::getInstance()->creer(t);break;
             case C_PRES:
                 return Pres::getInstance()->creer(t);break;
             case C_VILLE:
                 return Villes::getInstance()->creer(t);break;
+            case C_BOUCLIER:
+                ins = Villes::getInstance()->creer(t);
+                dynamic_cast<Ville*>(ins)->setOption(static_cast<int>(idTypesVilles::AVEC_BOUCLIER));
+                return ins;
+                break;
+            case C_CATHEDRALE:
+                ins = Villes::getInstance()->creer(t);
+                dynamic_cast<Ville*>(ins)->setOption(static_cast<int>(idTypesVilles::AVEC_CATHEDRALE));
+                return ins;
+                break;
             case C_ABBAYE:
                 return Abbayes::getInstance()->creer(t);break;
             case C_JARDIN:
                 return Jardins::getInstance()->creer(t);break;
+            case C_AUBERGE:
+                return Auberges::getInstance()->creer(t);break;
             case C_ROUTE:
                 return Routes::getInstance()->creer(t);break;
             case C_RIVIERE:

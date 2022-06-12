@@ -5,14 +5,17 @@
 #include <QWidget>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 namespace Carcassonne {
 
     class InterfaceMeeple : public QWidget {
+        Q_OBJECT
     private:
         const std::string nomTypeMeeple;
         QLabel *labelNomTypeMeeple, *labelNbMeeple;
         QVBoxLayout* layoutPrincipal;
+        QPushButton* jouer;
     public:
         InterfaceMeeple(std::string typeMeeple, QWidget* parent = nullptr) : QWidget(parent), nomTypeMeeple(typeMeeple) {
             layoutPrincipal = new QVBoxLayout(this);
@@ -22,17 +25,46 @@ namespace Carcassonne {
             labelNomTypeMeeple = new QLabel(c.c_str(), this);
             layoutPrincipal->addWidget(labelNomTypeMeeple);
 
-
             labelNbMeeple = new QLabel("0", this);
             layoutPrincipal->addWidget(labelNbMeeple);
 
+            jouer = new QPushButton("Placer", this);
+            jouer->setDisabled(true);
+            layoutPrincipal->addWidget(jouer);
+
+            //------
+            // Geston d'events
+            connect(jouer, SIGNAL(clicked()), this, SLOT(handleClickBtn()));
         }
 
         virtual ~InterfaceMeeple()=default;
 
+        const std::string& getId() const {
+            return nomTypeMeeple;
+        }
+
         void setNbMeeple(int nbMeeple) {
             labelNbMeeple->setText(std::to_string(nbMeeple).c_str());
         }
+
+        void activeSelectionMeeple() {
+            if(labelNbMeeple->text() != "0") {
+                jouer->setEnabled(true);
+            }
+        }
+
+        void desactiveSelectionMeeple() {
+            jouer->setDisabled(true);
+        }
+
+    signals:
+        void sig_demandePlacement(Carcassonne::InterfaceMeeple*);
+
+    private slots:
+        void handleClickBtn() {
+            emit sig_demandePlacement(this);
+        }
+
     };
 
 }
