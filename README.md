@@ -1,4 +1,4 @@
-# OùEstDoncOrNiCarcassonne
+# MaisOùEstDoncOrNiCarcassonne
 
 Ce projet a consiste en l’implémentation d'une version complète du jeu de plateau Carcassonne.   
 Réalisé dans le cadre du cours "LO21 : conception et programmation orientée objet" à l'UTC.
@@ -20,11 +20,11 @@ Le projet a été conçu en C++ à l'aide de la bibliothèque Qt6. Il est donc n
 
 1) Ajouter le dépôt apt suivant : 
 ```
-sudo add-apt-repository ppa:ubuntuhandbook1/ppa
+sudo add-apt-repository ppa:ubuntuhandbook1/ppa && sudo apt update
 ```
 2) Installer les packages nécessaires : 
 ```
-sudo apt install build-essential qt6-dev-tools libopenal-dev qt6-default libhidapi-dev
+sudo apt install build-essential libopenal-dev libhidapi-dev qt6-base-dev
 ```
 
 #### Solution générale
