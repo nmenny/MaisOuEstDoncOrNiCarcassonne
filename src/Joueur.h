@@ -1,5 +1,8 @@
 /*! \file Joueur.h
     \version 0.1
+
+    Copyright: (c) 2022, Bigotte Adrien, Lemkhali Bilal, Maistre Elise, Menny Nathan
+    GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 */
 
 #ifndef __JOUEUR_H__
@@ -114,17 +117,17 @@ namespace Carcassonne {
 		// Restitue un meeple au joueur
 
         /*! \brief Rend un Meeple a un joueur
-            \param[in] meeple Meeple à rendre
+            \param[in] meeple Meeple ï¿½ rendre
         */
 		void rendreMeeple(BasicMeeple* meeple);
 
         /*! \brief Rend un Grand Meeple a un joueur
-            \param[in] gdMeeple Grand Meeple à rendre
+            \param[in] gdMeeple Grand Meeple ï¿½ rendre
         */
 		void rendreGrandMeeple(GdMeeple* gdMeeple);
 
         /*! \brief Rend un Abbe a un joueur
-            \param[in] abbeP Abbe à rendre
+            \param[in] abbeP Abbe ï¿½ rendre
         */
 		void rendreAbbe(Abbe* abbeP);
 

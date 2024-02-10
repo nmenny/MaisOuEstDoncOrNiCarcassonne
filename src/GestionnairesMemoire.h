@@ -2,6 +2,9 @@
     \version 0.1
     \brief Tous les types de gestion de memoire
     \note Quand on ajoute un nouveau Meeple ou un nouvel environnement, il faut ajouter un type
+
+    Copyright: (c) 2022, Bigotte Adrien, Lemkhali Bilal, Maistre Elise, Menny Nathan
+    GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 */
 
 #ifndef __GESTIONNAIRESMEMOIRE_H__

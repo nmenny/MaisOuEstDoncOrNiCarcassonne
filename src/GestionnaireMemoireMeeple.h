@@ -1,5 +1,8 @@
 /*! \file GestionnaireMemoireMeeple.h
     \version 0.1
+
+    Copyright: (c) 2022, Bigotte Adrien, Lemkhali Bilal, Maistre Elise, Menny Nathan
+    GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 */
 
 #ifndef __GESTIONNAIREMEMOIREMEEPLE_H__
@@ -18,7 +21,7 @@ namespace Carcassonne {
 
     /*! \class GestionnaireMemoireMeeple
         \brief Represente le concept general de Gestionnaire memoire des Meeples
-        \tparam T Type de Meeple que doit gérer le Gestionnaire mémoire
+        \tparam T Type de Meeple que doit gï¿½rer le Gestionnaire mï¿½moire
     */
     template<class T>
     class GestionnaireMemoireMeeple {
