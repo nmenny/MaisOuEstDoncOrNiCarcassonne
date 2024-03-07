@@ -1,4 +1,4 @@
-# MaisOùEstDoncOrNiCarcassonne
+# Carcassonne
 
 Ce projet a consiste en l’implémentation d'une version complète du jeu de plateau Carcassonne.   
 Réalisé dans le cadre du cours "LO21 : conception et programmation orientée objet" à l'UTC.
